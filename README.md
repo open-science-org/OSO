@@ -9,3 +9,6 @@ Open Science Organization (OSO) is a non-profit Decentralized Autonomous Organiz
 3. the flow of value (in OSO tokens) created by the scientific results (publications, products, patents, etc.) back to the funding, thus creating a perpetual system for scientific research
 
 In OSO ecosystem, all steps/procedures will be algorithmic or will be based on community voting. Even certain aspects of algorithmic steps (e.g. algorithms used for decision making) are subjected to change based upon voting. Any individual or organization who holds OSO tokens will be considered an entity (or a member) in the OSO ecosystem. Each entity will have a voting power proportional to their expertise (e-value) in the corresponding scientific domain and the amount of value (OSO tokens) they are willing to invest/stake. 
+
+### Original White Paper
+https://github.com/open-science-org/wiki/blob/master/OSO_white_paper.pdf
