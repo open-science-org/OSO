@@ -100,9 +100,9 @@ OSO is a small fixed core with modular, replaceable parts, and every community c
 
 OSO has three kinds of entity: **ideas**, the **users** who create and use them, and **tokens** that reward fair interaction between the two.
 
-**Specification:** [OIP-8: Token structure](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-8.md), [OIP-10: Ownership and identity](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-10.md), [OIP-14: Idea attribution and value flow](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md).
+**Specification:** [OIP-16: Idea object](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-16.md), [OIP-8: Token structure](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-8.md), [OIP-10: Ownership and identity](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-10.md), [OIP-14: Idea attribution and value flow](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md).
 
-**Idea.** Any intellectual contribution that adds new information: a paper, dataset, code, review, hypothesis or replication. Ideas are versioned, and a review is itself an idea. Draft fields:
+**Idea.** Any intellectual contribution that adds new information: a paper, dataset, code, review, hypothesis or replication. Ideas are versioned, and a review is itself an idea. Each idea has a stable work ID, immutable content-addressed versions, and a separate registry record for status, owners and approved weights; the exact fields are in OIP-16. In summary:
 
 | Field | Meaning |
 | --- | --- |
@@ -132,7 +132,7 @@ OSO has three kinds of entity: **ideas**, the **users** who create and use them,
 
 New OSO is minted when an idea is validated, as in Proof of Idea. Because AI can generate plausible papers cheaply, the validation gate does the protecting: stakes, AI pre-screening, per-identity limits and a challenge window guard the mint.
 
-**Specification:** [OIP-8: Token structure](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-8.md) (minting, stakes, IDEA tokens), [OIP-9: Reputation and expertise](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-9.md), [OIP-11: Submission routing](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md) (validation, challenges, review), [OIP-14: Idea attribution and value flow](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md) (payout waterfall).
+**Specification:** [OIP-8: Token structure](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-8.md) (minting, stakes, IDEA tokens), [OIP-9: Reputation and expertise](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-9.md), [OIP-11: Submission routing](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md) (validation, challenges), [OIP-17: Peer review](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md) (review, ratings), [OIP-14: Idea attribution and value flow](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md) (payout waterfall).
 
 **1. Stake-to-submit.** The author stakes a small amount of OSO with each new idea. The stake is returned when the challenge window closes without a successful challenge (or when the idea is returned for a reason other than spam), and slashed if validators or a challenge find spam or plagiarism.
 
@@ -148,7 +148,7 @@ Each parent then keeps αⱼ of what it receives and passes the rest upstream. V
 
 **4. Minting on validation.** When an idea passes validation, new OSO is minted and split as in Proof of Idea: 50% to the authors, 30% to the OSO fund, 15% to the cited ideas (by edge weight w, then flowing upstream by α) and 5% to the validators. The whole mint, and the author's stake, are held during a challenge window measured in blocks. They are released when the window closes, or burned and slashed if a challenge (and any appeal) shows spam or plagiarism. Only newly submitted original work mints: imported papers, metadata edits and ownership changes never do. Whether revisions, reviews and replications mint is an open question. Value that arrives later (use, funding, gifts) reaches an idea through flow-back, not new minting. Emission policy (fixed cap or adaptive) is an open question.
 
-**5. Review (layer 2 and up).** Authors or channels post a review bounty in OSO. Reviewers claim it and submit reviews as idea objects linked to the reviewed idea. Ratings keep updating as new reviews, replications and downstream use arrive (perpetual review). Negative reviews and scientific dissent stay public alongside the idea. Failed admission and detected plagiarism are separate states.
+**5. Review (layer 2 and up).** The Idea Platform whitepaper lets each sub-network run its own review process, as long as it is open, selects reviewers fairly, keeps reviewing after publication and hides nothing. v1 starts simple, with one process for everyone: three matched reviewers per admitted idea, paid from the OSO fund the same whatever their verdict, plus open reviews from anyone qualified. Each review is an idea linked to the reviewed idea, with one score and a recommendation. Ratings keep updating as new reviews, replications and downstream use arrive (perpetual review). Negative reviews and scientific dissent stay public alongside the idea. Failed admission and detected plagiarism are separate states.
 
 **6. Where value comes from.** Tokens only have value if outside value flows in. The sources are grants and philanthropy routed through ideas, industry bounties, investment through IDEA tokens, commercialization revenue and platform fees. Recruiting the first real funders matters more than the token design.
 
@@ -178,7 +178,7 @@ Ownership has three layers: proof of authorship, the link from a key to a real p
 
 v1 ships a minimal web UI on top of the node. Users can chat about any idea, see its related ideas and value flow, and submit new ideas. Submissions are routed through validation first, then peer review.
 
-**Specification:** routing in [OIP-11: Submission routing](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md); chat and AI assistance in [OIP-15: AI services, models and costs](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md).
+**Specification:** routing in [OIP-11: Submission routing](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md); review in [OIP-17: Peer review](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md); chat and AI assistance in [OIP-15: AI services, models and costs](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md).
 
 | Screen | What the user can do |
 | --- | --- |
@@ -326,11 +326,13 @@ This doc is the overview; the exact rules are in OSO Idea Proposals (OIPs), whic
 | [8](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-8.md) | Token structure | Core | Draft | OSO supply, minting on validation, mint split and escrow, stakes, IDEA tokens, bootstrap |
 | [9](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-9.md) | Reputation and expertise | Module | Draft | Expertise × integrity voting weight |
 | [10](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-10.md) | Ownership and identity | Core | Draft | Identities, key custody, owners, imported-author claims, AI-produced work |
-| [11](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md) | Submission routing | Module | Draft | Pre-screen, validation, challenges, peer review |
+| [11](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md) | Submission routing | Module | Draft | Pre-screen, validation, challenges, appeals |
 | [12](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-12.md) | Module interface and community setups | Core | Draft | Fixed core, replaceable modules, per-community setups |
 | [13](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-13.md) | Public ledger and migration path | Core | Draft | Transactions, blocks, GitHub publication, replay, migration |
 | [14](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md) | Idea attribution and value flow | Core | Draft | Intrinsic and extrinsic links over time, approval, payout waterfall |
 | [15](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md) | AI services, models and costs | Module | Draft | Model choice, local hosting, recorded outputs, who pays |
+| [16](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-16.md) | Idea object | Core | Draft | What an idea is, work ID, immutable versions, registry record |
+| [17](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md) | Peer review | Module | Draft | Review principles; one simple v1 process: paid invited reviews, open reviews, perpetual ratings |
 | [1](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-1.md) | IPFS integration and platform UI | Informational | Stagnant | 2017 proposal |
 | [2](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-2.md) | Funding application | Meta | Stagnant | 2017 proposal |
 | [3](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-3.md) | Funding OSO | Meta | Stagnant | 2018 proposal |
@@ -365,7 +367,7 @@ These need a decision before or during Phase 1.
 - [ ] **Claim adjudication:** who resolves disputed author matches and co-author splits for imported papers?
 - [ ] **Small communities:** what happens when a community lacks conflict-free validators for a long time?
 - [ ] **First task:** what can the first user complete in month one?
-- [ ] **Specs to write as OIPs, each before its phase:** OIPs 8 to 15 are now drafted (see Specifications). Still to write: per-transaction schemas and canonical serialization (Phase 1); review bounties, funding transactions and control of the OSO fund (Phase 1); review ratings and how they feed reputation (Phase 1); key custody after migration and a randomness design (Phase 3); governance procedures (Meta); and the rules for enabling IDEA transfers.
+- [ ] **Specs to write as OIPs, each before its phase:** OIPs 8 to 17 are now drafted (see Specifications). Still to write: per-transaction schemas and canonical serialization of transactions (Phase 1; idea versions are covered by OIP-16); funding transactions and control of the OSO fund (Phase 1); key custody after migration and a randomness design (Phase 3); governance procedures (Meta); and the rules for enabling IDEA transfers.
 
 ## References
 
@@ -381,5 +383,5 @@ These need a decision before or during Phase 1.
 - [GIP](https://github.com/open-science-org/GIP): idea graph spec and attack-vector questions
 - [URI](https://github.com/open-science-org/URI): researcher identity proof of concept
 - [idea-hub](https://github.com/open-science-org/idea-hub): the 2019 proof of concept, the [2020 stack (#24)](https://github.com/open-science-org/idea-hub/issues/24), the [REST API spec (#26)](https://github.com/open-science-org/idea-hub/issues/26), and the unmerged [Solidity contract (PR #33)](https://github.com/open-science-org/idea-hub/pull/33)
-- [OIPs](https://github.com/open-science-org/OIPs): proposals 0 to 15 (see Specifications), including the original issues for [validator merit (OIP-4)](https://github.com/open-science-org/OIPs/issues/6) and [publishing as a cascade of TCRs (OIP-7)](https://github.com/open-science-org/OIPs/issues/9)
+- [OIPs](https://github.com/open-science-org/OIPs): proposals 0 to 17 (see Specifications), including the original issues for [validator merit (OIP-4)](https://github.com/open-science-org/OIPs/issues/6) and [publishing as a cascade of TCRs (OIP-7)](https://github.com/open-science-org/OIPs/issues/9)
 - [RR-index](https://github.com/open-science-org/RR-index): researcher impact metric

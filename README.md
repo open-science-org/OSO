@@ -28,6 +28,8 @@ OSO was active from 2017 to 2020 and then went dormant. In October 2026 the proj
 | [OIP-13](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-13.md) | Public ledger and migration path |
 | [OIP-14](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md) | Idea attribution and value flow |
 | [OIP-15](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md) | AI services, models and costs |
+| [OIP-16](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-16.md) | Idea object |
+| [OIP-17](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md) | Peer review |
 
 **How to get involved.** Read the design doc and comment on the open questions at its end. To propose a change or a new idea, follow [OIP-0](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-0.md). You can also email contact@oso.network.
 
@@ -53,4 +55,4 @@ The text below is the project's original description, kept for history. Two poin
 | May 2018 | [Technical design v0](OSO_design_v0.pdf) |
 | Sep 2018 | [Proof of Idea v0.0](https://github.com/open-science-org/wiki/blob/master/Proof_of_Idea.pdf) |
 | Nov 2018 | [OSO: An Idea Platform, v0.3](https://github.com/open-science-org/wiki/blob/master/OSO_Idea_Platform_whitepaper.pdf) |
-| Oct 2026 | [OSO v1 design doc](docs/design-v1.md) and OIPs 0 and 8–15 |
+| Oct 2026 | [OSO v1 design doc](docs/design-v1.md) and OIPs 0 and 8–17 |
