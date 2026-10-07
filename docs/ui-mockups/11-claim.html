@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Claim your work</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1000px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Phase B mockup. Simulated ledger; amounts are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="05-submit.html" style="color: #5f5d58; text-decoration: none">Submit</a>
+        <a href="06-status.html" style="color: #5f5d58; text-decoration: none">My work</a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <a href="12-profile.html" style="display: flex; align-items: center; gap: 8px; color: #1d1d1b; text-decoration: none; font-size: 14px"><span style="width: 34px; height: 34px; border-radius: 50%; background: #24426b; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">[AB]</span>[Your name]</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px">
+    <h1 style="margin: 0 0 6px; font-size: 28px; font-weight: 600">Claim your work</h1>
+    <p style="margin: 0 0 18px; color: #5f5d58; max-width: 760px">You linked your ORCID iD, so we matched it to works already in the graph. Claiming makes you an owner of your share of each work on OSO, so you receive the value that has flowed to it and will flow to it.</p>
+
+    <ol aria-label="Steps" style="list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+      <li style="padding: 8px 14px; border-radius: 999px; background: #e3efe6; color: #2c6a3f">Signed in · ORCID linked</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #1d1d1b; color: #ffffff">Review matches</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #efede8">Public notice period</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #efede8">Owner</li>
+    </ol>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+      <form style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #ffffff; border: 2px solid #b45514; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+          <label style="display: flex; gap: 10px; align-items: flex-start; font-weight: 600; font-size: 17px"><input type="checkbox" checked="checked" style="margin-top: 6px"> [Your paper A] · 2022</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px">
+            <span style="padding: 2px 8px; border-radius: 999px; background: #e3efe6; color: #2c6a3f">Matched by ORCID iD</span>
+            <span style="padding: 2px 8px; border-radius: 999px; background: #efede8">Built on by [n] ideas</span>
+            <span style="padding: 2px 8px; border-radius: 999px; background: #fdebd9; color: #8a3f0d">[x] OSO waiting for its authors (simulated)</span>
+          </div>
+          <p style="margin: 0; font-size: 15px; color: #4a4843">4 authors · 1 has claimed · approved automatically if no one disputes it during the notice period.</p>
+          <details style="font-size: 15px">
+            <summary style="cursor: pointer; color: #8a3f0d">Propose how the authors' shares are split</summary>
+            <p style="margin: 8px 0 0; color: #5f5d58">Shares are never assumed equal. The claims panel decides, with your proposal and the other authors' as input.</p>
+          </details>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+          <label style="display: flex; gap: 10px; align-items: flex-start; font-weight: 600; font-size: 17px"><input type="checkbox" checked="checked" style="margin-top: 6px"> [Your paper B] · 2020</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px">
+            <span style="padding: 2px 8px; border-radius: 999px; background: #e3efe6; color: #2c6a3f">Matched by ORCID iD</span>
+            <span style="padding: 2px 8px; border-radius: 999px; background: #efede8">Built on by [n] ideas</span>
+          </div>
+          <p style="margin: 0; font-size: 15px; color: #4a4843">Single author · approved automatically after the notice period.</p>
+        </div>
+
+        <div style="background: #ffffff; border: 1px dashed #cfcac1; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+          <label style="display: flex; gap: 10px; align-items: flex-start; font-weight: 600; font-size: 17px"><input type="checkbox" style="margin-top: 6px"> [Paper C] · 2019</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px">
+            <span style="padding: 2px 8px; border-radius: 999px; background: #fdebd9; color: #8a3f0d">Matched by name only</span>
+          </div>
+          <p style="margin: 0; font-size: 15px; color: #4a4843">The source has no ORCID for this author, so a claim goes to the claims panel. Add evidence, such as an institutional page or the paper's email address.</p>
+          <button type="button" style="align-self: flex-start; min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Add evidence</button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+          <button type="submit" style="min-height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Sign and claim 2 works</button>
+          <a href="#notme">One of these is not my work</a>
+        </div>
+      </form>
+
+      <aside style="flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column; gap: 16px">
+        <section aria-labelledby="means" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+          <h2 id="means" style="margin: 0; font-size: 17px">What claiming means</h2>
+          <ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px">
+            <li>You become an owner of your share; the work's credits do not change.</li>
+            <li>Value already received is held for each author until claims are settled.</li>
+            <li>Anyone can dispute a claim during the notice period.</li>
+            <li>Claimed work counts toward your expertise.</li>
+          </ul>
+        </section>
+        <section aria-labelledby="more" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+          <h2 id="more" style="margin: 0; font-size: 17px">Find more of your work</h2>
+          <a href="#bib" style="display: flex; justify-content: space-between; gap: 8px; text-decoration: none; color: #1d1d1b"><span>Import a BibTeX file or Zotero library</span><span aria-hidden="true">›</span></a>
+          <a href="#ext" style="display: flex; justify-content: space-between; gap: 8px; text-decoration: none; color: #1d1d1b"><span>Browser extension: claim while reading on arXiv</span><span aria-hidden="true">›</span></a>
+          <a href="#gh" style="display: flex; justify-content: space-between; gap: 8px; text-decoration: none; color: #1d1d1b"><span>Link code and models (GitHub, Hugging Face)</span><span aria-hidden="true">›</span></a>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

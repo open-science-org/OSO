@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Peer review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1400px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Phase B mockup. Simulated ledger; amounts are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <a href="09-community.html" style="display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 999px; font-size: 14px; color: #1d1d1b; text-decoration: none">Community: PEFT · LLMs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f5d58" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="05-submit.html" style="color: #5f5d58; text-decoration: none">Submit</a>
+        <a href="06-status.html" style="color: #5f5d58; text-decoration: none">My work</a>
+        <a href="07-validate.html" style="color: #5f5d58; text-decoration: none">Validate <span style="padding: 0 6px; border-radius: 999px; background: #b45514; color: #ffffff; font-size: 12px">2</span></a>
+        <a href="08-review.html" style="color: #1d1d1b; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e8792f">Review <span style="padding: 0 6px; border-radius: 999px; background: #b45514; color: #ffffff; font-size: 12px">1</span></a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <a href="#profile" style="display: flex; align-items: center; gap: 8px; color: #1d1d1b; text-decoration: none; font-size: 14px"><span style="width: 34px; height: 34px; border-radius: 50%; background: #24426b; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">[AB]</span>[Your name]</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px">
+    <h1 style="margin: 0 0 6px; font-size: 28px; font-weight: 600">Peer review</h1>
+    <p style="margin: 0 0 20px; color: #5f5d58">Invited reviews are paid [f_rev] OSO when delivered on time, whatever your score. You can also review any published idea on your own (open review, unpaid).</p>
+
+    <section aria-labelledby="inv" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px">
+      <h2 id="inv" style="margin: 0; font-size: 17px">Invitations</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid #e4e1db; border-radius: 10px">
+        <div style="flex: 1 1 360px"><strong>[Submitted idea C]</strong><br><span style="font-size: 14px; color: #5f5d58">Drawn by weighted random selection · accept within [n] blocks · deliver within [m] blocks</span></div>
+        <div style="display: flex; gap: 8px">
+          <button type="button" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Accept</button>
+          <button type="button" style="min-height: 44px; padding: 0 16px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit">Decline</button>
+        </div>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: #5f5d58">Declining passes the invitation to the next person in the draw. Missing a deadline after accepting lowers your integrity score.</p>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <form aria-labelledby="rv" style="flex: 999 1 640px; min-width: 0; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: baseline">
+          <h2 id="rv" style="margin: 0; font-size: 20px">Reviewing: [Your idea's title]</h2>
+          <span style="font-size: 14px; color: #8a3f0d">Due in [n] blocks</span>
+        </div>
+        <button type="button" style="align-self: flex-start; min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #fbfaf8; font: inherit; font-size: 14px">Draft notes with AI</button>
+
+        <div style="display: flex; flex-direction: column; gap: 4px"><label for="q1" style="font-weight: 500">What does the work claim?</label><textarea id="q1" rows="3" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical"></textarea></div>
+        <div style="display: flex; flex-direction: column; gap: 4px"><label for="q2" style="font-weight: 500">Does the evidence support the claims?</label><textarea id="q2" rows="3" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical"></textarea></div>
+        <div style="display: flex; flex-direction: column; gap: 4px"><label for="q3" style="font-weight: 500">Could the results be reproduced from the methods, code and data?</label><textarea id="q3" rows="3" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical"></textarea></div>
+        <div style="display: flex; flex-direction: column; gap: 4px"><label for="q4" style="font-weight: 500">What should change?</label><textarea id="q4" rows="3" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical"></textarea></div>
+
+        <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+          <legend style="font-weight: 500; margin-bottom: 8px">Score (0 to 10)</legend>
+          <div style="display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 6px">
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="0">0</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="1">1</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="2">2</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="3">3</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="4">4</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="5">5</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="6">6</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 2px solid #b45514; border-radius: 8px; background: #fff4e8; font-weight: 600; gap: 6px"><input type="radio" name="score" value="7" checked="checked">7</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="8">8</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="9">9</label>
+            <label style="display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid #cfcac1; border-radius: 8px; gap: 6px"><input type="radio" name="score" value="10">10</label>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; color: #5f5d58"><span>0 Fundamentally flawed</span><span>5 Sound, limited</span><span>7 Solid</span><span>10 Excellent</span></div>
+        </fieldset>
+
+        <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 16px">
+          <legend style="font-weight: 500; margin-bottom: 8px">Recommendation</legend>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="rec" checked="checked"> Endorse</label>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="rec"> Revise</label>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="rec"> Concerns</label>
+        </fieldset>
+
+        <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px">
+          <legend style="font-weight: 500; margin-bottom: 8px">AI use in this review</legend>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="ai"> None</label>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="ai" checked="checked"> Assisted (AI draft notes, edited by me)</label>
+        </fieldset>
+
+        <p role="note" style="margin: 0; padding: 10px 12px; border-radius: 8px; background: #f4f2ee; font-size: 14px; color: #4a4843">Your review is signed and public, and becomes an idea linked to this one. There is no accept or reject: your score joins the rating, which keeps changing.</p>
+        <button type="submit" style="align-self: flex-start; min-height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Sign and publish review</button>
+      </form>
+
+      <aside aria-label="Other reviews" style="flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column; gap: 16px">
+        <section style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+          <h2 style="margin: 0; font-size: 17px">Rating so far</h2>
+          <p style="margin: 0"><span style="font-size: 32px; font-weight: 600">7</span><span style="color: #5f5d58"> / 10 · from 1 review</span></p>
+          <p style="margin: 0; font-size: 13px; color: #5f5d58">Weighted median of review scores, weighted by each reviewer's reputation in the domain.</p>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+          <h2 style="margin: 0; font-size: 17px">Rate a review</h2>
+          <p style="margin: 0; font-size: 14px">[Reviewer 1]'s review: how careful and useful is it? (not whether you agree)</p>
+          <label for="rr" style="font-size: 14px; color: #5f5d58">Usefulness, 0 to 10</label>
+          <input id="rr" type="number" min="0" max="10" value="8" style="width: 80px; min-height: 44px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit">
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

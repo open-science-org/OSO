@@ -2,7 +2,7 @@
 
 **Author:** Gajendra Jung Katuwal (@himalayajung) · **Builders:** Abinash, Bikrant · **Status:** Draft for discussion · **Last updated:** 2026-10-06
 
-> **TL;DR.** Start building now, without waiting for the OIPs to settle. Work in two tracks. **Track 1** grows www.oso.network from one page into a small site that explains OSO and collects sign-ups. **Track 2** builds the v1 app against a **mock API** loaded with real papers from the seed sub-field: explore ideas, read an idea, see its graph and the whole field's lineage, simulate value flow, and chat about it. Everything that depends on rules still under discussion (tokens, reputation, validation) comes from the API, never from the UI, so rule changes do not touch the front end. Sign-in, submission and the validator and reviewer queues come in Phase B, once the ledger exists; their screens are designed now (section 5.3). AI calls go through one swappable adapter: OpenRouter or local open-weight models, chosen per task by configuration (section 7). The app is **modular**: each community's setup decides which modules, steps, parameters and screens it uses, and the app reads that setup instead of hard-coding rules (section 6). Mockups of all fourteen screens: [OSO v1 UI mockups](https://claude.ai/artifact/T5bdnEa1YUdDCi8kddLZ3v). Parent docs: [design doc](design-v1.md), [OIP-16: Idea object](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-16.md).
+> **TL;DR.** Start building now, without waiting for the OIPs to settle. Work in two tracks. **Track 1** grows www.oso.network from one page into a small site that explains OSO and collects sign-ups. **Track 2** builds the v1 app against a **mock API** loaded with real papers from the seed sub-field: explore ideas, read an idea, see its graph and the whole field's lineage, simulate value flow, and chat about it. Everything that depends on rules still under discussion (tokens, reputation, validation) comes from the API, never from the UI, so rule changes do not touch the front end. Sign-in, submission and the validator and reviewer queues come in Phase B, once the ledger exists; their screens are designed now (section 5.3). AI calls go through one swappable adapter: OpenRouter or local open-weight models, chosen per task by configuration (section 7). The app is **modular**: each community's setup decides which modules, steps, parameters and screens it uses, and the app reads that setup instead of hard-coding rules (section 6). Mockups of all fourteen screens are in the [appendix](#appendix-mockups), with HTML versions in [ui-mockups/](ui-mockups/). Parent docs: [design doc](design-v1.md), [OIP-16: Idea object](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-16.md).
 
 ## 1. Goals
 
@@ -386,3 +386,63 @@ Phase B work (submit, status, validator queue, review, claims, profile, notifica
 10. Which integrations to build first (section 8), and whether outside contributors may build them.
 11. Which sign-in methods at launch, and a hosted sign-in service or our own (section 5.8). When to add Sign in with Apple, who pays for the developer membership, and who holds the account.
 12. Where to host the node, database and content store; file size limit; backups; privacy policy (section 9).
+
+## Appendix: mockups
+
+Static mockups of every screen. Papers are real; weights, scores and amounts are illustrative. The HTML versions, with working links between screens, are in [ui-mockups/](ui-mockups/).
+
+### 1 · Explore and search
+
+![1 · Explore and search](img/ui/01-explore.png)
+
+### 2 · Idea page with chat
+
+![2 · Idea page with chat](img/ui/02-idea.png)
+
+### 3 · Graph, edge evidence and fund simulator
+
+![3 · Graph, edge evidence and fund simulator](img/ui/03-graph.png)
+
+### 4 · Website home (www.oso.network)
+
+![4 · Website home (www.oso.network)](img/ui/04-website.png)
+
+### 5 · Submit an idea
+
+![5 · Submit an idea](img/ui/05-submit.png)
+
+### 6 · My submission: validation, challenge window, peer review
+
+![6 · My submission: validation, challenge window, peer review](img/ui/06-status.png)
+
+### 7 · Validator queue and vote
+
+![7 · Validator queue and vote](img/ui/07-validate.png)
+
+### 8 · Reviewer invitations and review form
+
+![8 · Reviewer invitations and review form](img/ui/08-review.png)
+
+### 9 · Community setup: modules and customization
+
+![9 · Community setup: modules and customization](img/ui/09-community.png)
+
+### 10 · Graph explorer: lineage, field map and other views
+
+![10 · Graph explorer: lineage, field map and other views](img/ui/10-explorer.png)
+
+### 11 · Claim your work
+
+![11 · Claim your work](img/ui/11-claim.png)
+
+### 12 · Profile, notifications and integrations
+
+![12 · Profile, notifications and integrations](img/ui/12-profile.png)
+
+### 13 · Transparency page
+
+![13 · Transparency page](img/ui/13-transparency.png)
+
+### 14 · Sign in and link accounts
+
+![14 · Sign in and link accounts](img/ui/14-sign-in.png)

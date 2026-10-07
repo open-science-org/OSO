@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Graph explorer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1100px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Prototype on a simulated ledger. Real papers; links and weights shown are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <a href="09-community.html" style="display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 999px; font-size: 14px; color: #1d1d1b; text-decoration: none">Community: PEFT · LLMs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f5d58" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="10-explorer.html" style="color: #1d1d1b; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e8792f">Graph</a>
+        <a href="13-transparency.html" style="color: #5f5d58; text-decoration: none">Transparency</a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <button type="button" disabled="disabled" style="min-height: 44px; padding: 0 16px; border: 1px solid #d6d2ca; border-radius: 8px; background: #f4f2ee; color: #6b6862; font: inherit; font-size: 14px">Sign in · Phase B</button>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 48px">
+    <h1 style="margin: 0 0 4px; font-size: 26px; font-weight: 600">Graph explorer</h1>
+    <p style="margin: 0 0 16px; color: #5f5d58">The whole curated slice of the seed field. Pick a view; every view uses the same filters.</p>
+
+    <div role="tablist" aria-label="Views" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px">
+      <button type="button" role="tab" aria-selected="true" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: #1d1d1b; color: #ffffff; font: inherit; font-size: 14px">Lineage</button>
+      <button type="button" role="tab" aria-selected="false" style="min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Neighbourhood</button>
+      <button type="button" role="tab" aria-selected="false" style="min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Field map</button>
+      <button type="button" role="tab" aria-selected="false" style="min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Value flow</button>
+      <button type="button" role="tab" aria-selected="false" style="min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Path finder</button>
+      <button type="button" role="tab" aria-selected="false" style="min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">List</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <aside aria-label="Filters" style="flex: 1 1 240px; max-width: 270px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; font-size: 15px">
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+          <legend style="font-weight: 600; margin-bottom: 6px">Link types</legend>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> Builds on</label>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Similar</label>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Contradicts</label>
+          <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Reviews and replications</label>
+        </fieldset>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <label for="mw" style="font-weight: 600">Minimum weight: 10%</label>
+          <input id="mw" type="range" min="0" max="100" value="10">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <label for="yr" style="font-weight: 600">Years</label>
+          <select id="yr" style="min-height: 40px; padding: 0 8px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; background: #ffffff"><option>2017 to 2026</option></select>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <label for="hl" style="font-weight: 600">Highlight</label>
+          <input id="hl" type="text" value="LoRA" style="min-height: 40px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #efede8; padding-top: 12px">
+          <span style="font-weight: 600">Export</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px">
+            <button type="button" style="min-height: 36px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 13px">Image</button>
+            <button type="button" style="min-height: 36px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 13px">JSON</button>
+            <button type="button" style="min-height: 36px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 13px">GraphML</button>
+            <button type="button" style="min-height: 36px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 13px">Embed</button>
+          </div>
+        </div>
+      </aside>
+
+      <div style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <section aria-label="Lineage view" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #5f5d58">
+            <span>Time runs left to right. Credit flows right to left.</span>
+            <span><span style="display: inline-block; width: 18px; height: 4px; background: #b45514; vertical-align: middle"></span> LoRA's lineage</span>
+          </div>
+          <div style="overflow-x: auto">
+            <div style="width: 810px; height: 378px; margin: 0 auto">
+            <div style="position: relative; width: 900px; height: 420px; transform: scale(0.9); transform-origin: 0 0">
+              <div style="position: absolute; left: 0; top: 0; width: 900px; height: 20px; display: flex; font-size: 12px; color: #5f5d58">
+                <span style="position: absolute; left: 50px">2017</span><span style="position: absolute; left: 180px">2019</span><span style="position: absolute; left: 310px">2020</span><span style="position: absolute; left: 470px">2021</span><span style="position: absolute; left: 650px">2023</span><span style="position: absolute; left: 810px">2024</span>
+              </div>
+              <svg width="900" height="420" viewBox="0 0 900 420" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+                <line x1="130" y1="210" x2="150" y2="130" stroke="#cfcac1" stroke-width="2"></line>
+                <line x1="130" y1="210" x2="280" y2="280" stroke="#cfcac1" stroke-width="2"></line>
+                <line x1="130" y1="210" x2="430" y2="240" stroke="#b45514" stroke-width="3"></line>
+                <line x1="260" y1="130" x2="430" y2="130" stroke="#cfcac1" stroke-width="2"></line>
+                <line x1="260" y1="130" x2="430" y2="240" stroke="#b45514" stroke-width="4"></line>
+                <line x1="390" y1="60" x2="430" y2="240" stroke="#b45514" stroke-width="5"></line>
+                <line x1="390" y1="280" x2="430" y2="240" stroke="#b45514" stroke-width="2"></line>
+                <line x1="390" y1="280" x2="430" y2="350" stroke="#cfcac1" stroke-width="2"></line>
+                <line x1="485" y1="150" x2="485" y2="220" stroke="#b45514" stroke-width="3"></line>
+                <line x1="540" y1="240" x2="620" y2="160" stroke="#cfcac1" stroke-width="2"></line>
+                <line x1="540" y1="240" x2="620" y2="280" stroke="#cfcac1" stroke-width="2"></line>
+                <line x1="540" y1="240" x2="780" y2="220" stroke="#cfcac1" stroke-width="2"></line>
+              </svg>
+              <a href="#t" style="position: absolute; left: 20px; top: 190px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">Transformer</a>
+              <a href="#a" style="position: absolute; left: 150px; top: 110px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">Adapters</a>
+              <a href="#i" style="position: absolute; left: 280px; top: 40px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">Intrinsic dimension</a>
+              <a href="#g" style="position: absolute; left: 280px; top: 260px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">GPT-3</a>
+              <a href="#p" style="position: absolute; left: 430px; top: 110px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">Prefix-tuning</a>
+              <a href="02-idea.html" style="position: absolute; left: 430px; top: 220px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #1d1d1b; border-radius: 8px; font-size: 12px; font-weight: 600; color: #ffffff; text-decoration: none">LoRA</a>
+              <a href="#pt" style="position: absolute; left: 430px; top: 330px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">Prompt tuning</a>
+              <a href="#ad" style="position: absolute; left: 620px; top: 140px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">AdaLoRA</a>
+              <a href="#q" style="position: absolute; left: 620px; top: 260px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">QLoRA</a>
+              <a href="#d" style="position: absolute; left: 780px; top: 200px; width: 110px; height: 40px; box-sizing: border-box; padding: 0 8px; display: flex; align-items: center; background: #ffffff; border: 1px solid #cfcac1; border-radius: 8px; font-size: 12px; color: #1d1d1b; text-decoration: none">DoRA</a>
+            </div>
+            </div>
+          </div>
+        </section>
+
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+          <section aria-labelledby="fm" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+            <h2 id="fm" style="margin: 0; font-size: 16px">Field map preview</h2>
+            <svg width="100%" height="180" viewBox="0 0 360 180" role="img" aria-label="Clusters of related works">
+              <circle cx="70" cy="60" r="5" fill="#24426b"></circle><circle cx="84" cy="72" r="5" fill="#24426b"></circle><circle cx="60" cy="80" r="5" fill="#24426b"></circle><circle cx="78" cy="48" r="5" fill="#24426b"></circle>
+              <circle cx="190" cy="90" r="5" fill="#b45514"></circle><circle cx="204" cy="80" r="5" fill="#b45514"></circle><circle cx="178" cy="100" r="5" fill="#b45514"></circle><circle cx="210" cy="104" r="5" fill="#b45514"></circle><circle cx="196" cy="112" r="5" fill="#b45514"></circle>
+              <circle cx="300" cy="50" r="5" fill="#5f5d58"></circle><circle cx="312" cy="62" r="5" fill="#5f5d58"></circle><circle cx="290" cy="64" r="5" fill="#5f5d58"></circle>
+              <circle cx="290" cy="140" r="5" fill="#2c6a3f"></circle><circle cx="304" cy="150" r="5" fill="#2c6a3f"></circle>
+              <text x="40" y="110" font-size="11" fill="#1d1d1b">Adapters and prompts</text>
+              <text x="160" y="140" font-size="11" fill="#1d1d1b">Low-rank methods</text>
+              <text x="270" y="30" font-size="11" fill="#1d1d1b">Foundations</text>
+              <text x="262" y="174" font-size="11" fill="#1d1d1b">Quantization</text>
+            </svg>
+            <p style="margin: 0; font-size: 13px; color: #5f5d58">Works placed by content similarity; empty areas suggest gaps.</p>
+          </section>
+          <section aria-labelledby="pf" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+            <h2 id="pf" style="margin: 0; font-size: 16px">Path finder</h2>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="pa" style="font-size: 14px; color: #5f5d58">From</label><input id="pa" type="text" value="DoRA" style="min-height: 40px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit">
+              <label for="pb" style="font-size: 14px; color: #5f5d58">To</label><input id="pb" type="text" value="Adapters" style="min-height: 40px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit">
+            </div>
+            <p style="margin: 0">DoRA → LoRA → Adapters <span style="color: #5f5d58">· 2 steps</span></p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

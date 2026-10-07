@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Sign in</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 960px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1100px; margin: 0 auto; padding: 48px 24px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+    <section aria-labelledby="si" style="flex: 1 1 380px; max-width: 440px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+      <h1 id="si" style="margin: 0 0 4px; font-size: 26px; font-weight: 600">Sign in to OSO</h1>
+      <p style="margin: 0 0 8px; color: #5f5d58">Use an account you already have. You can add more later.</p>
+      <button type="button" style="min-height: 48px; border: 1px solid #cfcac1; border-radius: 10px; background: #ffffff; font: inherit; font-weight: 500">Continue with Google</button>
+      <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px">
+        <label for="em" style="font-size: 14px">Or get a sign-in link by email</label>
+        <div style="display: flex; gap: 8px">
+          <input id="em" type="email" placeholder="you@example.org" style="flex: 1; min-height: 48px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 10px; font: inherit">
+          <button type="button" style="min-height: 48px; padding: 0 16px; border: 0; border-radius: 10px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Send link</button>
+        </div>
+      </div>
+      <details style="font-size: 15px">
+        <summary style="cursor: pointer; color: #8a3f0d">More options</summary>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px">
+          <button type="button" style="min-height: 44px; border: 1px solid #cfcac1; border-radius: 10px; background: #ffffff; font: inherit">Continue with GitHub</button>
+          <button type="button" style="min-height: 44px; border: 1px solid #cfcac1; border-radius: 10px; background: #ffffff; font: inherit">Continue with ORCID</button>
+          <button type="button" disabled="disabled" style="min-height: 44px; border: 1px solid #d6d2ca; border-radius: 10px; background: #f4f2ee; color: #6b6862; font: inherit">Continue with Apple · coming later</button>
+        </div>
+      </details>
+      <p style="margin: 8px 0 0; font-size: 13px; color: #5f5d58">We never put your email on the public ledger. In this prototype, OSO holds your signing key for you; you can export it.</p>
+    </section>
+
+    <section aria-labelledby="next" style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 16px">
+      <h2 id="next" style="margin: 0; font-size: 20px">After you sign in</h2>
+      <div style="background: #ffffff; border: 2px solid #b45514; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px">
+        <strong>Link your ORCID to find your papers</strong>
+        <span style="color: #4a4843; font-size: 15px">We will look for your work in the graph and show what built on it, so you can claim it.</span>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <a href="11-claim.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 8px; background: #b45514; color: #ffffff; text-decoration: none; font-weight: 600">Link ORCID</a>
+          <a href="01-explore.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #cfcac1; color: #1d1d1b; text-decoration: none">Skip for now</a>
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px">
+        <h3 style="margin: 0 0 10px; font-size: 16px">What each step unlocks</h3>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; font-size: 15px">
+            <tbody>
+              <tr><td style="padding: 6px; color: #5f5d58; width: 42%">No sign-in</td><td style="padding: 6px">Browse, search, explore the graph, chat (limited)</td></tr>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px; color: #5f5d58">Any account</td><td style="padding: 6px">Submit ideas, write open reviews, rate reviews</td></tr>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px; color: #5f5d58">+ ORCID linked</td><td style="padding: 6px">Claim your published papers</td></tr>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px; color: #5f5d58">+ Earned reputation</td><td style="padding: 6px">Be drawn to validate, invited to review (paid)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin: 10px 0 0; font-size: 13px; color: #5f5d58">Each community can ask for more, for example an institutional email to validate.</p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

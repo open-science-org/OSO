@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Profile</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1240px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Phase B mockup. Simulated ledger; amounts are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="05-submit.html" style="color: #5f5d58; text-decoration: none">Submit</a>
+        <a href="06-status.html" style="color: #5f5d58; text-decoration: none">My work</a>
+        <a href="07-validate.html" style="color: #5f5d58; text-decoration: none">Validate</a>
+        <a href="08-review.html" style="color: #5f5d58; text-decoration: none">Review</a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <a href="12-profile.html" style="display: flex; align-items: center; gap: 8px; color: #1d1d1b; text-decoration: none; font-size: 14px; font-weight: 600"><span style="width: 34px; height: 34px; border-radius: 50%; background: #24426b; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">[AB]</span>[Your name]</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center">
+      <span style="width: 72px; height: 72px; border-radius: 50%; background: #24426b; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 24px">[AB]</span>
+      <div style="flex: 1 1 300px">
+        <h1 style="margin: 0; font-size: 28px; font-weight: 600">[Your name]</h1>
+        <p style="margin: 0; color: #5f5d58; font-size: 15px">Member of PEFT · LLMs · <span style="font-family: 'IBM Plex Mono', monospace">0x[address]</span> · keys held by OSO for you in v1 (<a href="#custody">export</a>)</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+      <section aria-labelledby="att" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+        <h2 id="att" style="margin: 0; font-size: 17px">Sign-in and identity checks</h2>
+        <p style="margin: 0">Signs in with Google, email link <a href="14-sign-in.html" style="font-size: 14px">· add another</a></p>
+        <p style="margin: 0">ORCID <span style="color: #2c6a3f">· linked · lets you claim papers</span></p>
+        <p style="margin: 0">Institutional email <span style="color: #2c6a3f">· verified</span></p>
+        <p style="margin: 0">Vouches <span style="color: #5f5d58">· [n]</span></p>
+        <p style="margin: 0; font-size: 13px; color: #5f5d58">Each check proves control of an account, not who you are. You choose which are public.</p>
+      </section>
+      <section aria-labelledby="rep" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+        <h2 id="rep" style="margin: 0; font-size: 17px">Reputation in PEFT · LLMs</h2>
+        <p style="margin: 0">Expertise <strong>[E]</strong> · Integrity <strong>[I]</strong></p>
+        <p style="margin: 0">Weight <strong>[w]</strong></p>
+        <p style="margin: 0; color: #2c6a3f">Eligible to validate and review</p>
+        <p style="margin: 0; font-size: 13px; color: #5f5d58">Earned from work others built on, reviews that held up and fair validation. Never bought.</p>
+      </section>
+      <section aria-labelledby="bal" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+        <h2 id="bal" style="margin: 0; font-size: 17px">Balances (simulated)</h2>
+        <p style="margin: 0">OSO <strong>[x]</strong></p>
+        <p style="margin: 0">Income from your ideas <strong>[y]</strong></p>
+        <p style="margin: 0">Locked in stakes <strong>[z]</strong></p>
+        <a href="11-claim.html" style="font-size: 14px">2 claims in progress</a>
+      </section>
+    </div>
+
+    <section aria-labelledby="ideas" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+      <h2 id="ideas" style="margin: 0; font-size: 17px">Your ideas and reviews</h2>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px">
+          <thead><tr style="text-align: left; color: #5f5d58; font-size: 13px"><th style="padding: 6px; font-weight: 500">Idea</th><th style="padding: 6px; font-weight: 500">Status</th><th style="padding: 6px; font-weight: 500">Your share</th><th style="padding: 6px; font-weight: 500">Rating</th><th style="padding: 6px; font-weight: 500">Built on by</th></tr></thead>
+          <tbody>
+            <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px"><a href="06-status.html">[Your idea's title]</a></td><td style="padding: 8px 6px">Admitted</td><td style="padding: 8px 6px">60%</td><td style="padding: 8px 6px">7</td><td style="padding: 8px 6px">—</td></tr>
+            <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">[Your paper A]</td><td style="padding: 8px 6px">Claim in notice period</td><td style="padding: 8px 6px">[proposed]</td><td style="padding: 8px 6px">—</td><td style="padding: 8px 6px">[n]</td></tr>
+            <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">Review of [Submitted idea C]</td><td style="padding: 8px 6px">Published</td><td style="padding: 8px 6px">100%</td><td style="padding: 8px 6px">Useful: 8</td><td style="padding: 8px 6px">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+      <section aria-labelledby="notif" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+        <h2 id="notif" style="margin: 0; font-size: 17px">Notifications</h2>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse">
+            <thead><tr style="text-align: left; color: #5f5d58; font-size: 13px"><th style="padding: 4px 6px; font-weight: 500">Event</th><th style="padding: 4px 6px; font-weight: 500">Email</th><th style="padding: 4px 6px; font-weight: 500">In app</th><th style="padding: 4px 6px; font-weight: 500">Chat app</th></tr></thead>
+            <tbody>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px">Drawn as validator</td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="Email"></td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="In app"></td><td style="padding: 6px"><input type="checkbox" aria-label="Chat app"></td></tr>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px">Review invitation</td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="Email"></td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="In app"></td><td style="padding: 6px"><input type="checkbox" aria-label="Chat app"></td></tr>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px">Deadline in 24 hours</td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="Email"></td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="In app"></td><td style="padding: 6px"><input type="checkbox" aria-label="Chat app"></td></tr>
+              <tr style="border-top: 1px solid #efede8"><td style="padding: 6px">My idea: new review, challenge, status change</td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="Email"></td><td style="padding: 6px"><input type="checkbox" checked="checked" aria-label="In app"></td><td style="padding: 6px"><input type="checkbox" aria-label="Chat app"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="int" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+        <h2 id="int" style="margin: 0; font-size: 17px">Integrations</h2>
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center"><span>Zotero library</span><button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 14px">Connect</button></div>
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center"><span>GitHub (code as ideas)</span><span style="color: #2c6a3f; font-size: 14px">Connected</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center"><span>Hugging Face (models and datasets)</span><button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 14px">Connect</button></div>
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center"><span>Slack or Discord alerts</span><button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 14px">Connect</button></div>
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center"><span>Your AI key or local model (heavy chat use)</span><button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 6px; background: #ffffff; font: inherit; font-size: 14px">Set up</button></div>
+        <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #efede8; padding-top: 10px">
+          <span>Badge for your page or README</span>
+          <code style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #f4f2ee; padding: 8px; border-radius: 6px; overflow-x: auto; white-space: nowrap">&lt;a href="https://app.oso.network/i/[work-id]"&gt;&lt;img src=".../badge/[work-id].svg"&gt;&lt;/a&gt;</code>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

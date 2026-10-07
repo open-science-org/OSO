@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Transparency</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 960px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Prototype on a simulated ledger. Figures in brackets are placeholders.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="10-explorer.html" style="color: #5f5d58; text-decoration: none">Graph</a>
+        <a href="13-transparency.html" style="color: #1d1d1b; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e8792f">Transparency</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px; display: flex; flex-direction: column; gap: 24px">
+    <div>
+      <h1 style="margin: 0 0 6px; font-size: 28px; font-weight: 600">Transparency</h1>
+      <p style="margin: 0; color: #5f5d58; max-width: 760px">Everything OSO spends, holds and records, in one place. All figures come from the public ledger or published budgets, and anyone can check them by replaying the log.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+      <section aria-labelledby="led" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+        <h2 id="led" style="margin: 0; font-size: 17px">Public ledger</h2>
+        <p style="margin: 0">Latest block <strong>[n]</strong></p>
+        <p style="margin: 0">Last published to GitHub <strong>[time]</strong></p>
+        <p style="margin: 0">Independent replays matching <strong>[k] of [k]</strong></p>
+        <a href="#log" style="font-size: 14px">Open the log on GitHub</a>
+      </section>
+      <section aria-labelledby="fund" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+        <h2 id="fund" style="margin: 0; font-size: 17px">OSO fund (simulated)</h2>
+        <p style="margin: 0">Balance <strong>[x] OSO</strong></p>
+        <p style="margin: 0">In this round: mints [+a] · slashed stakes [+b]</p>
+        <p style="margin: 0">Out: validator fees [−c] · review pay [−d]</p>
+        <p style="margin: 0; font-size: 13px; color: #5f5d58">Who can spend it: founding team in v1.</p>
+      </section>
+      <section aria-labelledby="boot" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+        <h2 id="boot" style="margin: 0; font-size: 17px">Bootstrap pool</h2>
+        <p style="margin: 0">Created at genesis <strong>[B] OSO</strong></p>
+        <p style="margin: 0">Used for first stakes and validators <strong>[u]</strong></p>
+        <p style="margin: 0">Starting expertise granted to <strong>[m]</strong> validators</p>
+      </section>
+    </div>
+
+    <section aria-labelledby="ai" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+      <h2 id="ai" style="margin: 0; font-size: 17px">AI spending this round (real money)</h2>
+      <p style="margin: 0; font-size: 14px; color: #5f5d58">Budget [$ budget] · paid by [the founding team, a grant or donated credits]</p>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px">
+          <thead><tr style="text-align: left; color: #5f5d58; font-size: 13px"><th style="padding: 6px; font-weight: 500">Task</th><th style="padding: 6px; font-weight: 500">Provider</th><th style="padding: 6px; font-weight: 500">Model</th><th style="padding: 6px; font-weight: 500">Calls</th><th style="padding: 6px; font-weight: 500">Cost</th></tr></thead>
+          <tbody>
+            <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">Chat</td><td style="padding: 8px 6px">OpenRouter</td><td style="padding: 8px 6px">[model]</td><td style="padding: 8px 6px">[n]</td><td style="padding: 8px 6px">[$]</td></tr>
+            <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">Edge assessments (two models)</td><td style="padding: 8px 6px">OpenRouter · local</td><td style="padding: 8px 6px">[model A] · [model B]</td><td style="padding: 8px 6px">[n]</td><td style="padding: 8px 6px">[$]</td></tr>
+            <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">Embeddings and tagging</td><td style="padding: 8px 6px">Local</td><td style="padding: 8px 6px">[model]</td><td style="padding: 8px 6px">[n]</td><td style="padding: 8px 6px">$0 (own hardware)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="gov" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
+      <h2 id="gov" style="margin: 0; font-size: 17px">Who decides, and what changed</h2>
+      <p style="margin: 0">Governance today: founding team (milestone M1). Recent decisions: <a href="#decisions">decision log</a> · Community setup changes: <a href="09-community.html">setup history</a> · Proposals: <a href="https://github.com/open-science-org/OIPs">OIPs</a></p>
+    </section>
+  </main>
+</div>
+</body>
+</html>

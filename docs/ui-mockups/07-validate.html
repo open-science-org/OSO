@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Validator queue</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1240px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Phase B mockup. Simulated ledger; amounts are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <a href="09-community.html" style="display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 999px; font-size: 14px; color: #1d1d1b; text-decoration: none">Community: PEFT · LLMs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f5d58" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="05-submit.html" style="color: #5f5d58; text-decoration: none">Submit</a>
+        <a href="06-status.html" style="color: #5f5d58; text-decoration: none">My work</a>
+        <a href="07-validate.html" style="color: #1d1d1b; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e8792f">Validate <span style="padding: 0 6px; border-radius: 999px; background: #b45514; color: #ffffff; font-size: 12px">2</span></a>
+        <a href="08-review.html" style="color: #5f5d58; text-decoration: none">Review <span style="padding: 0 6px; border-radius: 999px; background: #b45514; color: #ffffff; font-size: 12px">1</span></a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <a href="#profile" style="display: flex; align-items: center; gap: 8px; color: #1d1d1b; text-decoration: none; font-size: 14px"><span style="width: 34px; height: 34px; border-radius: 50%; background: #24426b; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">[AB]</span>[Your name]</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px">
+    <h1 style="margin: 0 0 6px; font-size: 28px; font-weight: 600">Validator queue</h1>
+    <p style="margin: 0 0 20px; color: #5f5d58">You were drawn at random to check these ideas for admission. You are paid [f_val] OSO per on-time vote, whatever you vote.</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <nav aria-label="Assigned ideas" style="flex: 1 1 260px; max-width: 300px; display: flex; flex-direction: column; gap: 10px">
+        <a href="#item1" style="display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 10px; background: #ffffff; border: 2px solid #b45514; text-decoration: none; color: #1d1d1b">
+          <strong style="font-size: 15px">[Submitted idea A]</strong>
+          <span style="font-size: 13px; color: #8a3f0d">Due in [n] blocks</span>
+        </a>
+        <a href="#item2" style="display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 10px; background: #ffffff; border: 1px solid #e4e1db; text-decoration: none; color: #1d1d1b">
+          <strong style="font-size: 15px">[Submitted idea B]</strong>
+          <span style="font-size: 13px; color: #5f5d58">Due in [n] blocks</span>
+        </a>
+        <a href="#challenge" style="display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 10px; background: #ffffff; border: 1px dashed #cfcac1; text-decoration: none; color: #1d1d1b">
+          <strong style="font-size: 15px">Challenges and appeals</strong>
+          <span style="font-size: 13px; color: #5f5d58">None assigned</span>
+        </a>
+      </nav>
+
+      <div style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <section aria-labelledby="it" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+          <h2 id="it" style="margin: 0; font-size: 20px">[Submitted idea A]</h2>
+          <p style="margin: 0; color: #5f5d58; font-size: 14px">Preprint · 2 owners · authors' names hidden to you until the vote closes · <a href="#content">open the content</a></p>
+          <p style="margin: 0">[Abstract]</p>
+        </section>
+
+        <section aria-labelledby="ai" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 id="ai" style="margin: 0; font-size: 17px">AI pre-screen report <span style="font-weight: 400; font-size: 13px; color: #5f5d58">· two models · advice only</span></h2>
+          <dl style="margin: 0; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 8px 16px; font-size: 15px">
+            <dt style="color: #5f5d58">Spam likelihood</dt><dd style="margin: 0">Low (both models agree)</dd>
+            <dt style="color: #5f5d58">Closest existing ideas</dt><dd style="margin: 0">AdaLoRA (similarity 0.71) · LoRA (0.64) · no near-duplicate</dd>
+            <dt style="color: #5f5d58">Domain fit</dt><dd style="margin: 0">PEFT · LLMs: strong</dd>
+            <dt style="color: #5f5d58">Proposed vs suggested weights</dt><dd style="margin: 0">LoRA 60% vs 55% · AdaLoRA 30% vs 25% · dataset 10% vs 10%</dd>
+            <dt style="color: #5f5d58">Flag</dt><dd style="margin: 0; color: #8a3f0d">Uncited dependency on DoRA (essential method, score 0.74). The authors explained why they did not add it: [authors' note]</dd>
+          </dl>
+        </section>
+
+        <form aria-labelledby="vote" style="background: #ffffff; border: 2px solid #1d1d1b; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+          <h2 id="vote" style="margin: 0; font-size: 17px">Your vote</h2>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; font-size: 15px">
+            <legend style="margin-bottom: 8px; font-weight: 500">Admission criteria (check each one that is met)</legend>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> Provenance is clear</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> Required fields complete</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> Not a duplicate</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> Not spam</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> No plagiarism found</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked="checked"> Fits the domain</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Parents and weights are plausible</label>
+          </fieldset>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px">
+            <legend style="margin-bottom: 8px; font-weight: 500">Decision</legend>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="d"> Admit</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="radio" name="d" checked="checked"> Not admit</label>
+            <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Mark as spam</label>
+          </fieldset>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="rs" style="font-size: 14px">Reason (shown to the authors and published when the vote closes)</label><textarea id="rs" rows="3" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical">Implausible weights: the method depends heavily on DoRA, which is not credited.</textarea></div>
+          <p role="note" style="margin: 0; padding: 10px 12px; border-radius: 8px; background: #f4f2ee; font-size: 14px; color: #4a4843">Admission is not a judgement of scientific quality; that is peer review. You are penalized only if your decision is overturned with evidence, in either direction.</p>
+          <button type="submit" style="align-self: flex-start; min-height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Sign and cast vote</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

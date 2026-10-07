@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Idea page</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1040px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Prototype on a simulated ledger. Tokens have no value; weights shown are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px">
+        <span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO
+      </a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 15px">
+        <a href="01-explore.html" style="color: #1d1d1b; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e8792f; padding-bottom: 2px">Explore</a>
+        <a href="03-graph.html" style="color: #5f5d58; text-decoration: none">Graph</a>
+        <a href="#ledger" style="color: #5f5d58; text-decoration: none">Ledger</a>
+        <a href="04-website.html" style="color: #5f5d58; text-decoration: none">About</a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <button type="button" disabled="disabled" style="min-height: 44px; padding: 0 16px; border: 1px solid #d6d2ca; border-radius: 8px; background: #f4f2ee; color: #6b6862; font: inherit; font-size: 14px">Sign in · Phase B</button>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 48px">
+    <nav aria-label="Breadcrumb" style="font-size: 14px; color: #5f5d58; margin-bottom: 16px"><a href="01-explore.html">Explore</a> / LoRA</nav>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+      <article style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px">
+            <span style="padding: 2px 8px; border-radius: 999px; background: #fdebd9; color: #8a3f0d; font-weight: 500">Curated slice</span>
+            <span style="padding: 2px 8px; border-radius: 999px; background: #efede8; color: #4a4843">Preprint · 2021</span>
+            <span style="padding: 2px 8px; border-radius: 999px; background: #efede8; color: #4a4843">Imported from arXiv</span>
+            <span style="padding: 2px 8px; border-radius: 999px; background: #e8eef7; color: #24426b">Unclaimed · authors can claim later</span>
+          </div>
+          <h1 style="margin: 0; font-size: 30px; line-height: 1.25; font-weight: 600">LoRA: Low-Rank Adaptation of Large Language Models</h1>
+          <p style="margin: 0; color: #4a4843">Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px">
+            <a href="https://arxiv.org/abs/2106.09685">arXiv:2106.09685</a>
+            <span style="color: #5f5d58">License: see source</span>
+            <span style="color: #5f5d58; font-family: 'IBM Plex Mono', monospace; font-size: 13px">work sha256:[first 12 hex]</span>
+          </div>
+        </div>
+
+        <section aria-labelledby="sum" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 20px">
+          <h2 id="sum" style="margin: 0 0 8px; font-size: 17px">Summary</h2>
+          <p style="margin: 0; color: #2f2d2a">Freezes the weights of a pretrained model and trains small low-rank update matrices inside each layer, cutting the number of trainable parameters for fine-tuning by orders of magnitude while matching full fine-tuning quality.</p>
+        </section>
+
+        <section aria-labelledby="builds" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+            <h2 id="builds" style="margin: 0; font-size: 17px">Builds on</h2>
+            <a href="03-graph.html" style="font-size: 14px">Open in graph</a>
+          </div>
+          <p style="margin: 0; font-size: 14px; color: #5f5d58">Share of this idea's intellectual debt owed to each parent. 20% of what LoRA receives flows to these (α = 80%).</p>
+
+          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 160px 48px; gap: 10px 14px; align-items: center; font-size: 15px">
+            <a href="#p1">Intrinsic Dimensionality Explains the Effectiveness of LM Fine-Tuning · 2020</a>
+            <div style="height: 10px; background: #efede8; border-radius: 5px"><div style="width: 100%; height: 10px; background: #e8792f; border-radius: 5px"></div></div>
+            <span style="text-align: right; font-weight: 600">35%</span>
+
+            <a href="#p2">Parameter-Efficient Transfer Learning for NLP (adapters) · 2019</a>
+            <div style="height: 10px; background: #efede8; border-radius: 5px"><div style="width: 71%; height: 10px; background: #e8792f; border-radius: 5px"></div></div>
+            <span style="text-align: right; font-weight: 600">25%</span>
+
+            <a href="#p3">Prefix-Tuning: Optimizing Continuous Prompts for Generation · 2021</a>
+            <div style="height: 10px; background: #efede8; border-radius: 5px"><div style="width: 43%; height: 10px; background: #e8792f; border-radius: 5px"></div></div>
+            <span style="text-align: right; font-weight: 600">15%</span>
+
+            <a href="#p4">Attention Is All You Need · 2017</a>
+            <div style="height: 10px; background: #efede8; border-radius: 5px"><div style="width: 43%; height: 10px; background: #e8792f; border-radius: 5px"></div></div>
+            <span style="text-align: right; font-weight: 600">15%</span>
+
+            <a href="#p5">Language Models are Few-Shot Learners (GPT-3) · 2020</a>
+            <div style="height: 10px; background: #efede8; border-radius: 5px"><div style="width: 29%; height: 10px; background: #e8792f; border-radius: 5px"></div></div>
+            <span style="text-align: right; font-weight: 600">10%</span>
+          </div>
+          <p style="margin: 0; font-size: 13px; color: #5f5d58">Weights: AI suggestion from citations and content, approved by the community's weight panel. Click a parent in the graph to see the evidence.</p>
+        </section>
+
+        <section aria-labelledby="children" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+          <h2 id="children" style="margin: 0; font-size: 17px">Built on by</h2>
+          <ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px">
+            <li><a href="#c1">QLoRA: Efficient Finetuning of Quantized LLMs</a> <span style="color: #5f5d58">· 2023</span></li>
+            <li><a href="#c2">Adaptive Budget Allocation for Parameter-Efficient Fine-Tuning (AdaLoRA)</a> <span style="color: #5f5d58">· 2023</span></li>
+            <li><a href="#c3">DoRA: Weight-Decomposed Low-Rank Adaptation</a> <span style="color: #5f5d58">· 2024</span></li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="reviews" style="border: 1px dashed #cfcac1; border-radius: 12px; padding: 20px; color: #5f5d58">
+          <h2 id="reviews" style="margin: 0 0 6px; font-size: 17px; color: #1d1d1b">Reviews and rating</h2>
+          <p style="margin: 0; font-size: 15px">Phase B: reviews (score 0 to 10 and a recommendation), the current rating and its history, and replications.</p>
+        </section>
+      </article>
+
+      <aside aria-label="Chat about this idea" style="flex: 1 1 340px; max-width: 420px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; display: flex; flex-direction: column">
+        <div style="padding: 16px 18px; border-bottom: 1px solid #e4e1db">
+          <h2 style="margin: 0; font-size: 17px">Ask about this idea</h2>
+          <p style="margin: 2px 0 0; font-size: 13px; color: #5f5d58">AI assistant. Answers cite ideas in the graph. Chats are not recorded on the ledger.</p>
+        </div>
+        <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px; font-size: 15px">
+          <div style="align-self: flex-end; max-width: 85%; background: #f4f2ee; border-radius: 12px 12px 4px 12px; padding: 10px 14px">What does LoRA build on?</div>
+          <div style="max-width: 92%; display: flex; flex-direction: column; gap: 8px">
+            <p style="margin: 0">Mainly on the finding that fine-tuning changes have a low intrinsic dimension, which motivates training only a low-rank update. It positions itself against adapters, which add inference latency, and against prefix-tuning, which uses up sequence length. Its experiments use Transformer models up to GPT-3.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px">
+              <a href="#p1" style="padding: 3px 8px; border: 1px solid #e4e1db; border-radius: 6px; text-decoration: none">Intrinsic dimensionality, 2020</a>
+              <a href="#p2" style="padding: 3px 8px; border: 1px solid #e4e1db; border-radius: 6px; text-decoration: none">Adapters, 2019</a>
+              <a href="#p3" style="padding: 3px 8px; border: 1px solid #e4e1db; border-radius: 6px; text-decoration: none">Prefix-tuning, 2021</a>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+            <button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #e4e1db; border-radius: 999px; background: #fbfaf8; font: inherit; font-size: 13px; color: #4a4843">What came after it?</button>
+            <button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #e4e1db; border-radius: 999px; background: #fbfaf8; font: inherit; font-size: 13px; color: #4a4843">Open questions?</button>
+          </div>
+        </div>
+        <form style="margin-top: auto; padding: 14px 18px; border-top: 1px solid #e4e1db; display: flex; gap: 8px">
+          <label for="msg" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Message</label>
+          <input id="msg" type="text" placeholder="Ask a question" style="flex: 1; min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit">
+          <button type="submit" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Send</button>
+        </form>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

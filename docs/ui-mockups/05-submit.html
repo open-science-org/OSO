@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Submit an idea</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1560px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 16px; line-height: 1.5">
+  <div style="background: #fff4e8; border-bottom: 1px solid #f0c9a4; padding: 8px 24px; font-size: 13px; text-align: center; color: #5f3510">Phase B mockup. Simulated ledger; amounts are illustrative.</div>
+  <header style="border-bottom: 1px solid #e4e1db; background: #ffffff">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px"><span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>OSO</a>
+      <a href="09-community.html" style="display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 999px; font-size: 14px; color: #1d1d1b; text-decoration: none">Community: PEFT · LLMs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f5d58" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 15px">
+        <a href="01-explore.html" style="color: #5f5d58; text-decoration: none">Explore</a>
+        <a href="05-submit.html" style="color: #1d1d1b; font-weight: 600; text-decoration: none; border-bottom: 2px solid #e8792f">Submit</a>
+        <a href="06-status.html" style="color: #5f5d58; text-decoration: none">My work</a>
+        <a href="07-validate.html" style="color: #5f5d58; text-decoration: none">Validate <span style="padding: 0 6px; border-radius: 999px; background: #b45514; color: #ffffff; font-size: 12px">2</span></a>
+        <a href="08-review.html" style="color: #5f5d58; text-decoration: none">Review <span style="padding: 0 6px; border-radius: 999px; background: #b45514; color: #ffffff; font-size: 12px">1</span></a>
+      </nav>
+      <div style="flex: 1 1 auto"></div>
+      <a href="#profile" style="display: flex; align-items: center; gap: 8px; color: #1d1d1b; text-decoration: none; font-size: 14px"><span style="width: 34px; height: 34px; border-radius: 50%; background: #24426b; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">[AB]</span>[Your name]</a>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px">
+    <h1 style="margin: 0 0 6px; font-size: 28px; font-weight: 600">Submit an idea</h1>
+    <p style="margin: 0 0 20px; color: #5f5d58">To the PEFT · LLMs community. Rules come from its setup (validation, review, α); <a href="09-community.html">see the setup</a>.</p>
+
+    <ol aria-label="Steps" style="list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px">
+      <li style="padding: 8px 14px; border-radius: 999px; background: #1d1d1b; color: #ffffff">1 Content</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #efede8">2 Details</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #efede8">3 Builds on</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #efede8">4 Owners</li>
+      <li style="padding: 8px 14px; border-radius: 999px; background: #efede8">5 Stake and sign</li>
+    </ol>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start">
+      <form style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+        <fieldset style="margin: 0; padding: 20px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; display: flex; flex-direction: column; gap: 14px">
+          <legend style="padding: 0 6px; font-weight: 600; font-size: 17px">1 · Content</legend>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+            <div style="display: flex; flex-direction: column; gap: 4px"><label for="ty" style="font-size: 14px">Type</label><select id="ty" style="min-height: 44px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; background: #ffffff"><option>Preprint</option><option>Paper</option><option>Dataset</option><option>Code</option><option>Replication</option><option>Hypothesis</option></select></div>
+            <div style="display: flex; flex-direction: column; gap: 4px"><label for="lk" style="font-size: 14px">Main file: upload or link</label><input id="lk" type="url" value="https://arxiv.org/abs/[id]" style="min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit"></div>
+          </div>
+          <p style="margin: 0; font-size: 13px; color: #5f5d58; font-family: 'IBM Plex Mono', monospace">File fingerprint: sha256:[computed in your browser] · fixes the exact content you sign</p>
+          <p style="margin: 0; font-size: 13px; color: #5f5d58">Uploaded files are kept by OSO, identified by this fingerprint, and visible only to you and your validators until admitted. They can later be copied to decentralized storage without changing anything.</p>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="cd" style="font-size: 14px">Code or data (optional)</label><input id="cd" type="url" placeholder="Repository link at a fixed commit" style="min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit"></div>
+        </fieldset>
+
+        <fieldset style="margin: 0; padding: 20px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; display: flex; flex-direction: column; gap: 14px">
+          <legend style="padding: 0 6px; font-weight: 600; font-size: 17px">2 · Details</legend>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="ti" style="font-size: 14px">Title</label><input id="ti" type="text" value="[Your idea's title]" style="min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit"></div>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="ab" style="font-size: 14px">Abstract</label><textarea id="ab" rows="4" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical">[Abstract]</textarea></div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+            <div style="display: flex; flex-direction: column; gap: 4px"><label for="li" style="font-size: 14px">License</label><select id="li" style="min-height: 44px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; background: #ffffff"><option>CC-BY-4.0</option><option>CC0-1.0</option><option>MIT (code)</option></select></div>
+            <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 4px; font-size: 14px">
+              <legend style="margin-bottom: 4px">AI use in this work</legend>
+              <div style="display: flex; flex-wrap: wrap; gap: 14px">
+                <label style="display: flex; gap: 6px; align-items: center"><input type="radio" name="ai"> None</label>
+                <label style="display: flex; gap: 6px; align-items: center"><input type="radio" name="ai" checked="checked"> Assisted</label>
+                <label style="display: flex; gap: 6px; align-items: center"><input type="radio" name="ai"> Generated</label>
+              </div>
+            </fieldset>
+          </div>
+        </fieldset>
+
+        <fieldset style="margin: 0; padding: 20px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; display: flex; flex-direction: column; gap: 12px">
+          <legend style="padding: 0 6px; font-weight: 600; font-size: 17px">3 · Builds on</legend>
+          <p style="margin: 0; font-size: 14px; color: #5f5d58">Which earlier ideas does this depend on, and how much? AI suggests weights from your citations and your text; you adjust them; validators check them. Weights must add up to 100%.</p>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 15px">
+              <thead><tr style="text-align: left; color: #5f5d58; font-size: 13px"><th style="padding: 6px; font-weight: 500">Parent idea</th><th style="padding: 6px; font-weight: 500">Why (AI)</th><th style="padding: 6px; font-weight: 500">AI suggests</th><th style="padding: 6px; font-weight: 500">Your weight</th></tr></thead>
+              <tbody>
+                <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">LoRA · 2021</td><td style="padding: 8px 6px; color: #4a4843">Essential method</td><td style="padding: 8px 6px">60%</td><td style="padding: 8px 6px"><label style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)" for="w1">Weight for LoRA</label><input id="w1" type="number" value="60" style="width: 72px; min-height: 40px; padding: 0 8px; border: 1px solid #cfcac1; border-radius: 6px; font: inherit"> %</td></tr>
+                <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">AdaLoRA · 2023</td><td style="padding: 8px 6px; color: #4a4843">Direct extension</td><td style="padding: 8px 6px">30%</td><td style="padding: 8px 6px"><label style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)" for="w2">Weight for AdaLoRA</label><input id="w2" type="number" value="30" style="width: 72px; min-height: 40px; padding: 0 8px; border: 1px solid #cfcac1; border-radius: 6px; font: inherit"> %</td></tr>
+                <tr style="border-top: 1px solid #efede8"><td style="padding: 8px 6px">[A cited dataset]</td><td style="padding: 8px 6px; color: #4a4843">Data dependency</td><td style="padding: 8px 6px">10%</td><td style="padding: 8px 6px"><label style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)" for="w3">Weight for dataset</label><input id="w3" type="number" value="10" style="width: 72px; min-height: 40px; padding: 0 8px; border: 1px solid #cfcac1; border-radius: 6px; font: inherit"> %</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div role="note" style="padding: 12px 14px; border-radius: 8px; background: #fff4e8; border: 1px solid #f0c9a4; font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+            <span style="flex: 1 1 360px">AI found a strong dependency you did not cite: <strong>DoRA (2024)</strong>, essential method. Validators will see this.</span>
+            <button type="button" style="min-height: 40px; padding: 0 12px; border: 1px solid #b45514; border-radius: 8px; background: #ffffff; color: #8a3f0d; font: inherit; font-size: 14px">Add as parent</button>
+            <button type="button" style="min-height: 40px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Explain why not</button>
+          </div>
+          <p style="margin: 0; font-size: 14px">Total: <strong>100%</strong> · Your idea keeps α = 80% of what it earns; 20% flows to these.</p>
+        </fieldset>
+
+        <fieldset style="margin: 0; padding: 20px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; display: flex; flex-direction: column; gap: 12px">
+          <legend style="padding: 0 6px; font-weight: 600; font-size: 17px">4 · Owners</legend>
+          <p style="margin: 0; font-size: 14px; color: #5f5d58">Every owner must sign. Shares decide how the idea's income is split (IDEA units).</p>
+          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 110px 150px; gap: 10px 14px; align-items: center; font-size: 15px">
+            <span>[Your name] · ORCID [0000-…]</span><span><input aria-label="Your share" type="number" value="60" style="width: 64px; min-height: 40px; padding: 0 8px; border: 1px solid #cfcac1; border-radius: 6px; font: inherit"> %</span><span style="color: #2c6a3f; font-weight: 500">Signed</span>
+            <span>[Co-author] · ORCID [0000-…]</span><span><input aria-label="Co-author share" type="number" value="40" style="width: 64px; min-height: 40px; padding: 0 8px; border: 1px solid #cfcac1; border-radius: 6px; font: inherit"> %</span><span style="color: #8a3f0d; font-weight: 500">Invite sent</span>
+          </div>
+          <button type="button" style="align-self: flex-start; min-height: 40px; padding: 0 14px; border: 1px solid #cfcac1; border-radius: 8px; background: #ffffff; font: inherit; font-size: 14px">Add owner</button>
+        </fieldset>
+
+        <fieldset style="margin: 0; padding: 20px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; display: flex; flex-direction: column; gap: 12px">
+          <legend style="padding: 0 6px; font-weight: 600; font-size: 17px">5 · Stake and sign</legend>
+          <p style="margin: 0">Stake <strong>[s_sub] OSO</strong>. You get it back when the idea is published, or returned for any reason other than spam. AI processing is free for authors.</p>
+          <label style="display: flex; gap: 8px; align-items: flex-start; font-size: 15px"><input type="checkbox" style="margin-top: 5px"> I confirm this is original work by the listed owners, and the AI use above is accurate.</label>
+          <button type="submit" style="align-self: flex-start; min-height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Sign and submit</button>
+        </fieldset>
+      </form>
+
+      <aside aria-label="What happens next" style="flex: 1 1 300px; max-width: 360px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px; font-size: 15px">
+        <h2 style="margin: 0; font-size: 17px">What happens next</h2>
+        <ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px">
+          <li><strong>AI pre-screen.</strong> A report for validators. It never rejects on its own.</li>
+          <li><strong>Validation.</strong> 5 randomly drawn validators check admission criteria. Majority admits.</li>
+          <li><strong>Challenge window.</strong> Anyone can challenge for spam or plagiarism. Tokens wait in escrow.</li>
+          <li><strong>Published.</strong> Tokens and your stake are released.</li>
+          <li><strong>Peer review.</strong> 3 reviewers are invited automatically; anyone qualified can add more.</li>
+        </ol>
+        <p style="margin: 0; font-size: 13px; color: #5f5d58">These steps and numbers are this community's setup and can differ in other communities.</p>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

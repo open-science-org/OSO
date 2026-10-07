@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSO · Website home</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#b45514}a:hover{color:#8a3f0d}
+</style>
+</head>
+<body>
+<!-- OSO v1 UI mockup, exported from the design canvas. Static markup only; not production code. -->
+<div style="min-height: 1120px; background: #fbfaf8; color: #1d1d1b; font-family: 'IBM Plex Sans', 'Helvetica Neue', sans-serif; font-size: 17px; line-height: 1.6">
+  <header style="border-bottom: 1px solid #e4e1db">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+      <a href="04-website.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1d1d1b; font-weight: 600; font-size: 18px">
+        <span style="width: 30px; height: 30px; border-radius: 50%; background: #e8792f; display: inline-block"></span>Open Science Organization
+      </a>
+      <div style="flex: 1 1 auto"></div>
+      <nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 15px">
+        <a href="#how" style="color: #4a4843; text-decoration: none">How it works</a>
+        <a href="#progress" style="color: #4a4843; text-decoration: none">Progress</a>
+        <a href="#join" style="color: #4a4843; text-decoration: none">Get involved</a>
+        <a href="#about" style="color: #4a4843; text-decoration: none">About</a>
+      </nav>
+      <a href="01-explore.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 8px; background: #b45514; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px">Explore the graph</a>
+    </div>
+  </header>
+
+  <main>
+    <section style="max-width: 1100px; margin: 0 auto; padding: 64px 24px 48px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+      <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+        <p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #b45514">Our north star</p>
+        <h1 style="margin: 0; font-family: 'IBM Plex Serif', Georgia, serif; font-size: 40px; line-height: 1.2; font-weight: 600">A self-governing, self-sustaining organization that stewards humanity's collective intelligence and rewards every idea for what it makes possible.</h1>
+        <p style="margin: 0; color: #4a4843">Every contribution is an idea in an open graph. When new work builds on old work, credit and value flow back to it.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px">
+          <a href="01-explore.html" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: 8px; background: #b45514; color: #ffffff; text-decoration: none; font-weight: 600">Explore the graph</a>
+          <a href="https://github.com/open-science-org/OSO/blob/master/docs/design-v1.md" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: 8px; border: 1px solid #b45514; text-decoration: none; font-weight: 600">Read the design</a>
+        </div>
+      </div>
+      <a href="03-graph.html" aria-label="Preview of the idea graph" style="flex: 1 1 380px; position: relative; height: 300px; background: #ffffff; border: 1px solid #e4e1db; border-radius: 16px; overflow: hidden; text-decoration: none">
+        <svg width="100%" height="300" viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <line x1="80" y1="60" x2="210" y2="150" stroke="#f2b88a" stroke-width="4"></line>
+          <line x1="210" y1="50" x2="210" y2="150" stroke="#b45514" stroke-width="7"></line>
+          <line x1="340" y1="60" x2="210" y2="150" stroke="#f2b88a" stroke-width="3"></line>
+          <line x1="210" y1="150" x2="120" y2="245" stroke="#cfcac1" stroke-width="3"></line>
+          <line x1="210" y1="150" x2="300" y2="245" stroke="#cfcac1" stroke-width="3"></line>
+          <circle cx="80" cy="60" r="18" fill="#ffffff" stroke="#cfcac1" stroke-width="2"></circle>
+          <circle cx="210" cy="50" r="22" fill="#fff4e8" stroke="#b45514" stroke-width="2"></circle>
+          <circle cx="340" cy="60" r="16" fill="#ffffff" stroke="#cfcac1" stroke-width="2"></circle>
+          <circle cx="210" cy="150" r="26" fill="#1d1d1b"></circle>
+          <circle cx="120" cy="245" r="16" fill="#ffffff" stroke="#cfcac1" stroke-width="2"></circle>
+          <circle cx="300" cy="245" r="16" fill="#ffffff" stroke="#cfcac1" stroke-width="2"></circle>
+        </svg>
+        <span style="position: absolute; left: 16px; bottom: 12px; font-size: 13px; color: #5f5d58">Live preview from the seed field · opens the explorer</span>
+      </a>
+    </section>
+
+    <section id="how" style="background: #ffffff; border-top: 1px solid #e4e1db; border-bottom: 1px solid #e4e1db">
+      <div style="max-width: 1100px; margin: 0 auto; padding: 48px 24px">
+        <h2 style="margin: 0 0 24px; font-size: 26px; font-family: 'IBM Plex Serif', Georgia, serif">How it works</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-weight: 600; color: #b45514">1 · Ideas</span>
+            <p style="margin: 0; color: #4a4843">Papers, data, code and reviews are ideas, each linked to the ideas it builds on.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-weight: 600; color: #b45514">2 · Open review</span>
+            <p style="margin: 0; color: #4a4843">Work is checked in the open and reviewed by paid, fairly chosen reviewers, and ratings keep changing as results are reproduced.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-weight: 600; color: #b45514">3 · Value flows back</span>
+            <p style="margin: 0; color: #4a4843">Value that reaches an idea flows back to the work that made it possible, so foundations are rewarded.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="progress" style="max-width: 1100px; margin: 0 auto; padding: 48px 24px">
+      <h2 style="margin: 0 0 20px; font-size: 26px; font-family: 'IBM Plex Serif', Georgia, serif">Where we are</h2>
+      <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; font-size: 14px">
+        <li style="padding: 14px; border-radius: 10px; background: #fff4e8; border: 2px solid #b45514"><strong style="display: block">M1 · now</strong>Working protocol</li>
+        <li style="padding: 14px; border-radius: 10px; border: 1px solid #e4e1db"><strong style="display: block">M2</strong>First community</li>
+        <li style="padding: 14px; border-radius: 10px; border: 1px solid #e4e1db"><strong style="display: block">M3</strong>Trustless and funded</li>
+        <li style="padding: 14px; border-radius: 10px; border: 1px solid #e4e1db"><strong style="display: block">M4</strong>Many fields</li>
+        <li style="padding: 14px; border-radius: 10px; border: 1px solid #e4e1db"><strong style="display: block">M5</strong>Funding engine</li>
+        <li style="padding: 14px; border-radius: 10px; border: 1px solid #e4e1db"><strong style="display: block">M6</strong>Self-governance</li>
+      </ol>
+    </section>
+
+    <section id="join" style="background: #ffffff; border-top: 1px solid #e4e1db">
+      <div style="max-width: 1100px; margin: 0 auto; padding: 48px 24px; display: flex; flex-wrap: wrap; gap: 40px">
+        <div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 26px; font-family: 'IBM Plex Serif', Georgia, serif">Get involved</h2>
+          <p style="margin: 0; color: #4a4843">We are looking for researchers, engineers, designers and funders. Leave your details and we will write when there is something for you to try or decide.</p>
+          <p style="margin: 0; font-size: 14px; color: #5f5d58">We use these details only to contact you about OSO. Unsubscribe at any time.</p>
+        </div>
+        <form style="flex: 1 1 420px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="nm" style="font-size: 14px">Name</label><input id="nm" type="text" style="min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit"></div>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="em" style="font-size: 14px">Email</label><input id="em" type="email" style="min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit"></div>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="rl" style="font-size: 14px">I am a</label><select id="rl" style="min-height: 44px; padding: 0 10px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; background: #ffffff"><option>Researcher</option><option>Engineer</option><option>Designer</option><option>Funder</option><option>Other</option></select></div>
+          <div style="display: flex; flex-direction: column; gap: 4px"><label for="fd" style="font-size: 14px">Field</label><input id="fd" type="text" style="min-height: 44px; padding: 0 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit"></div>
+          <div style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 4px"><label for="hw" style="font-size: 14px">How would you like to help?</label><textarea id="hw" rows="3" style="padding: 10px 12px; border: 1px solid #cfcac1; border-radius: 8px; font: inherit; resize: vertical"></textarea></div>
+          <button type="submit" style="grid-column: 1 / -1; justify-self: start; min-height: 48px; padding: 0 24px; border: 0; border-radius: 8px; background: #b45514; color: #ffffff; font: inherit; font-weight: 600">Sign up</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer id="about" style="border-top: 1px solid #e4e1db">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 24px; display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: #5f5d58">
+      <span>Open Science Organization · since 2017, restarted 2026</span>
+      <a href="https://github.com/open-science-org">GitHub</a>
+      <a href="https://github.com/open-science-org/OIPs">Proposals (OIPs)</a>
+      <a href="https://www.oso.network/2017.html">Previous website</a>
+      <span>contact@oso.network</span>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
