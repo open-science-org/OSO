@@ -62,14 +62,14 @@ v1 tests accounting and incentive hypotheses on a real literature graph. It cann
 3. An idea graph seeded in two tiers: a curated slice of 50 to 100 works in one topic, whose AI-suggested edge weights are approved by a small, disclosed human panel and move value; and a larger read-only import from one subfield for discovery and chat, whose weights move no value.
 4. A working value-flow engine: fund any idea and see the value propagate to its ancestors, with exact, conserved integer accounting.
 5. Routing of new ideas: stake-to-submit, AI pre-screen, validation, then peer review.
-6. Identity through ORCID, with an escrow for imported ideas so existing authors can claim them later.
+6. Sign-in with common accounts (Google, email) and linked ORCID and other attestations, with an escrow for imported ideas so existing authors can claim them later.
 7. A minimal UI: chat about an idea, see its related ideas and value flow, submit new ideas, and work through the validator and reviewer queues.
 
 **Non-goals (deferred)**
 
 - Deploying to a public blockchain or listing a token on an exchange
 - DAO governance with binding on-chain votes
-- Decentralized file storage (IPFS, torrents); v1 stores metadata and links, not files
+- Decentralized file storage (IPFS, permanent-storage networks); v1 stores files centrally, addressed by hash, so they can move to decentralized storage later without changing any ID
 - Large-scale democratic funding with real money
 - Coverage of every field
 
@@ -162,7 +162,7 @@ Ownership has three layers: proof of authorship, the link from a key to a real p
 
 **Proof of authorship and priority.** Each idea version is hashed, signed by every owner's key, and recorded in a block with an operator-logged timestamp. In v1 this is a registration claim recorded by the operator, not independent proof of priority. It also does not prove who thought of the idea first; plagiarism checks at validation and a staked challenge process cover that gap.
 
-**Identity (replaces the 2017 URI design).** Researchers sign in with ORCID. ORCID proves control of an ORCID account, not real-world identity, and it does not create keys. After sign-in, OSO creates a key pair and, in v1, holds it for the user. Key recovery, export, delegated signing (including for AI services) and operator access must be specified before real value is involved. Identity strengthens as attestations accumulate: ORCID, institutional email, peer vouches. New identities are rate-limited, and voting weight comes from earned reputation, which together limit Sybil attacks.
+**Identity (replaces the 2017 URI design).** People sign in with an account they already have: Google, a one-time email link, or others such as GitHub or ORCID. Sign in with Apple is future work, since it needs a paid Apple developer membership. They can link more accounts and add attestations later: ORCID, institutional email, peer vouches. Signing in proves control of an account, not real-world identity, and on its own grants no trust. After the first sign-in, OSO creates a key pair and, in v1, holds it for the user. Key recovery, export, delegated signing (including for AI services) and operator access must be specified before real value is involved. Easy sign-in gives access to browsing, chat and submissions within rate limits; trusted roles need more: claiming an imported paper needs a linked ORCID (or adjudication with evidence), and being drawn as a validator or reviewer needs earned reputation and any attestations the community requires. Email addresses and account identifiers never appear on the public ledger.
 
 **Co-author shares.** For new submissions, owners and their shares are part of the signed idea version, and every listed owner must sign. Imported ideas are registered without owner signatures and carry no financial terms until their authors claim them. Changing the shares needs a new version signed by all current owners.
 
@@ -178,7 +178,7 @@ Ownership has three layers: proof of authorship, the link from a key to a real p
 
 v1 ships a minimal web UI on top of the node. Users can chat about any idea, see its related ideas and value flow, and submit new ideas. Submissions are routed through validation first, then peer review.
 
-**Specification:** routing in [OIP-11: Submission routing](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md); review in [OIP-17: Peer review](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md); chat and AI assistance in [OIP-15: AI services, models and costs](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md).
+**Specification:** routing in [OIP-11: Submission routing](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-11.md); review in [OIP-17: Peer review](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md); chat and AI assistance in [OIP-15: AI services, models and costs](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md). The high-level design for the website and app, and the build plan, are in [ui-v1.md](ui-v1.md).
 
 | Screen | What the user can do |
 | --- | --- |
@@ -240,7 +240,7 @@ AI services and ingestion have no special access. They act under a scoped, revoc
 - **Blocks:** the local sequencer batches transactions into blocks. Each block holds the previous block's hash and a Merkle root of its transactions. Validators are selected by a logged, reproducible procedure over a published roster. In v1 the operator orders transactions and could try to bias a draw seeded by a block hash. This trust assumption is disclosed, and v1 does not claim manipulation resistance. A later version needs its own randomness design.
 - **State machine:** a pure function `apply(state, tx)`. It uses integer amounts in the smallest unit (like wei), weights and shares in basis points, and no floats, clock or outside calls. Every replay gives the same result, and AI suggestions and human decisions enter as recorded inputs. Time-based rules, such as the challenge window, are measured in blocks. Module dispatch order and policy versions are part of the log.
 - **Modules map to contracts:** Identity, Ideas and graph, Tokens and wallets (OSO as ERC-20, IDEA tokens per idea), Validation, Value flow, Minting and rewards.
-- **Storage:** The append-only block log is the source of truth. It is published from day one to a public GitHub repo with signed commits, along with periodic state snapshots. Anyone can replay it with the open-source node and check every balance and ownership record. Signed commits authenticate changes, but GitHub admins can still force-push. The log is therefore tamper-evident relative to published checkpoints and independent mirrors, not immutable. The state database (SQLite) can be deleted and rebuilt by replaying the log. Files are not stored; ideas point to them by hash, DOI or arXiv link.
+- **Storage:** The append-only block log is the source of truth. It is published from day one to a public GitHub repo with signed commits, along with periodic state snapshots. Anyone can replay it with the open-source node and check every balance and ownership record. Signed commits authenticate changes, but GitHub admins can still force-push. The log is therefore tamper-evident relative to published checkpoints and independent mirrors, not immutable. The state database (SQLite) can be deleted and rebuilt by replaying the log. Files uploaded with submissions, and text written in OSO such as reviews, are kept in a central content store, addressed by their SHA-256 hash; ideas can also point to files elsewhere (DOI, arXiv). Private account data is kept separately and never on the ledger. Decentralizing storage is the long-term plan (OIP-16 section 5a).
 - **Value-flow cost:** transfers below a dust threshold wait as recorded liabilities and settle once they are large enough or at the end of each round. Worst-case depth and branching will be measured and capped, and settlement done in bounded steps that keep pending liabilities, before any contract version. Solidity loops that grow with stored data can exceed gas limits.
 - **Migration steps:** (1) deploy the modules as contracts; (2) load a snapshot of identities, ideas, balances and escrow, checked by replaying the public log; (3) switch writes to the chain. This happens at M3, and only once outside money and self-custody require it.
 
@@ -262,14 +262,14 @@ The main risks are spam, Sybil identities, buying influence and gaming the edge 
 | Attack | Mitigation |
 | --- | --- |
 | AI-generated spam papers | Stake-to-submit with slashing, AI pre-screen, per-identity submission limits, and a challenge window before any part of the mint or the stake is released |
-| Sybil identities | ORCID plus attestations, rate-limited onboarding, and reputation that is earned slowly |
+| Sybil identities | Easy sign-in grants access only; trusted roles need attestations such as ORCID and reputation that is earned slowly; rate limits are stricter for unattested accounts |
 | Buying influence (the old "pharma buys tokens" question) | Voting uses non-transferable reputation, not token balance. This is one defense; bribery, account takeover and vote trading still need monitoring |
 | Inflated edge weights (citation rings, self-citation) | AI estimate as the baseline, validator review, graph analysis for rings, and capped weight for self-citation |
 | Lazy or malicious validators | Logged selection, public votes, deadlines, pay that does not depend on the outcome, and sanctions only for decisions overturned on challenge or appeal |
 | Capture of a channel or sub-network (OIP-5) | Open rules and history; communities can fork a setup, list the same ideas and govern new work under their own rules |
 | Plagiarism or priority theft | Similarity checks against the graph, and a staked challenge window after publication |
 | Token concentration by early funders (OIP-3) | No pre-mine beyond a small, disclosed bootstrap pool; earned emission; and funding that can never buy voting weight |
-| Large files overloading storage | v1 stores hashes and links only, with size limits on anything hosted |
+| Large files overloading storage | File size limits in the content store, submission stakes, and per-identity limits |
 
 ## Related work since 2017
 
