@@ -93,9 +93,9 @@ flowchart LR
 ### 5.2 Key interactions
 
 1. **Search, then idea page, then graph.** The core loop: find a paper, see what it built on and what built on it.
-2. **Why this weight?** Clicking an edge shows where its weight came from: the citation, the AI's dependence score and category, and whether a person approved it. This makes OSO's attribution idea visible.
+2. **Why this weight?** Clicking an edge shows where its weight came from: the citation, the AI's dependence score and category, the exact passages the AI relied on (section 9), and whether a person approved it. This makes OSO's attribution idea visible.
 3. **Fund simulator.** Enter an amount, watch value flow up the graph level by level, then see a table of recipients. Every number comes from the API.
-4. **Chat.** Ask "What does this paper build on?" or "What came after it?"; answers cite ideas in the graph with links.
+4. **Chat.** Ask "What does this paper build on?" or "What came after it?"; answers cite ideas in the graph with links and, where the text is available, the exact passage they rely on.
 
 ### 5.3 Workflow screens (Phase B): submit, validate, review
 
@@ -184,6 +184,37 @@ OSO is a small fixed core with replaceable modules, and each community chooses i
 
 In Phase A there is one community and the setup comes from a fixture file, but the app already reads it, so Phase B adds communities without restructuring.
 
+### 6.1 Every choice is a default, not a dependency
+
+Each concrete technology or rule in this document is the **v1 default** behind an interface. Replacing it is a configuration change or a new module, never a rewrite.
+
+| Area | v1 default | How it is swapped | Defined in |
+| --- | --- | --- | --- |
+| Seed field | Parameter-efficient fine-tuning of LLMs | A new community with its own import sources and setup | Design doc; section 12 |
+| Kinds of ideas | Paper, preprint, dataset, code, review, replication, hypothesis, other | Community subtypes (for example `other/legal-analysis`); new base types by OIP | OIP-16 section 2 |
+| Import sources | OpenAlex, arXiv | Ingestion module; sources listed per community | OIP-12 section 6 |
+| Sign-in | Google, email link, GitHub, ORCID | Identity module configuration (OpenID Connect) | OIP-10; section 5.8 |
+| Attestations that allow claims | ORCID for papers | Community setup (for example GitHub for code, Hugging Face for models) | OIP-10 section 6 |
+| Admission criteria | The fixed list in OIP-11 | Communities add checkable criteria; never merit | OIP-11 section 4 |
+| Validation | Random N = 5, majority | Validation module and parameters | OIP-11, OIP-12 |
+| Review | 3 invited reviewers, weighted draw, score 0–10 | Review module and parameters; extra questions per community | OIP-17 |
+| Attribution rubric | Six categories | Communities add field-specific categories | OIP-14 section 4 |
+| Reputation formula | Expertise × integrity | Reputation module | OIP-9 |
+| AI models and providers | OpenRouter for chat and assessments; local models for embeddings | Configuration per task; per community in Phase B | OIP-15; section 7 |
+| Literature access | Direct import; hosted tools optional | Literature module (open index long term) | Section 8.1 |
+| Content storage | Central S3-compatible store | Storage module; decentralized later | OIP-16 section 5a; section 9 |
+| Ledger publication | GitHub, with mirrors | Any public git host; smart contracts at M3 | OIP-13 |
+| Database | SQLite (rebuildable from the log) | Any database behind the state interface | Design doc |
+| Notifications | Email and in-app | Notification module (Slack, Discord and others) | OIP-12 |
+| Hosting | To be decided | Any cloud or self-hosted server | Section 9 |
+| Front-end stack | TypeScript and React; Cytoscape.js, Sigma.js, D3 | UI modules and shared components | Sections 6 and 10 |
+| Look and wording | OSO design tokens, English | Community tokens, labels and translations | Section 6 |
+| Governance | Founding team | Governance module, by milestone | OIP-0, OIP-12 |
+
+**What stays fixed (the core, OIP-12 section 1):** the idea object, transactions and blocks, accounts, the mint and the value-flow waterfall, and the module interfaces. Fixing these is what lets different communities, modules and providers work together on one shared graph.
+
+**General purpose.** Nothing in the core assumes a particular field, kind of contribution, language or vendor (OIP-12 section 7). The seed field is only where we start; the same app should serve a biology lab, a group of engineers, legal scholars or designers through their own community setup, subtypes, criteria and review questions. Every user-facing string is kept in translation files from the start, so communities can work in their own language.
+
 ## 7. AI services and providers
 
 AI is used in six places, each a separate task that a community configures on its own ([OIP-15](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md)):
@@ -192,7 +223,7 @@ AI is used in six places, each a separate task that a community configures on it
 | --- | --- | --- | --- |
 | Chat about an idea | Idea page | A | A capable chat model; answers grounded in the idea and its neighbours, with citations |
 | Edge assessment | Graph evidence panel, Submit step 3 | A (curated slice, offline), B (submissions) | Two models from different families for anything that can move value |
-| Similarity and duplicate search | Search, pre-screen | A | An embedding model; no generative model |
+| Similarity and duplicate search | Search, pre-screen | A | Hybrid search: keyword ranking (BM25) and embedding similarity run together and their results are merged by reciprocal rank fusion, as [Paperclip](https://paperclip.gxl.ai/) (GXL) does ([description](https://gxl.ai/blog/biomedical-literature-as-a-filesystem/)); the fusion method is from Cormack, Clarke and Büttcher, "Reciprocal Rank Fusion outperforms Condorcet and individual Rank Learning Methods", SIGIR 2009. No generative model needed |
 | Pre-screen report | Validator queue, My work | B | Two models; structured output |
 | Review draft notes | Review form | B | A chat model; always labelled as AI |
 | Domain tagging | Ingestion, idea pages | A | A small, cheap model |
@@ -218,6 +249,7 @@ In Phase B these task settings move from this file into each community's setup (
 | Option | Pros | Cons | Use it for |
 | --- | --- | --- | --- |
 | **OpenRouter (one API key, many models)** | One key and one bill for models from many companies; easy to switch and to get two model families; some free, rate-limited models | Pay per use; free models are rate-limited and may change or disappear; check each model's data policy before sending unpublished work | **Recommended default for Phase A:** chat and the two-model edge assessments |
+| Specialized literature tools as AI services, for example [Paperclip](https://paperclip.gxl.ai/) (GXL) | Agent-ready full-text search and reading over millions of papers (strongest for biomedicine) | Hosted, closed index; terms and pricing to check; outputs must be recorded as ledger inputs to keep replay exact (OIP-13) | Optional, for reading and novelty checks, especially a biomedical community; long term, an open equivalent becomes an OSO module (section 8.1) |
 | A single provider's API directly | Often the best model quality and reliability; clear data terms | One vendor; a second key is needed for a second model family | Later, if one model is clearly best for a task |
 | **Local, open-weight (Ollama, llama.cpp, LM Studio; vLLM for bulk)** | No per-call cost; unpublished work never leaves our machine; exact weights can be recorded for audits | Needs hardware (a GPU for larger models); lower quality than top hosted models for hard tasks; someone runs it | **Recommended for embeddings, domain tagging and development**, and for authors who ask for local-only processing |
 | Free tiers only | No cost | Rate limits, unpredictable availability, and terms that may allow logging or training on inputs | Experiments only, never for unpublished submissions |
@@ -240,10 +272,52 @@ Integrations sit on the public API and webhooks, so outside contributors can bui
 | **Embeddable badge** | "Built on by N ideas · rating 7" for lab pages and READMEs | Later |
 | **Cite this idea** | A BibTeX entry with the work ID | Phase A, small |
 | **Webhooks** | Events such as idea admitted or review posted, for community bots | Phase B |
-| **MCP server** | Lets AI assistants query the graph (lineage, related work, ratings) | Later |
+| **MCP server** | Lets AI assistants query the graph (lineage, related work, ratings), laid out as a read-only filesystem (section 8.1), plus an endpoint for every idea (section 8.2) | Phase A (read-only); executable ideas later |
 | **Python client and data dumps** | Periodic open snapshots of the graph and a client library for meta-research | Later |
 
 Before relying on a third-party service, check its current terms and plugin or API support.
+
+### 8.1 Agent access: the graph as a filesystem
+
+The MCP server and command-line client follow the design of [Paperclip](https://paperclip.gxl.ai/) (GXL), which presents literature to AI agents as a read-only filesystem that they explore with familiar commands (`ls`, `cat`, `grep`) plus search ([how it works](https://gxl.ai/blog/biomedical-literature-as-a-filesystem/)). We borrow the idea, not code. Paperclip's client is open source under Apache-2.0; its index is a hosted service. In OSO, the same layout covers the idea graph, not only documents:
+
+```
+/ideas/<work-id>/
+    idea.json            current version (OIP-16)
+    versions/<n>.json    every version, with its hash
+    content/             sections, figures and tables of the main file (section 9)
+    parents.json         approved parents, weights and evidence (OIP-14)
+    children.json        ideas that build on it
+    reviews/             reviews and the current rating (OIP-17)
+    history.json         its ledger transactions
+/communities/<id>/setup.json
+/ledger/blocks/<n>.json
+```
+
+Commands: `search` (hybrid, section 7), `grep` within an idea or across the graph, `lineage`, `path`, and `cite` (BibTeX). Everything is read-only; actions that change state stay signed transactions through the normal API (OIP-10, OIP-13).
+
+**Long-term objective: an open literature module.** Paperclip's index is a hosted, closed service. OSO's long-term aim is an open equivalent, built as a replaceable module (a `literature` slot under OIP-12), so the full-text layer of science is not owned by one company. It would:
+
+- index openly licensed full text (for example arXiv papers with open licenses, the PubMed Central open-access subset, and other open-access sources) into sections and passages with stable IDs, plus metadata for everything else from open sources such as OpenAlex;
+- offer the same filesystem and MCP interface as section 8.1, with hybrid search;
+- be open source and self-hostable, so communities, libraries and universities can run mirrors, and any copy can be checked against content hashes (section 9);
+- respect licenses: full text is stored and served only where the license allows, otherwise metadata and links only.
+
+This is not needed for v1, which uses the seed field's metadata and open full text directly, and may call hosted tools such as Paperclip through the swappable AI adapter (section 7). It would be specified in a later OIP and could become a community project of its own.
+
+### 8.2 An MCP endpoint for every idea
+
+Every idea gets its own MCP endpoint, so any AI agent can work with one idea directly: `https://<api host>/mcp/ideas/<work-id>`. It is one shared server that routes by work ID, generated from the graph; authors do nothing to get it.
+
+| Layer | What the endpoint offers | When |
+| --- | --- | --- |
+| **1. Idea endpoint (every idea)** | *Resources:* the idea and its versions, content sections with passage IDs, parents and weights with evidence, children, reviews and rating, ledger history. *Tools:* ask about this idea (answers cite passages), lineage, related ideas, compare with another idea, cite. *Prompts:* for example "What does this build on?" | Phase A, read-only, with the main MCP server (section 8.1) |
+| **2. Executable idea (optional)** | For ideas with code and data, tools that run the method itself, generated from the codebase, tested, versioned, and registered as a linked `code` idea that reviewers can check. Follows [Paper2Agent](https://arxiv.org/abs/2509.06917) (Miao, Davis, Zhang, Pritchard and Zou), which turns a paper and its code into a tested MCP server | Later: needs sandboxed compute and a budget; not every paper converts |
+| **3. Structured claims (optional)** | A short file listing the idea's claims, evidence and provenance, so agents, reviewers and the pre-screen can check claim by claim. Follows [Knows](https://arxiv.org/abs/2604.17309) (Yu and Wang), a structured sidecar for research papers | Later |
+
+**Attribution for AI agents.** When an agent uses idea endpoints while producing new work, its call log records which ideas it used. If that work is submitted as an idea, the log is offered as evidence for its parents and weights (OIP-14), to be checked and approved like any other evidence. Credit, and later value, then flows back to the ideas an AI relied on. Call counts are never paid out directly, since usage is easy to fake.
+
+**Risks to handle:** compute cost and sandboxing for executable tools; prompt injection from paper content, treated as data (OIP-15 section 7); the licenses of papers and code when generating tools; and keeping tools in step with new versions of an idea.
 
 ## 9. Data storage
 
@@ -254,6 +328,7 @@ Before relying on a third-party service, check its current terms and plugin or A
 | Ledger: ideas and versions, links and weights, votes, review records, balances, claims | Public GitHub repo, one file per block, signed commits, with regular state snapshots and the latest block hash copied to independent mirrors (OIP-13) | Yes | It is the source of truth |
 | Current state: balances, graph, scores | Database on the OSO node, rebuilt by replaying the log | Yes, through the API | Yes |
 | Uploaded files (papers, data, code archives) and text written in OSO (reviews, replies, authors' notes) | **Central content store**: an S3-compatible object-storage bucket run by the operator, files named by hash, with a size limit and a backup in a separate location (OIP-16 section 5a) | Yes once admitted; before admission only owners and drawn validators | From backups; verifiable by hash |
+| Structured text of each paper: sections, figures, tables, with an ID for every passage | Derived from the content store (or from open full text for imports) and kept beside it; the ID lets AI assessments, chat answers and reviews cite exact passages. Adapted from [Paperclip](https://paperclip.gxl.ai/) (GXL), which gives every line an identifier traceable to its source ([description](https://gxl.ai/blog/biomedical-literature-as-a-filesystem/)) | Same as the source content | Yes, from the content |
 | Imported metadata and AI outputs | On the ledger, as recorded inputs | Yes | Yes |
 | Search and similarity index | Alongside the database on the node | No | Yes |
 | Accounts, emails, linked sign-ins, notification settings | Operator's private database, encrypted backups; never on the ledger | No | No |
@@ -312,6 +387,7 @@ JSON over HTTPS, read-only except the simulator and chat. Field names follow OIP
 | `GET /v1/graph/export?format=json` (or `graphml`) | Graph export |
 | `GET /v1/ideas/{work_id}/cite?format=bibtex` and `/badge.svg` | Citation and badge |
 | `GET /v1/transparency` | Ledger status, fund, bootstrap pool, AI spending (section 5.7) |
+| `/mcp` and `/mcp/ideas/{work_id}` | MCP servers for the whole graph and for one idea (sections 8.1 and 8.2) |
 
 Phase B adds sign-in (`/v1/auth/*` for each provider, `POST /v1/me/linked-accounts`, `POST /v1/me/attestations/orcid`) and, behind sign-in: `POST /v1/submissions` (with signatures), `GET /v1/me/submissions`, `GET /v1/me/validation-queue`, `POST /v1/votes`, `GET /v1/me/review-invitations`, `POST /v1/reviews`, `POST /v1/review-ratings`, `POST /v1/challenges`, `POST /v1/appeals`, `GET /v1/me/claim-matches`, `POST /v1/claims`, `GET/PUT /v1/me/notifications` and webhooks. Each maps to a ledger transaction; the API only prepares and relays signed transactions, it does not decide outcomes.
 
@@ -386,6 +462,17 @@ Phase B work (submit, status, validator queue, review, claims, profile, notifica
 10. Which integrations to build first (section 8), and whether outside contributors may build them.
 11. Which sign-in methods at launch, and a hosted sign-in service or our own (section 5.8). When to add Sign in with Apple, who pays for the developer membership, and who holds the account.
 12. Where to host the node, database and content store; file size limit; backups; privacy policy (section 9).
+
+## References
+
+Ideas borrowed from other projects, with what we took:
+
+- **[Paperclip](https://paperclip.gxl.ai/) (GXL)**, an agent-native filesystem over biomedical literature, with an open-source (Apache-2.0) client and a hosted index. GXL, "[Representing biomedical literature as a filesystem through agent-native indexing](https://gxl.ai/blog/biomedical-literature-as-a-filesystem/)" and the [Paperclip repository](https://github.com/GXL-ai/paperclip). Borrowed: the filesystem layout for agents (section 8.1), passage-level identifiers and citations (sections 5.2 and 9), and hybrid keyword-plus-embedding search (section 7). No code is reused.
+- **[Paper2Agent](https://arxiv.org/abs/2509.06917) (Miao, Davis, Zhang, Pritchard and Zou)**, "Paper2Agent: Reimagining Research Papers As Interactive and Reliable AI Agents", arXiv:2509.06917 (2025); reported as published in *Nature* in 2026. Borrowed: turning an idea's code into tested MCP tools (section 8.2, layer 2).
+- **[Knows](https://arxiv.org/abs/2604.17309) (Yu and Wang)**, "Knows: Agent-Native Structured Research Representations", arXiv:2604.17309 (2026). Borrowed: a structured claims and evidence file beside each paper (section 8.2, layer 3).
+- **Literature-search MCP servers**, such as [paper-mcp](https://github.com/MCPServings/paper-mcp) and [paper-search-mcp](https://mcpservers.org/servers/openags/paper-search-mcp), which search arXiv, Semantic Scholar and OpenAlex together. Reference for the whole-graph MCP server (section 8.1).
+- **Reciprocal rank fusion:** Cormack, Clarke and Büttcher, "Reciprocal Rank Fusion outperforms Condorcet and individual Rank Learning Methods", SIGIR 2009. Used to merge keyword and embedding search results (section 7).
+
 
 ## Appendix: mockups
 

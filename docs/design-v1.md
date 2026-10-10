@@ -86,6 +86,7 @@ OSO is a small fixed core with modular, replaceable parts, and every community c
 5. **AI proposes, humans decide.** Every AI output can be accepted or overridden, and the record shows which happened.
 6. **Voting weight can't be bought directly.** It comes from reputation, not token balance. This is one defense, not a guarantee: on its own it does not stop bribery, account takeover or vote trading.
 7. **A blockchain only where trust requires it.** Use a public GitHub ledger first, and contracts only once real money and self-custody need them.
+8. **General purpose.** Nothing in the core assumes a field, kind of contribution, language or vendor. Field-specific choices (idea subtypes, admission criteria, review questions, import sources, attestations, models) live in community setups and modules, and every external service is reached through an interface so it can be replaced (OIP-12 section 7). The seed field is only the starting point.
 
 ![The OSO network: fixed core, replaceable modules, per-community setups](img/modular-network.png)
 
@@ -285,6 +286,10 @@ Several projects now cover parts of the OSO vision. Our working hypothesis, not 
 | OpenAlex, Semantic Scholar, arXiv | Open metadata and citation graphs | Seed data for the graph |
 | ORCID | Researcher identifiers | Identity anchor |
 | Open review (e.g. OpenReview) | Public reviews for venues | Reference for review workflows |
+| [Paperclip](https://paperclip.gxl.ai/) (GXL) | Lets AI agents search and read full-text biomedical papers, trials and regulatory documents as a virtual filesystem, through a command-line tool and an MCP server; open-source client, hosted index | Borrow the agent-native filesystem layout and passage-level citations (see [ui-v1.md](ui-v1.md)); differs by having no attribution weights, value flow or community governance |
+| [Paper2Agent](https://arxiv.org/abs/2509.06917) (Stanford) | Turns a paper and its code into a tested MCP server that AI agents can call to run the paper's methods | Borrow for optional executable ideas (one MCP endpoint per idea, see [ui-v1.md](ui-v1.md)); differs by not tracking lineage or credit |
+| [Knows](https://arxiv.org/abs/2604.17309) | A structured sidecar file of claims, evidence and provenance beside each paper, for agents | Borrow as optional structured claims per idea |
+| Literature-search MCP servers (e.g. [paper-mcp](https://github.com/MCPServings/paper-mcp)) | One MCP server searching arXiv, Semantic Scholar and OpenAlex | Reference for OSO's whole-graph MCP server |
 
 ## Near-term roadmap (Phases 0 to 3)
 
@@ -302,6 +307,12 @@ Dates are not set yet. The gate criteria (for example, how many active pilot res
 | M3 reached | The legal entity operates, outside funding has flowed through the graph to authors and parent ideas, and every funded payout reconciles |
 
 Gates for M4 to M6 will be set when M3 is reached.
+
+**Long-term objectives beyond v1**
+
+- **Open literature module.** An open, self-hostable equivalent of tools like [Paperclip](https://paperclip.gxl.ai/) (GXL): openly licensed full text split into sections and passages with stable IDs, hybrid search, and a filesystem and MCP interface for people and AI agents. It plugs in as a replaceable module, so access to the full-text layer of science is not owned by one company. Full text only where licenses allow; metadata and links otherwise. See [ui-v1.md](ui-v1.md), section 8.1.
+- **Decentralized storage** of public content, replacing the central content store (OIP-16 section 5a).
+- **Executable ideas**: tested tools generated from an idea's code, following Paper2Agent (see [ui-v1.md](ui-v1.md), section 8.2).
 
 **v1 acceptance checks**
 
