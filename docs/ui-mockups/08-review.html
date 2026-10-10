@@ -32,7 +32,13 @@ a{color:#b45514}a:hover{color:#8a3f0d}
 
   <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px">
     <h1 style="margin: 0 0 6px; font-size: 28px; font-weight: 600">Peer review</h1>
-    <p style="margin: 0 0 20px; color: #5f5d58">Invited reviews are paid [f_rev] OSO when delivered on time, whatever your score. You can also review any published idea on your own (open review, unpaid).</p>
+    <p style="margin: 0 0 16px; color: #5f5d58">Review happens in four layers. You see the ones open to you.</p>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; font-size: 14px">
+      <div style="padding: 12px 14px; border-radius: 10px; border: 1px solid #e4e1db; background: #ffffff"><strong style="display: block">1 · Spam filter</strong><span style="color: #5f5d58">Drawn validators admit ideas. <a href="07-validate.html">Validator queue</a></span></div>
+      <div style="padding: 12px 14px; border-radius: 10px; border: 2px solid #b45514; background: #fff4e8"><strong style="display: block">2 · Assigned expert review</strong><span style="color: #4a4843">Drawn for you; paid [f_rev] OSO on time, whatever your score</span></div>
+      <div style="padding: 12px 14px; border-radius: 10px; border: 1px solid #e4e1db; background: #ffffff"><strong style="display: block">3 · Expert reader review</strong><span style="color: #5f5d58">Review any idea you read in your field, any time; counts to your expertise</span></div>
+      <div style="padding: 12px 14px; border-radius: 10px; border: 1px solid #e4e1db; background: #ffffff"><strong style="display: block">4 · Community review</strong><span style="color: #5f5d58">Any member: a comment and optional score; counts to the community rating</span></div>
+    </div>
 
     <section aria-labelledby="inv" style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px">
       <h2 id="inv" style="margin: 0; font-size: 17px">Invitations</h2>
@@ -96,9 +102,11 @@ a{color:#b45514}a:hover{color:#8a3f0d}
 
       <aside aria-label="Other reviews" style="flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column; gap: 16px">
         <section style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
-          <h2 style="margin: 0; font-size: 17px">Rating so far</h2>
-          <p style="margin: 0"><span style="font-size: 32px; font-weight: 600">7</span><span style="color: #5f5d58"> / 10 · from 1 review</span></p>
-          <p style="margin: 0; font-size: 13px; color: #5f5d58">Weighted median of review scores, weighted by each reviewer's reputation in the domain.</p>
+          <h2 style="margin: 0; font-size: 17px">Ratings so far</h2>
+          <p style="margin: 0"><span style="font-size: 32px; font-weight: 600">7</span><span style="color: #5f5d58"> / 10 · expert rating, 1 review</span></p>
+          <p style="margin: 0; font-size: 13px; color: #5f5d58">Weighted median of assigned and expert reader reviews, weighted by reputation in the domain.</p>
+          <p style="margin: 0"><span style="font-size: 20px; font-weight: 600">—</span><span style="color: #5f5d58"> community rating · 2 of 5 scores needed</span></p>
+          <p style="margin: 0; font-size: 13px; color: #5f5d58">Shown separately, so neither group drowns out the other.</p>
         </section>
         <section style="background: #ffffff; border: 1px solid #e4e1db; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px">
           <h2 style="margin: 0; font-size: 17px">Rate a review</h2>

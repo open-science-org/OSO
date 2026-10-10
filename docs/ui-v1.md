@@ -12,6 +12,8 @@
 
 **Not in this phase:** real accounts and sign-in, real submissions, validator and reviewer queues, wallets, anything on a blockchain.
 
+**How the phases relate.** Phase A and Phase B are both inside **roadmap Phase 1 (v1)** in the design doc. Phase A is the part that can be built before the ledger exists (website, explorer, graph, simulator, chat); Phase B adds everything that writes to the ledger (sign-in, submission, validation, review, claims). Roadmap Phases 2 and 3 (pilot community, trustless launch) come after both.
+
 ## 2. What is stable enough to build on
 
 | Area | State | How the UI treats it |
@@ -120,9 +122,9 @@ flowchart LR
 | **Submit** | Author | Five steps: (1) content: type, main file or link, the file's fingerprint (hash) computed in the browser, optional code or data; (2) details: title, abstract, license, AI use; (3) builds on: AI-suggested parents and weights, which the author adjusts to a 100% total, with any uncited dependency the AI found shown for the author to add or explain; (4) owners and shares, with each co-owner's signature status; (5) stake and sign. A side panel explains what happens next in this community. |
 | **My work** (status) | Author | A timeline for each submission: submitted, pre-screen (with the report), validation (votes and reasons, public once the vote closes), challenge window (time left, any challenges), published, and peer review (invited reviewers, submitted reviews, current rating). Shows what is held in escrow, and actions: submit a new version, or appeal if returned. |
 | **Validator queue** | Drawn validators | Assigned ideas with deadlines; the AI pre-screen report (spam likelihood, closest ideas, domain fit, proposed versus suggested weights, uncited dependencies); a checklist of the admission criteria; admit or not admit, optional spam mark, and a reason; a reminder that admission is not a quality verdict and that pay does not depend on the vote. Challenges and appeals assigned to the user appear in the same queue. |
-| **Reviewer inbox and review form** | Drawn reviewers, and anyone qualified | Invitations to accept or decline before a deadline; a review form with the four required questions (claims, evidence, reproducibility, what should change), an optional AI-drafted start, a score from 0 to 10 with anchors, a recommendation (endorse, revise, concerns), and AI disclosure; the current rating; and rating other reviews for usefulness. |
+| **Reviewer inbox and review form** | Assigned reviewers, expert readers and community members | Review happens in four layers (OIP-17): the spam filter (the validator queue above), **assigned expert review** (invitations to accept or decline before a deadline, paid), **expert reader review** (any expert who reads the idea, at any time) and **community review** (any signed-in member interested in the idea). Expert reviews use the full form: the four required questions, an optional AI-drafted start, a score from 0 to 10 with anchors, a recommendation (endorse, revise, concerns) and AI disclosure. Community reviews need only a comment, with an optional score. The idea page shows two ratings side by side: an expert rating and, once enough scores exist, a community rating. Users can rate other reviews for usefulness. |
 
-**Submitting for peer review** needs no separate action: under OIP-17, reviewers are invited automatically when an idea is admitted, and anyone qualified can add an open review later. If bounties for extra reviews are added (an open question in OIP-17), they get a button on the My work screen.
+**Submitting for peer review** needs no separate action: under OIP-17, assigned reviewers are invited automatically when an idea is admitted, and expert readers and community members can review it at any time after. If bounties for extra reviews are added (an open question in OIP-17), they get a button on the My work screen.
 
 ### 5.4 Design principles
 
@@ -197,7 +199,7 @@ Each concrete technology or rule in this document is the **v1 default** behind a
 | Attestations that allow claims | ORCID for papers | Community setup (for example GitHub for code, Hugging Face for models) | OIP-10 section 6 |
 | Admission criteria | The fixed list in OIP-11 | Communities add checkable criteria; never merit | OIP-11 section 4 |
 | Validation | Random N = 5, majority | Validation module and parameters | OIP-11, OIP-12 |
-| Review | 3 invited reviewers, weighted draw, score 0–10 | Review module and parameters; extra questions per community | OIP-17 |
+| Review | Four layers: spam filter, 3 assigned expert reviewers (weighted draw), expert readers, community; score 0–10; expert and community ratings kept separate | Review module and parameters; extra questions per community | OIP-17 |
 | Attribution rubric | Six categories | Communities add field-specific categories | OIP-14 section 4 |
 | Reputation formula | Expertise × integrity | Reputation module | OIP-9 |
 | AI models and providers | OpenRouter for chat and assessments; local models for embeddings | Configuration per task; per community in Phase B | OIP-15; section 7 |
