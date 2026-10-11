@@ -27,7 +27,7 @@ Each concrete technology or rule in this document is the **v1 default** behind a
 | Attestations that allow claims | ORCID for papers | Community setup (for example GitHub for code, Hugging Face for models) | OIP-10 section 6 |
 | Admission criteria | The fixed list in OIP-11 | Communities add checkable criteria; never merit | OIP-11 section 4 |
 | Validation | Random N = 5, majority | Validation module and parameters | OIP-11, OIP-12 |
-| Review | Four layers: spam filter, 3 assigned expert reviewers (weighted draw), expert readers, community; score 0–10; expert and community ratings kept separate | Review module and parameters; extra questions per community | OIP-17 |
+| Review | A pipeline of layers; default: spam filter, 3 assigned expert reviewers (weighted draw), expert readers, community; AI agent review and invited panels optional; score 0–10; each rating shown separately | Community configures the pipeline from layer types; new layer types as module versions | OIP-17 |
 | Attribution rubric | Six categories | Communities add field-specific categories | OIP-14 section 4 |
 | Reputation formula | Expertise × integrity | Reputation module | OIP-9 |
 | AI models and providers | OpenRouter for chat and assessments; local models for embeddings | Configuration per task; per community in Phase B | OIP-15; [AI services and providers](ai.md) |
@@ -39,6 +39,7 @@ Each concrete technology or rule in this document is the **v1 default** behind a
 | Hosting | To be decided | Any cloud or self-hosted server | [Data storage](storage.md) |
 | Front-end stack | TypeScript and React; Cytoscape.js, Sigma.js, D3 | UI modules and shared components | [Modular and customizable design](modularity.md) and [Architecture](architecture.md) |
 | Look and wording | OSO design tokens, English | Community tokens, labels and translations | [Modular and customizable design](modularity.md) |
+| AI agents | Registered agent identities with an operator; off in review by default | Community enables agent layers and sets limits per operator | OIP-10 section 1b; OIP-17 |
 | Governance | Founding team | Governance module, by milestone | OIP-0, OIP-12 |
 
 **What stays fixed (the core, OIP-12 section 1):** the idea object, transactions and blocks, accounts, the mint and the value-flow waterfall, and the module interfaces. Fixing these is what lets different communities, modules and providers work together on one shared graph.
