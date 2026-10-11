@@ -2,7 +2,7 @@
 
 Static mockups of the OSO website and v1 app, described in [ui-v1.md](../ui-v1.md). They show layout and content, not final visual design or production code.
 
-- **Images** are in [`../img/ui/`](../img/ui/) and are shown in [ui-v1.md, Appendix](../ui-v1.md#appendix-mockups).
+- **Images** are in [`../img/ui/`](../img/ui/) and are shown in the [gallery](#gallery) below.
 - **HTML files** here are plain, self-contained pages. Download the folder and open any file in a browser; the links between screens work. GitHub shows them as source, not as pages.
 - **Papers** are real works from the seed field; all weights, scores and amounts are illustrative, and bracketed values like `[n]` are placeholders.
 - The editable source is a design canvas; when it changes, these files are exported again.
@@ -23,3 +23,63 @@ Static mockups of the OSO website and v1 app, described in [ui-v1.md](../ui-v1.m
 | 12 | Profile, notifications and integrations | B | [image](../img/ui/12-profile.png) | [HTML](12-profile.html) |
 | 13 | Transparency page | A | [image](../img/ui/13-transparency.png) | [HTML](13-transparency.html) |
 | 14 | Sign in and link accounts | B | [image](../img/ui/14-sign-in.png) | [HTML](14-sign-in.html) |
+
+## Gallery
+
+Static mockups of every screen. Papers are real; weights, scores and amounts are illustrative. The HTML versions, with working links between screens, are in this folder.
+
+### 1 · Explore and search
+
+![1 · Explore and search](../img/ui/01-explore.png)
+
+### 2 · Idea page with chat
+
+![2 · Idea page with chat](../img/ui/02-idea.png)
+
+### 3 · Graph, edge evidence and fund simulator
+
+![3 · Graph, edge evidence and fund simulator](../img/ui/03-graph.png)
+
+### 4 · Website home (www.oso.network)
+
+![4 · Website home (www.oso.network)](../img/ui/04-website.png)
+
+### 5 · Submit an idea
+
+![5 · Submit an idea](../img/ui/05-submit.png)
+
+### 6 · My submission: validation, challenge window, peer review
+
+![6 · My submission: validation, challenge window, peer review](../img/ui/06-status.png)
+
+### 7 · Validator queue and vote
+
+![7 · Validator queue and vote](../img/ui/07-validate.png)
+
+### 8 · Reviewer invitations and review form
+
+![8 · Reviewer invitations and review form](../img/ui/08-review.png)
+
+### 9 · Community setup: modules and customization
+
+![9 · Community setup: modules and customization](../img/ui/09-community.png)
+
+### 10 · Graph explorer: lineage, field map and other views
+
+![10 · Graph explorer: lineage, field map and other views](../img/ui/10-explorer.png)
+
+### 11 · Claim your work
+
+![11 · Claim your work](../img/ui/11-claim.png)
+
+### 12 · Profile, notifications and integrations
+
+![12 · Profile, notifications and integrations](../img/ui/12-profile.png)
+
+### 13 · Transparency page
+
+![13 · Transparency page](../img/ui/13-transparency.png)
+
+### 14 · Sign in and link accounts
+
+![14 · Sign in and link accounts](../img/ui/14-sign-in.png)
