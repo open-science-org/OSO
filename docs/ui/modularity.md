@@ -32,6 +32,8 @@ Each concrete technology or rule in this document is the **v1 default** behind a
 | Reputation formula | Expertise × integrity | Reputation module | OIP-9 |
 | AI models and providers | OpenRouter for chat and assessments; local models for embeddings | Configuration per task; per community in Phase B | OIP-15; [AI services and providers](ai.md) |
 | Literature access | Direct import; hosted tools optional | Literature module (open index long term) | [Agent access: the graph as a filesystem](integrations.md#agent-access-the-graph-as-a-filesystem) |
+| Automated verification | Off; tools such as Lean proof checking and code re-execution available | Community enables the layer and pins tools and versions | OIP-17 section 7b |
+| Priority evidence | Independent timestamps of block hashes; sealed priority claims | Any timestamping service (OpenTimestamps, RFC 3161 authorities) | OIP-10 section 5a; OIP-13 |
 | Content storage | Central S3-compatible store | Storage module; decentralized later | OIP-16 section 5a; [Data storage](storage.md) |
 | Ledger publication | GitHub, with mirrors | Any public git host; smart contracts at M3 | OIP-13 |
 | Database | SQLite (rebuildable from the log) | Any database behind the state interface | Design doc |

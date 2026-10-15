@@ -1,6 +1,6 @@
 # OSO v1 Design Doc
 
-**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-02
+**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-15
 
 Comment through an issue or pull request in this repository.
 
@@ -35,6 +35,7 @@ Science is collective intelligence, and its output depends on how well value mov
 - **Feasible:** LLMs can now assist with judgment work the old design could not automate: estimating how much a paper relied on each citation, filtering spam, tagging domains and helping with review.
 - **Urgent:** AI will flood the literature with generated papers, so open, accountable curation becomes essential. As AI agents start producing ideas, tracing credit and provenance matters more.
 - **Useful to AI:** a structured, quality-scored graph of human knowledge is itself valuable infrastructure for AI-driven research.
+- **A recent warning.** On 8 September 2026, OpenAI announced a claimed solution of the Navier–Stokes Millennium Prize Problem, produced by thousands of AI agents running in parallel. About 12 hours earlier, two mathematicians had made public related results on the Euler equations, saying their progress had been passed to OpenAI days before; OpenAI disputed parts of their account. The episode raised exactly the questions OSO is built around: who gets credit when AI builds on human work, how to show who had a result first without publishing it, and what happens to unpublished work entered into AI systems ([summary](https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy)). OSO's answers: required parents and flagged uncited dependencies for AI-produced work (OIP-14), sealed priority claims with independent timestamps (OIP-10 section 5a, OIP-13), strict rules for AI processing of unpublished work (OIP-15 section 7a), and machine-checked proofs as review evidence (OIP-17).
 
 ## North star and milestones
 
@@ -137,7 +138,7 @@ New OSO is minted when an idea is validated, as in Proof of Idea. Because AI can
 
 **1. Stake-to-submit.** The author stakes a small amount of OSO with each new idea. The stake is returned when the challenge window closes without a successful challenge (or when the idea is returned for a reason other than spam), and slashed if validators or a challenge find spam or plagiarism.
 
-**2. Validation (layer 1).** AI pre-checks for spam, plagiarism, domain fit and plausible edge weights. Then N randomly selected validators (e.g. 5 to 7, drawn by a logged, reproducible procedure; see Architecture for its trust limits) vote. More than 50% approval publishes the idea into the graph. Validators are paid a fixed fee from the OSO fund for every on-time vote, whatever the outcome, plus a share of the mint when an idea is admitted. Validation is an admission check against stated criteria (provenance, required fields, duplication, spam, plagiarism, domain fit), not a scientific verdict. Validators are sanctioned only when their decision is overturned with evidence, on challenge or on the author's appeal, or for missed deadlines; owners can appeal both a rejection and a removal once. Scientific disagreement is never penalized (addresses OIP-4). If a community cannot supply enough conflict-free validators, the idea waits: quorum and conflict rules are never relaxed silently.
+**2. Validation (layer 1).** AI pre-checks for spam, plagiarism, domain fit and plausible edge weights. Then N randomly selected validators (e.g. 5 to 7, drawn by a logged, reproducible procedure; see Architecture for its trust limits) vote. More than 50% approval publishes the idea into the graph. Validators are paid a fixed fee from the OSO fund for every on-time vote, whatever the outcome, and get no share of the mint, which would pay them more for admitting. They must keep unadmitted work confidential, and every read of it is logged for its owners (OIP-11 section 3a). Validation is an admission check against stated criteria (provenance, required fields, duplication, spam, plagiarism, domain fit), not a scientific verdict. Validators are sanctioned only when their decision is overturned with evidence, on challenge or on the author's appeal, or for missed deadlines; owners can appeal both a rejection and a removal once. Scientific disagreement is never penalized (addresses OIP-4). If a community cannot supply enough conflict-free validators, the idea waits: quorum and conflict rules are never relaxed silently.
 
 **3. Value flow-back.** Value v entering idea I₀ from use, funding, a bounty or a gift is split as follows:
 
@@ -147,7 +148,7 @@ New OSO is minted when an idea is validated, as in Proof of Idea. Because AI can
 
 Each parent then keeps αⱼ of what it receives and passes the rest upstream. Value moves only along the payout graph: approved links from a later idea to strictly older ones, so it is acyclic. Similarity, disagreement and other links move no money. Root ideas keep everything they receive, and a shared ancestor reached through two branches receives both amounts. All amounts are integers; each idea tracks its cumulative obligations, so splitting one payment into many small ones gives the same end-of-round result, and small amounts wait as recorded liabilities until they are worth settling. What an idea keeps goes to its IDEA-token holders, who are its owners: the tokens are the ownership shares (OIP-8). Exact rules are in OIP-14.
 
-**4. Minting on validation.** When an idea passes validation, new OSO is minted and split as in Proof of Idea: 50% to the authors, 30% to the OSO fund, 15% to the cited ideas (by edge weight w, then flowing upstream by α) and 5% to the validators. The whole mint, and the author's stake, are held during a challenge window measured in blocks. They are released when the window closes, or burned and slashed if a challenge (and any appeal) shows spam or plagiarism. Only newly submitted original work mints: imported papers, metadata edits and ownership changes never do. Whether revisions, reviews and replications mint is an open question. Value that arrives later (use, funding, gifts) reaches an idea through flow-back, not new minting. Emission policy (fixed cap or adaptive) is an open question.
+**4. Minting on validation.** When an idea passes validation, new OSO is minted and split close to Proof of Idea: 50% to the authors, 35% to the OSO fund and 15% to the cited ideas (by edge weight w, then flowing upstream by α). Proof of Idea's 5% validator share now goes to the fund, which pays validators per vote. The whole mint, and the author's stake, are held during a challenge window measured in blocks. They are released when the window closes, or burned and slashed if a challenge (and any appeal) shows spam or plagiarism. Only newly submitted original work mints: imported papers, metadata edits and ownership changes never do. Whether revisions, reviews and replications mint is an open question. Value that arrives later (use, funding, gifts) reaches an idea through flow-back, not new minting. Emission policy (fixed cap or adaptive) is an open question.
 
 **5. Review as a configurable pipeline.** Review serves different purposes, so each community assembles its own pipeline of review layers, each stating who takes part, how they are selected, what a review contains, what it pays and which rating it feeds (OIP-17). The default pipeline has four layers: (1) a **spam filter**, the validation step above, which only admits ideas; (2) **assigned expert review**, by three experts drawn for each admitted idea and paid from the OSO fund the same whatever their verdict; (3) **expert reader review**, by any expert who reads the idea, at any time; and (4) **community review**, by any OSO member interested in the idea. Communities can add other layers, such as an invited panel for a channel, or **AI agent review**, where registered AI agents check statistics, citations and code at scale; their reviews feed a separate AI rating and their own track record. Each review is an idea linked to the reviewed idea. Ratings from different layers are shown separately, so no group drowns out another, and keep updating as reviews, replications and downstream use arrive (perpetual review). Negative reviews and scientific dissent stay public alongside the idea.
 
@@ -161,7 +162,7 @@ Ownership has three layers: proof of authorship, the link from a key to a real p
 
 **Specification:** [OIP-10: Ownership and identity](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-10.md).
 
-**Proof of authorship and priority.** Each idea version is hashed, signed by every owner's key, and recorded in a block with an operator-logged timestamp. In v1 this is a registration claim recorded by the operator, not independent proof of priority. It also does not prove who thought of the idea first; plagiarism checks at validation and a staked challenge process cover that gap.
+**Proof of authorship and priority.** Each idea version is hashed, signed by every owner's key, and recorded in a block. Block hashes are anchored to independent timestamping services, so anyone can show a registration existed no later than a given time without trusting the operator. Researchers can also make a **sealed priority claim**: register only a salted hash of unpublished work, keep the content private, and reveal it later to prove they held it by the time of an independent timestamp made within minutes. A claim on an earlier draft can be revealed alongside the revised work, with the draft published for comparison (OIP-10 section 5a). A registration time still does not prove who thought of an idea first; plagiarism checks at validation and a staked challenge process cover that gap.
 
 **Identity (replaces the 2017 URI design).** People sign in with an account they already have: Google, a one-time email link, or others such as GitHub or ORCID. Sign in with Apple is future work, since it needs a paid Apple developer membership. They can link more accounts and add attestations later: ORCID, institutional email, peer vouches. Signing in proves control of an account, not real-world identity, and on its own grants no trust. After the first sign-in, OSO creates a key pair and, in v1, holds it for the user. Key recovery, export, delegated signing (including for AI services) and operator access must be specified before real value is involved. Easy sign-in gives access to browsing, chat and submissions within rate limits; trusted roles need more: claiming an imported paper needs a linked ORCID (or adjudication with evidence), and being drawn as a validator or reviewer needs earned reputation and any attestations the community requires. Email addresses and account identifiers never appear on the public ledger.
 
@@ -268,7 +269,9 @@ The main risks are spam, Sybil identities, buying influence and gaming the edge 
 | Inflated edge weights (citation rings, self-citation) | AI estimate as the baseline, validator review, graph analysis for rings, and capped weight for self-citation |
 | Lazy or malicious validators | Logged selection, public votes, deadlines, pay that does not depend on the outcome, and sanctions only for decisions overturned on challenge or appeal |
 | Capture of a channel or sub-network (OIP-5) | Open rules and history; communities can fork a setup, list the same ideas and govern new work under their own rules |
-| Plagiarism or priority theft | Similarity checks against the graph, and a staked challenge window after publication |
+| Plagiarism or priority theft | Similarity checks against the graph, a staked challenge window after publication, and sealed priority claims with prompt independent timestamps |
+| Validators using or leaking unpublished work | Confidentiality duty, an access log the owners can see, optional restricted access, and misconduct penalties (OIP-11 section 3a) |
+| Malicious code in submissions | Automated verification runs in isolated, network-free environments with no access to keys or other systems (OIP-17 section 7b) |
 | Token concentration by early funders (OIP-3) | No pre-mine beyond a small, disclosed bootstrap pool; earned emission; and funding that can never buy voting weight |
 | Large files overloading storage | File size limits in the content store, submission stakes, and per-identity limits |
 
@@ -329,7 +332,7 @@ These checks cover accounting correctness only. Resistance to gaming and usefuln
 
 ## Specifications (OIPs)
 
-This doc is the overview; the exact rules are in OSO Idea Proposals (OIPs), which follow Ethereum's EIP process. All v1 OIPs are drafts. The links below work once the OIPs branch is merged into the repository.
+This doc is the overview; the exact rules are in OSO Idea Proposals (OIPs), which follow Ethereum's EIP process. All v1 OIPs are drafts.
 
 | OIP | Title | Type / category | Status | Covers |
 | --- | --- | --- | --- | --- |
@@ -343,7 +346,7 @@ This doc is the overview; the exact rules are in OSO Idea Proposals (OIPs), whic
 | [14](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-14.md) | Idea attribution and value flow | Core | Draft | Intrinsic and extrinsic links over time, approval, payout waterfall |
 | [15](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-15.md) | AI services, models and costs | Module | Draft | Model choice, local hosting, recorded outputs, who pays |
 | [16](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-16.md) | Idea object | Core | Draft | What an idea is, work ID, immutable versions, registry record |
-| [17](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md) | Peer review | Module | Draft | Review principles; one simple v1 process: paid invited reviews, open reviews, perpetual ratings |
+| [17](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-17.md) | Peer review | Module | Draft | Review principles; configurable pipelines of review layers (spam filter, assigned expert, expert reader, community, and optional AI agent review and automated verification); perpetual ratings |
 | [1](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-1.md) | IPFS integration and platform UI | Informational | Stagnant | 2017 proposal |
 | [2](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-2.md) | Funding application | Meta | Stagnant | 2017 proposal |
 | [3](https://github.com/open-science-org/OIPs/blob/master/OIPS/oip-3.md) | Funding OSO | Meta | Stagnant | 2018 proposal |
@@ -364,7 +367,7 @@ These need a decision before or during Phase 1.
   Proposal: start v1 with parameter-efficient fine-tuning, and add neuroimaging ML as the second community, which also tests per-community setups such as a different default α.
 - [ ] **Emission:** how much is minted per validated idea? Keep Proof of Idea's fixed cap (10¹² OSO, reward rate 10⁻¹⁰ of the remaining supply), or let the rate adjust over time?
 - [ ] **Default α:** fixed per community (now proposed), never set by authors. What default value (e.g. 0.8), and can a community change it for existing ideas?
-- [ ] **Reward split:** keep Proof of Idea's 50/30/15/5 split (authors, fund, cited ideas, validators), or change it? How long should the challenge window be?
+- [ ] **Reward split:** keep the 50/35/15 split (authors, fund, cited ideas; Proof of Idea's 5% validator share now goes to the fund), or change it? How long should the challenge window be?
 - [ ] **Governance at launch:** a core team at first, with what path and timeline to community control?
 - [ ] **Legal entity:** a non-profit (as discussed in OIP-3) or a foundation, and in which country?
 - [ ] **Target chain for migration:** which L2, and when do we decide?
@@ -388,6 +391,10 @@ These need a decision before or during Phase 1.
 - [OSO: An Idea Platform v0.3](https://github.com/open-science-org/wiki/blob/master/OSO_Idea_Platform_whitepaper.pdf) (Nov 2018): GIP, tokens, expertise and reputation, Idea-Hub
 - [Proof of Idea v0.0](https://github.com/open-science-org/wiki/blob/master/Proof_of_Idea.pdf) (Sep 2018): validator consensus, minting, reward split
 - [Technical design v0](https://github.com/open-science-org/OSO/blob/master/OSO_design_v0.pdf) (May 2018)
+
+**Further reading**
+
+- [Navier–Stokes priority controversy](https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_priority_controversy) (Wikipedia, 2026): a dispute over credit, priority and data handling after an AI system's announced proof; a case for several v1 rules.
 
 **Repos and threads**
 

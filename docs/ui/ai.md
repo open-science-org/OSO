@@ -39,6 +39,8 @@ In Phase B these task settings move from this file into each community's setup (
 | **Local, open-weight (Ollama, llama.cpp, LM Studio; vLLM for bulk)** | No per-call cost; unpublished work never leaves our machine; exact weights can be recorded for audits | Needs hardware (a GPU for larger models); lower quality than top hosted models for hard tasks; someone runs it | **Recommended for embeddings, domain tagging and development**, and for authors who ask for local-only processing |
 | Free tiers only | No cost | Rate limits, unpredictable availability, and terms that may allow logging or training on inputs | Experiments only, never for unpublished submissions |
 
+**Protecting unpublished work.** Unpublished submissions go only to local models or to providers whose terms exclude training and retention, and every AI processing of a submission is logged for its owners to see (OIP-15 section 7a). This choice limits which hosted providers and models a community can pin for pre-screening; check each provider's current terms before pinning it.
+
 **Recommendation for Phase A.** Use OpenRouter for chat and edge assessments, with a small daily budget that is published, and a local Ollama server for embeddings and tagging. Developers can run everything locally at no cost by pointing every task at the local provider. API keys live only on the API server, in environment variables, never in the browser or the repository. Later, users may bring their own key or local model for heavy chat use (OIP-15 section 5).
 
 **Costs to expect.** The curated slice is small (50 to 100 works, a few hundred edges), so assessing it once with two models is a one-off cost that is easy to bound; chat is the open-ended cost, capped by the daily budget and a per-user allowance.
