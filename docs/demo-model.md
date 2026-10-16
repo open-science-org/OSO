@@ -1,13 +1,13 @@
 # OSO v1 demo: research-community model
 
-**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-15 · **Simulator:** [open-science-org/app `sim/`](https://github.com/open-science-org/app/tree/master/sim)
+**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-16 · **Simulator:** [open-science-org/app `sim/`](https://github.com/open-science-org/app/tree/master/sim) · **Results:** [log of saved runs](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md)
 
 > **TL;DR.** The v1 demo is an experiment.
 > - **What it compares.** Two communities of AI scientist agents get the same budget and the same problem. One works under traditional incentives, the other under OSO incentives.
 > - **What it tests.** Whether OSO produces more value: faster, cheaper, and harder results.
 > - **How traditional research fits.** It isn't a separate system. It is OSO with flow-back switched off and only finished work shared.
 >
-> This doc gives the model behind the experiment, so the parameters can be explored by simulation before money is spent on LLM agents. The problem space is still open; formal math in Lean is the leading candidate.
+> This doc gives the model behind the experiment, so the parameters can be explored by simulation before money is spent on LLM agents. First simulation results are [below](#first-simulation-results), with every run [logged in the app repository](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md). The problem space is still open; formal math in Lean is the leading candidate.
 
 ![One model, two rule settings: traditional research vs. OSO](img/demo-model.svg)
 
@@ -260,11 +260,21 @@ Value is measured on several axes, because a setting can be fastest but expensiv
 
 ## First simulation results
 
-The simulator, its full description and every saved result are in the app repository: [sim/README.md](https://github.com/open-science-org/app/blob/master/sim/README.md), with results logged in [sim/results/](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md). Each result names the commit that produced it and can be regenerated with one command.
+The simulator and its full description are in [sim/README.md](https://github.com/open-science-org/app/blob/master/sim/README.md) in the app repository. Every saved result is listed in the [log](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md). Each result names the commit that produced it, and can be regenerated with one command.
 
-**Simple model first.** On a single chain with N identical agents, sharing progress reaches about N times deeper than hiding it for the same budget. The simulator matches the exact prediction for every N from 1 to 16. This check also found a flaw in the first random-number generator, which was then replaced.
+| Experiment | What it tests | Results |
+| --- | --- | --- |
+| Simple model | One chain, shared vs. hidden progress, against exact predictions | [summary](https://github.com/open-science-org/app/blob/master/sim/results/simple/summary.md) |
+| Six settings | Traditional, OSO and the mixed corners on the default world | [summary](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md) |
+| α sweep | How sharing and outcomes change with α, under agent's-choice visibility | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md) |
+| α × ψ × c | Where sharing becomes rational, by scoop risk ψ and cited share c | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md) |
+| Sensitivity | How much the gap depends on the gaming agent and the compute loop | [summary](https://github.com/open-science-org/app/blob/master/sim/results/sensitivity/summary.md) |
 
-**Full model, default world** (8 levels, 7 targets, 12 agents, X = 1,200; 100 seeds; mean):
+Each folder also holds `config.json` (every parameter and the commit) and `runs.jsonl` (one line per run).
+
+**Simple model first** ([results](https://github.com/open-science-org/app/blob/master/sim/results/simple/summary.md)). On a single chain with N identical agents, sharing progress reaches about N times deeper than hiding it for the same budget. The simulator matches the exact prediction for every N from 1 to 16. This check also found a flaw in the first random-number generator, which was then replaced.
+
+**Full model, default world** (8 levels, 7 targets, 12 agents, X = 1,200; 100 seeds; mean; [results](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md)):
 
 | Setting | Frontier (level) | Runs reaching level 7 | Cost to level 7 |
 | --- | --- | --- | --- |
@@ -276,10 +286,10 @@ The simulator, its full description and every saved result are in the app reposi
 What they show so far:
 
 1. **Sharing does most of the work.** Immediate visibility reaches level 7 in every run at about half the cost, with or without flow-back. In this model the effect is largely built in, because published results are free to use and always correct.
-2. **Flow-back makes agents choose to share only well below α = 0.8.** Under agent's-choice visibility, the share of lemmas shared is 0.23 at α = 1, 0.22 at 0.8, 0.47 at 0.3 and 0.77 at 0.1. With a lower scoop risk (ψ = 0.1), it is already 0.61 at α = 0.5. So α\* exists in the model, but its value depends on ψ, which is a guess.
-3. **The cited mint share c barely matters,** because the mint is small next to the bounties.
-4. **Flow-back makes credit more accurate when work is shared:** 0.57 vs. 0.47.
-5. **Under traditional rules, a single gaming agent captures most of the compute and a median of all the pay.** Nobody else earns until they win a target, so the earnings-driven compute loop funds the spammer. Without the gamer, traditional reaches level 7.0 and the gap to OSO shrinks from 2.2 levels to 1.0. A large part of the default gap therefore comes from this combination, and should be presented with that decomposition.
+2. **Flow-back makes agents choose to share only well below α = 0.8.** Under agent's-choice visibility, the share of lemmas shared is 0.23 at α = 1, 0.22 at 0.8, 0.47 at 0.3 and 0.77 at 0.1. With a lower scoop risk (ψ = 0.1), it is already 0.61 at α = 0.5. So α\* exists in the model, but its value depends on ψ, which is a guess. Sources: [α sweep](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md), [α × ψ × c](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md).
+3. **The cited mint share c barely matters,** because the mint is small next to the bounties ([α × ψ × c](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md)).
+4. **Flow-back makes credit more accurate when work is shared:** 0.57 vs. 0.47 ([six settings](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md)).
+5. **Under traditional rules, a single gaming agent captures most of the compute and a median of all the pay.** Nobody else earns until they win a target, so the earnings-driven compute loop funds the spammer. Without the gamer, traditional reaches level 7.0 and the gap to OSO shrinks from 2.2 levels to 1.0. A large part of the default gap therefore comes from this combination, and should be presented with that decomposition ([sensitivity](https://github.com/open-science-org/app/blob/master/sim/results/sensitivity/summary.md)).
 
 These are a first calibration, not a result to present. The simulator's limits are listed in [sim/README.md, section 6](https://github.com/open-science-org/app/blob/master/sim/README.md#6-what-this-simulation-can-and-cannot-show).
 
@@ -303,7 +313,7 @@ Each is a place where the LLM experiment may behave differently from the model, 
 3. **Limits.** OSO's advantage should shrink when agents are impatient (low δ), and should break when gamers are common and the validation screen θ is weak. Both are limits to state honestly.
 4. **Credit.** Traditional rules pay final provers and leave foundation builders unpaid; OSO's pay should track true contribution.
 
-These are model predictions, not results. The simulation tests them, and the LLM experiment tests whether real agents behave like the model.
+These are model predictions, not results. The simulation tests them ([first results](#first-simulation-results)), and the LLM experiment tests whether real agents behave like the model.
 
 ## Problem space
 
@@ -333,7 +343,7 @@ Any problem space must:
 
 ## Phases
 
-1. **Simulation.** Implement this model, reusing the ledger's tested OIP-14 waterfall from [open-science-org/app](https://github.com/open-science-org/app). Run thousands of settings without LLMs; find α\* and the settings worth testing.
+1. **Simulation.** Implement this model, reusing the ledger's tested OIP-14 waterfall from [open-science-org/app](https://github.com/open-science-org/app). Run thousands of settings without LLMs; find α\* and the settings worth testing. *First version done:* see [First simulation results](#first-simulation-results).
 2. **Pilot.** LLM agents on a small problem set with cheap models, in the traditional and OSO settings. Check the mechanics and whether incentives move behaviour at all.
 3. **Full runs.** The chosen problem space, the real budget, several runs per setting.
 4. **Demo.** The settings' DAGs growing side by side, the frontier-vs-spend curves and the α sweep. All runs replayable from their logs.
