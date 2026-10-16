@@ -260,25 +260,28 @@ Value is measured on several axes, because a setting can be fastest but expensiv
 
 ## First simulation results
 
-From `npm run sim -- --seeds 40 --sweep` in the app repository, with the default world: 8 levels, 10 results per level, 7 targets; 12 agents of six archetypes; X = 1,200 over 120 rounds. Mean ± standard deviation over 40 seeds:
+The simulator, its full description and every saved result are in the app repository: [sim/README.md](https://github.com/open-science-org/app/blob/master/sim/README.md), with results logged in [sim/results/](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md). Each result names the commit that produced it and can be regenerated with one command.
 
-| Setting | Frontier (level) | Runs reaching level 7 | Rounds to level 7 | Cost to level 7 |
-| --- | --- | --- | --- | --- |
-| Traditional | 5.6 ± 1.2 | 28% | 98 ± 22 | 970 ± 222 |
-| OSO (immediate) | 8.0 ± 0.2 | 100% | 44 ± 14 | 439 ± 142 |
-| Flow-back, finished-only | 6.0 ± 1.2 | 50% | 97 ± 20 | 962 ± 198 |
-| No flow-back, immediate | 8.0 ± 0.0 | 100% | 48 ± 10 | 475 ± 104 |
-| No flow-back, agent's choice | 6.0 ± 0.9 | 25% | 96 ± 19 | 956 ± 186 |
-| OSO (agent's choice) | 6.2 ± 1.0 | 45% | 100 ± 16 | 992 ± 158 |
+**Simple model first.** On a single chain with N identical agents, sharing progress reaches about N times deeper than hiding it for the same budget. The simulator matches the exact prediction for every N from 1 to 16. This check also found a flaw in the first random-number generator, which was then replaced.
+
+**Full model, default world** (8 levels, 7 targets, 12 agents, X = 1,200; 100 seeds; mean):
+
+| Setting | Frontier (level) | Runs reaching level 7 | Cost to level 7 |
+| --- | --- | --- | --- |
+| Traditional | 5.7 | 35% | 957 |
+| OSO (immediate) | 7.9 | 100% | 485 |
+| No flow-back, immediate | 7.9 | 100% | 494 |
+| OSO (agent's choice) | 6.3 | 43% | 959 |
 
 What they show so far:
 
-1. **Sharing does most of the work.** When results are visible immediately, the community reaches the top level in every run at about half the cost, with or without flow-back. This supports prediction 1.
-2. **At α = 0.8, flow-back is too weak to make agents share by choice.** With agent's-choice visibility, the share of lemmas published at once rises only from 0.21 (α = 1) to 0.27 (α = 0.5). With a lower scoop risk (ψ = 0.1), it rises from 0.23 at α = 1 to 0.81 at α = 0.3, and then every run reaches level 7. So α\* exists in this model, but well below 0.8. The cited mint share c makes little difference, because the mint is small next to the bounties.
-3. **Flow-back makes credit more accurate when work is shared:** 0.59 for OSO against 0.48 for immediate sharing without flow-back.
-4. **Publish-count incentives feed spammers.** Under traditional rules, 31% of spend goes to the one gaming agent, because its trivial results earn mint and the compute loop rewards earnings. This depends on the validation screen θ = 0.5 being weak.
+1. **Sharing does most of the work.** Immediate visibility reaches level 7 in every run at about half the cost, with or without flow-back. In this model the effect is largely built in, because published results are free to use and always correct.
+2. **Flow-back makes agents choose to share only well below α = 0.8.** Under agent's-choice visibility, the share of lemmas shared is 0.23 at α = 1, 0.22 at 0.8, 0.47 at 0.3 and 0.77 at 0.1. With a lower scoop risk (ψ = 0.1), it is already 0.61 at α = 0.5. So α\* exists in the model, but its value depends on ψ, which is a guess.
+3. **The cited mint share c barely matters,** because the mint is small next to the bounties.
+4. **Flow-back makes credit more accurate when work is shared:** 0.57 vs. 0.47.
+5. **Under traditional rules, a single gaming agent captures most of the compute and a median of all the pay.** Nobody else earns until they win a target, so the earnings-driven compute loop funds the spammer. Without the gamer, traditional reaches level 7.0 and the gap to OSO shrinks from 2.2 levels to 1.0. A large part of the default gap therefore comes from this combination, and should be presented with that decomposition.
 
-These depend on the parameters, especially the scoop risk ψ, the bounty sizes and θ. They are a first calibration, not a result to present.
+These are a first calibration, not a result to present. The simulator's limits are listed in [sim/README.md, section 6](https://github.com/open-science-org/app/blob/master/sim/README.md#6-what-this-simulation-can-and-cannot-show).
 
 ## Simplifications to revisit
 
