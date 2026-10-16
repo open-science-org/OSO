@@ -1,6 +1,6 @@
 # OSO v1 demo: research-community model
 
-**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-15
+**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-15 · **Simulator:** [open-science-org/app `sim/`](https://github.com/open-science-org/app/tree/master/sim)
 
 > **TL;DR.** The v1 demo is an experiment.
 > - **What it compares.** Two communities of AI scientist agents get the same budget and the same problem. One works under traditional incentives, the other under OSO incentives.
@@ -93,7 +93,7 @@ Agent i has eight core traits:
 | Cost per attempt | k_i | Attempts per round = b_i(t) / k_i |
 | Time horizon | δ_i | Discount per round on future rewards |
 | Risk attitude | γ_i | Penalty on uncertain payoffs |
-| Reuse | ω_i | Chance the agent trusts and uses another agent's published result; otherwise it proves it again |
+| Reuse | ω_i | Chance per round that the agent takes up another agent's published result. Low reuse means a lag before the agent can build on others' work, during which it may prove the result again |
 | Sharing disposition | β_i | Intrinsic value the agent places on publishing |
 | Gaming | g_i | Share of attempts spent farming trivial results |
 
@@ -114,7 +114,7 @@ In the LLM experiment, some traits come from the choice of model (skill, conject
 
 ### 4. Knowledge, priority and visibility
 
-- **Known results.** K_i(t) is what agent i knows: its own proved results, plus visible published results it accepts (each with chance ω_i).
+- **Known results.** K_i(t) is what agent i knows: its own proved results, plus published results it has taken up (each with chance ω_i per round).
 - **Frontier.** F_i(t) = { r : P(r) ⊆ K_i(t), r not already proved by i } is what agent i can attempt.
 - **Priority.** The **author of record** of r is the first agent to publish it. Any other proof of r is a **duplicate**: it earns nothing and counts as waste.
 - **Visibility rule V:**
@@ -174,22 +174,22 @@ With traditional rules (α = 1, c = 0), **S_r = 0 for every result that is not a
 The score is:
 
 ```
-U_i(r) = π_i(r) · [ (1 − c)·m  +  1[r ∈ T] · α · B_r · (1 − d̂_i(r))  +  δ_i^h(r) · Ŝ_i(r) ]
-         − γ_i · Var_i(r)^½
+V_i(r) = (1 − c)·m  +  1[r ∈ T] · α · B_r · win_i(r)  +  δ_i^h(r) · α · B̂_down,i(r) · win_i(r)  +  δ_i^h(r) · Ŝ_i(r)
+U_i(r) = V_i(r) · ( π_i(r) − γ_i · √(π_i(r)·(1 − π_i(r))) )
 ```
 
-where:
-- d̂_i(r) is the estimated chance that someone else publishes r first, from how many agents have r on their frontier;
-- h(r) is the expected delay until the flow-back arrives;
-- Var_i(r) is the variance of the payoff.
+The four terms of V are the mint, the bounty if r is a target, r's value as a **stepping stone** to a target the agent may win itself (under any rules, a lemma is worth proving on the way to one's own target), and flow-back. Here:
+- win_i(r) = 1 / (1 + rivals), where rivals is the number of other agents that can attempt r now;
+- B̂_down,i(r) is the agent's noisy estimate of the largest bounty below r;
+- h(r) is the expected delay until value from targets below r arrives.
 
 **Whether to publish now** (agent's-choice visibility only). The agent publishes r now if:
 
 ```
-β_i  +  δ_i · Ŝ_i(r) · κ  ≥  α · B̂_down,i(r) · ψ
+β_i · m  +  mint at risk  +  δ_i · Ŝ_i(r) · κ  ≥  α · B̂_down,i(r) · win_i(r) · ψ
 ```
 
-- **Left side:** the intrinsic value of sharing, plus the flow-back gained because others can now build on r. κ is how much publishing raises r's expected use.
+- **Left side:** the intrinsic value of sharing; the mint, which publishing earns now and keeping private earns only if the agent later wins a target that uses r (mint at risk = mint × (1 − δ^h · win)); and the flow-back gained because others can now build on r. κ is how much publishing raises r's expected use.
 - **Right side:** the risk of being scooped. B̂_down,i(r) is the bounty the agent hopes to win on a target below r; ψ is how much publishing raises a rival's chance of winning it first.
 
 **Prediction.** With traditional rules, Ŝ = 0 for lemmas, so an agent publishes a lemma only if its sharing disposition β_i is large: rational agents hoard. As α falls, the left side grows and the right side shrinks. They cross at a threshold **α\***, below which sharing is the rational choice.
@@ -217,7 +217,7 @@ This loop is how incentives change what an LLM agent can do: an agent cannot res
 5. Mints and bounties are paid through the waterfall (section 5).
 6. Every agent's known results K_i are updated.
 
-The run stops when X is spent. Each setting is run S times with different random seeds.
+The run stops when X is spent, or earlier when every target is solved: a funder stops paying then. Each setting is run S times with different random seeds.
 
 ### 9. Settings
 
@@ -241,9 +241,9 @@ Value is measured on several axes, because a setting can be fastest but expensiv
 | **Cost** | Cumulative spend at that round |
 | **Productivity** | Distinct published, non-trivial results per unit of spend |
 | **Breadth** | Share of targets solved; number of areas reached |
-| **Waste** | Share of spend on duplicate proofs, dead ends and trivial results |
+| **Waste** | Share of spend on redundant work (attempts on results someone else published first), dead ends and trivial results |
 | **Reliability** | Share of runs that reach L\*, and the spread across runs |
-| **Credit accuracy** | 1 − ½ Σ_i \| pay share_i − contribution share_i \|. **Contribution** comes from the hidden DAG: each solved target's bounty is split over every result in its proof in proportion to that result's cost 1/p_r. **Pay share** is the agent's share of total earnings |
+| **Credit accuracy** | 1 − ½ Σ_i \| bounty pay share_i − contribution share_i \|. **Contribution** comes from the hidden DAG: each solved target's bounty is split over every result in its proof in proportion to that result's cost 1/p_r. **Bounty pay share** is the agent's share of bounty payouts (the mint is per-result credit and is left out). When one agent proves a whole chain alone, as under traditional rules, this is trivially high, so compare it between settings that share work |
 
 **Diagnostics** that explain the outcomes:
 - sharing rate;
@@ -257,6 +257,28 @@ Value is measured on several axes, because a setting can be fastest but expensiv
 - a profile of all eight axes for each setting;
 - a Pareto view where settings trade one axis against another;
 - the α sweep, with α\* marked.
+
+## First simulation results
+
+From `npm run sim -- --seeds 40 --sweep` in the app repository, with the default world: 8 levels, 10 results per level, 7 targets; 12 agents of six archetypes; X = 1,200 over 120 rounds. Mean ± standard deviation over 40 seeds:
+
+| Setting | Frontier (level) | Runs reaching level 7 | Rounds to level 7 | Cost to level 7 |
+| --- | --- | --- | --- | --- |
+| Traditional | 5.6 ± 1.2 | 28% | 98 ± 22 | 970 ± 222 |
+| OSO (immediate) | 8.0 ± 0.2 | 100% | 44 ± 14 | 439 ± 142 |
+| Flow-back, finished-only | 6.0 ± 1.2 | 50% | 97 ± 20 | 962 ± 198 |
+| No flow-back, immediate | 8.0 ± 0.0 | 100% | 48 ± 10 | 475 ± 104 |
+| No flow-back, agent's choice | 6.0 ± 0.9 | 25% | 96 ± 19 | 956 ± 186 |
+| OSO (agent's choice) | 6.2 ± 1.0 | 45% | 100 ± 16 | 992 ± 158 |
+
+What they show so far:
+
+1. **Sharing does most of the work.** When results are visible immediately, the community reaches the top level in every run at about half the cost, with or without flow-back. This supports prediction 1.
+2. **At α = 0.8, flow-back is too weak to make agents share by choice.** With agent's-choice visibility, the share of lemmas published at once rises only from 0.21 (α = 1) to 0.27 (α = 0.5). With a lower scoop risk (ψ = 0.1), it rises from 0.23 at α = 1 to 0.81 at α = 0.3, and then every run reaches level 7. So α\* exists in this model, but well below 0.8. The cited mint share c makes little difference, because the mint is small next to the bounties.
+3. **Flow-back makes credit more accurate when work is shared:** 0.59 for OSO against 0.48 for immediate sharing without flow-back.
+4. **Publish-count incentives feed spammers.** Under traditional rules, 31% of spend goes to the one gaming agent, because its trivial results earn mint and the compute loop rewards earnings. This depends on the validation screen θ = 0.5 being weak.
+
+These depend on the parameters, especially the scoop risk ψ, the bounty sizes and θ. They are a first calibration, not a result to present.
 
 ## Simplifications to revisit
 
