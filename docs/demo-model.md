@@ -1,358 +1,380 @@
-# OSO v1 demo: research-community model
+# OSO v1 demo: experiment specification
 
-**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-16 · **Simulator:** [open-science-org/app `sim/`](https://github.com/open-science-org/app/tree/master/sim) · **Results:** [log of saved runs](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md)
+**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-16
 
-> **TL;DR.** The v1 demo is an experiment.
-> - **What it compares.** Two communities of AI scientist agents get the same budget and the same problem. One works under traditional incentives, the other under OSO incentives.
-> - **What it tests.** Whether OSO produces more value: faster, cheaper, and harder results.
-> - **How traditional research fits.** It isn't a separate system. It is OSO with flow-back switched off and only finished work shared.
->
-> This doc gives the model behind the experiment, so the parameters can be explored by simulation before money is spent on LLM agents. First simulation results are [below](#first-simulation-results), with every run [logged in the app repository](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md). The problem space is still open; formal math in Lean is the leading candidate.
+**Implementations:**
+- **Simulator:** [app/sim](https://github.com/open-science-org/app/tree/master/sim)
+- **Lean problem set:** app/problems (in preparation)
+- **Results:** [log of saved runs](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md)
 
-![One model, two rule settings: traditional research vs. OSO](img/demo-model.svg)
+> **TL;DR.**
+> - **The experiment.** The v1 demo compares two communities of AI research agents, given the same budget and the same problems. One works under traditional incentives, the other under OSO incentives. The question is which produces more value: faster, cheaper, and harder results.
+> - **This doc is the canonical specification.** It defines the research environment once, independent of any problem: results, attempts, success, sharing, rewards, rounds and measures.
+> - **Two instantiations so far.**
+>   - **The simulation:** results are abstract, and an attempt succeeds with a set chance. It is cheap and runs thousands of experiments.
+>   - **The Lean experiment:** results are real theorems, and an attempt succeeds when Lean accepts the agent's proof.
+> - **More complex experiments** are new instantiations of the same specification: new worlds, success oracles, agents or rules.
+> - **Traditional research is not a separate system.** It is one setting of OSO's rules.
 
-## Question
+![What the agents are solving: the simulation and the Lean experiment](img/sim-vs-lean.svg)
 
-For the same budget, does a community of AI scientist agents working under OSO incentives produce more verified value than the same agents under traditional incentives?
+## 1. Question and approach
 
-**Hypothesis.** Paying credit back to the work a result builds on makes building and sharing reusable foundations worthwhile, instead of racing for final results and hiding work until it is finished. Over time this compounds into reaching harder results for the same money.
+**Question.** For the same budget, does a community of AI research agents working under OSO incentives produce more verified value than the same agents under traditional incentives?
 
-**Why it matters now.** AI agents doing research will flood the literature, and they cost money. Whoever funds them wants the most research value per dollar. If the incentive rules decide how much an agent community achieves, OSO's rules are worth testing directly.
+**Hypothesis.** Hiding unfinished work makes every agent repeat the steps others have already done. Paying credit back to the work a result builds on makes sharing worthwhile. Together these should let a community reach harder results for the same money.
 
-## Design
+**Why now.** AI agents doing research will flood the literature, and they cost money. Whoever funds them wants the most research value per dollar.
 
-### Traditional research as a special case of OSO
+**Approach.**
+1. **One environment, defined here.** Every experiment uses the same concepts and protocol, whatever its problems are.
+2. **The incentive rules are parameters.** Traditional research and OSO are two settings of the same rules (section 3), so a difference between them can only come from the rules.
+3. **Simulation first, then real problems.** The simulation explores thousands of settings cheaply, with no real problem content. The Lean experiment then tests the settings that matter, with real problems and LLM agents.
 
-Two axes of the rules separate traditional research from OSO:
+## 2. The environment
 
-1. **Flow-back.** Does value flow back to the work a result built on? OSO controls this with α, the share of incoming value a result keeps (OIP-14), and c, the share of each new result's mint paid to what it built on (OIP-8).
-2. **Visibility.** When does work become visible to others: only when finished, after a delay, immediately, or when its author chooses?
+This section is canonical: both instantiations, and any future one, follow it. Where an element is decided by the instantiation, the text says so and section 6 says how.
 
-| | Flow-back off (α = 1, c = 0) | Flow-back on |
-| --- | --- | --- |
-| **Finished only** | **Traditional research** (baseline) | Credit without sharing |
-| **Immediate** | Sharing without credit (Polymath-style) | **Full OSO** |
+### 2.1 Results and the research tree
 
-The world, the agents and the budget are identical in every setting; only the rules change. Everything runs through one implementation, so a difference between settings can only come from the rules.
-
-### The mechanism test
-
-OSO's claim is not that forced sharing helps. Its claim is that flow-back makes sharing the rational choice. So a third visibility setting, **agent's choice**, lets each agent decide whether to publish a result now or keep it private.
-- **Without flow-back:** publishing a lemma early only helps rivals win the bounty first, so agents should hoard.
-- **With flow-back:** publishing earns flow-back when others build on it, so agents should share.
-
-If agents share more when flow-back is on, and the sharing leads to harder results, that is evidence for the mechanism, not only for its effects.
-
-### Comparisons
-
-| Comparison | Answers |
+| Term | Definition |
 | --- | --- |
-| Traditional vs. OSO | The headline: how much more value OSO produces |
-| The two mixed corners | How much of the gain comes from sharing, from credit, and from both together |
-| Agent's choice, flow-back off vs. on | Whether flow-back causes sharing |
-| A sweep of α (and c) | The threshold α\* where sharing becomes rational, and the best setting |
+| **Result** | One unit of research output. In the simulation, an abstract node; in the Lean experiment, a theorem |
+| **Prerequisite** | A result that another result builds on. A result can be attempted only by an agent that knows all its prerequisites |
+| **Research tree** | All results and their prerequisite links: a directed acyclic graph (DAG) |
+| **Root** | A result with no prerequisites |
+| **Level** | 1 for a root; otherwise 1 + the highest level among the result's prerequisites. Higher levels are deeper, and usually harder |
+| **Target** | A result with a public bounty. Targets are announced at the start |
+| **Dead end** | A result that no target depends on. It can be proved, but leads nowhere |
+| **Trivial result** | A result with no value that costs almost nothing to produce, such as spam |
+| **Frontier of an agent** | The results the agent can attempt now: those it does not know whose prerequisites it all knows |
 
-## The model
+Agents see the targets, their bounties, and the results they know. They do not see the rest of the tree. In the simulation the whole tree exists in advance and is hidden. In the Lean experiment, intermediate results do not exist until an agent states them.
 
-Section numbers match the figure.
+### 2.2 Attempts and success
 
-### 1. Time and money
-
-- **Rounds:** t = 1, …, T.
-- **Budget:** a funder spends a total of **X** compute units, released as **X_t = X / T** per round.
-- **Cost:** one attempt by agent i costs **k_i** units.
-
-### 2. The world: a hidden DAG of results
-
-R is the set of results and E the edges between them. Each result r has:
-
-- **prerequisites** P(r) ⊂ R: r can be attempted only when all of them are known;
-- **level** ℓ(r): the longest path to r from a root. This is its difficulty level;
-- **difficulty:** a base success chance per attempt, **p_r = p₀ · η^ℓ(r)**, with 0 < η < 1;
-- **area** a(r) ∈ {1…K}: its subfield.
-
-The world also contains:
-
-- **Targets** T ⊂ R, with public bounties **B_t = B₀ · g^ℓ(t)**. The paths to them are hidden.
-- **Dead ends:** results with no target among their descendants. They can be proved but lead nowhere.
-- **A trivial pool:** results that are always provable and have no descendants and no value. This is what spam produces.
-- **Attribution weights** w(r, j) for each j ∈ P(r), summing to 1 over j.
-  - The true weights are cost shares: w(r, j) ∝ 1 / p_j.
-  - The ledger uses estimated weights ŵ = w + noise with spread **σ_w**. σ_w = 0 means exact attribution, as in Lean; σ_w > 0 means estimated attribution, for example by embeddings.
-
-**Shape parameters:** depth, branching, number of areas, dead-end fraction, p₀, η, B₀, g.
-
-### 3. Agents
-
-Agent i has eight core traits:
-
-| Trait | Symbol | Effect |
-| --- | --- | --- |
-| Proving skill per area | s_i,a | Success chance per attempt: π_i(r) = min(1, s_i,a(r) · p_r) |
-| Conjecture quality | q_i | How noisy the agent's sense of which results matter is (section 5) |
-| Cost per attempt | k_i | Attempts per round = b_i(t) / k_i |
-| Time horizon | δ_i | Discount per round on future rewards |
-| Risk attitude | γ_i | Penalty on uncertain payoffs |
-| Reuse | ω_i | Chance per round that the agent takes up another agent's published result. Low reuse means a lag before the agent can build on others' work, during which it may prove the result again |
-| Sharing disposition | β_i | Intrinsic value the agent places on publishing |
-| Gaming | g_i | Share of attempts spent farming trivial results |
-
-Two settings apply to the whole population: **τ**, rationality (softmax temperature), and **ε**, the exploration rate. Later versions may add specialization breadth, an exploration rate per agent, and attention: how much of the graph an agent reads before acting.
-
-**Archetypes.** The population is a mix of named types, each a fixed set of trait values. The mix is varied between runs, with sensitivity checks on single traits.
-
-| Archetype | Character |
+| Term | Definition |
 | --- | --- |
-| Foundation builder | Patient, shares, prefers safe lemmas |
-| Target racer | Impatient, risk-seeking, hoards |
-| Cheap explorer | Low cost and low skill, explores widely |
-| Specialist | Strong in one area |
-| Free rider | Reuses others' work, never shares |
-| Gamer | Farms trivial results |
+| **Attempt** | One try by one agent at one result on its frontier. It costs compute: the agent's cost per attempt |
+| **Success** | The attempt worked: the agent has now proved the result and knows it. Nothing else counts as success |
+| **Failure** | The attempt did not work. The compute is spent and nothing is gained; there is no partial progress |
+| **Success oracle** | What decides whether an attempt succeeds. It is set by the instantiation (section 6) |
+| **Success chance p** | The probability that an attempt succeeds. The simulation sets it from the result's level and the agent's skill; in the Lean experiment it is measured, not set |
+| **Duplicate** | A success on a result someone else has already published. It earns nothing and counts as waste |
 
-In the LLM experiment, some traits come from the choice of model (skill, conjecture quality, cost) and some from the prompt (horizon, risk, sharing). All of them are also measured from behaviour, to check the model against the agents.
+**One rule for success, two oracles:**
+- **Simulation:** an attempt succeeds with chance p. The simulator draws a random number between 0 and 1, and the attempt succeeds if the number is below p.
+- **Lean:** an attempt succeeds if Lean's checker accepts the proof the agent wrote.
 
-### 4. Knowledge, priority and visibility
+### 2.3 Knowledge and sharing
 
-- **Known results.** K_i(t) is what agent i knows: its own proved results, plus published results it has taken up (each with chance ω_i per round).
-- **Frontier.** F_i(t) = { r : P(r) ⊆ K_i(t), r not already proved by i } is what agent i can attempt.
-- **Priority.** The **author of record** of r is the first agent to publish it. Any other proof of r is a **duplicate**: it earns nothing and counts as waste.
-- **Visibility rule V:**
-  - **finished-only:** a result stays private until its author proves a target that uses it; then the author's whole supporting bundle is published together;
-  - **delayed(d):** a result is published d rounds after it is proved;
-  - **immediate:** a result is published as soon as it is proved;
-  - **agent's choice:** the agent decides by the rule in section 6. Anything still private is published with the first target that uses it.
-
-Under every rule, a published result's prerequisites are published, so value never flows to hidden work.
-
-### 5. Rewards
-
-One ledger, following OIP-8 and OIP-14.
-
-**The waterfall.** Value v entering result r is split:
-- r's author keeps **α · v**;
-- **(1 − α) · v** flows to r's prerequisites by weight ŵ, recursively;
-- roots keep everything that reaches them.
-
-The share of value entering r that reaches an ancestor j is:
-
-```
-share(r → j) = Σ over paths r→…→j of  [ Π along the path of (1 − α)·ŵ ] · α_j
-               where α_j = α, or 1 if j is a root
-```
-
-**Mint.** Each newly published, non-trivial result mints m:
-- its author gets (1 − c) · m;
-- c · m enters its prerequisites through the waterfall.
-
-**Bounty.** When a target t is first published, B_t enters t through the waterfall.
-
-**Validation screen.** A trivial result is rejected with probability **θ**. This is OSO's admission check (OIP-11).
-
-**Attribution value.** S_r is what authoring r can be expected to earn later from flow-back:
-
-```
-S_r = Σ over targets t below r of  B_t · Pr(t solved) · share(t → r)
-      + c · m · (expected number of descendants of r)
-```
-
-Agents do not see the DAG, so agent i perceives S_r with noise that shrinks as its conjecture quality grows:
-
-```
-Ŝ_i(r) = S_r · (1 + σ₀ · (1 − q_i) · ξ),   ξ ~ N(0, 1)
-```
-
-With traditional rules (α = 1, c = 0), **S_r = 0 for every result that is not a target**: only targets pay beyond the base mint.
-
-### 6. Decisions
-
-**What to attempt.** For each attempt, agent i:
-- farms a trivial result, with probability g_i;
-- otherwise picks a random result in F_i(t), with probability ε;
-- otherwise picks r from F_i(t) by softmax over the score U_i(r), with temperature τ.
-
-The score is:
-
-```
-V_i(r) = (1 − c)·m  +  1[r ∈ T] · α · B_r · win_i(r)  +  δ_i^h(r) · α · B̂_down,i(r) · win_i(r)  +  δ_i^h(r) · Ŝ_i(r)
-U_i(r) = V_i(r) · ( π_i(r) − γ_i · √(π_i(r)·(1 − π_i(r))) )
-```
-
-The four terms of V are the mint, the bounty if r is a target, r's value as a **stepping stone** to a target the agent may win itself (under any rules, a lemma is worth proving on the way to one's own target), and flow-back. Here:
-- win_i(r) = 1 / (1 + rivals), where rivals is the number of other agents that can attempt r now;
-- B̂_down,i(r) is the agent's noisy estimate of the largest bounty below r;
-- h(r) is the expected delay until value from targets below r arrives.
-
-**Whether to publish now** (agent's-choice visibility only). The agent publishes r now if:
-
-```
-β_i · m  +  mint at risk  +  δ_i · Ŝ_i(r) · κ  ≥  α · B̂_down,i(r) · win_i(r) · ψ
-```
-
-- **Left side:** the intrinsic value of sharing; the mint, which publishing earns now and keeping private earns only if the agent later wins a target that uses r (mint at risk = mint × (1 − δ^h · win)); and the flow-back gained because others can now build on r. κ is how much publishing raises r's expected use.
-- **Right side:** the risk of being scooped. B̂_down,i(r) is the bounty the agent hopes to win on a target below r; ψ is how much publishing raises a rival's chance of winning it first.
-
-**Prediction.** With traditional rules, Ŝ = 0 for lemmas, so an agent publishes a lemma only if its sharing disposition β_i is large: rational agents hoard. As α falls, the left side grows and the right side shrinks. They cross at a threshold **α\***, below which sharing is the rational choice.
-
-### 7. The compute loop
-
-Earnings buy future compute, while total spend stays fixed at X:
-
-```
-b_i(t) = X_t · [ (1 − ρ)/N  +  ρ · Ē_i(t) / Σ_j Ē_j(t) ]
-Ē_i(t) = λ_E · Ē_i(t−1) + (1 − λ_E) · earnings_i(t)        (smoothed recent earnings)
-```
-
-- **ρ = 0:** equal fixed grants.
-- **ρ = 1:** compute allocated by earnings alone.
-
-This loop is how incentives change what an LLM agent can do: an agent cannot respond to rewards it cannot spend.
-
-### 8. One round
-
-1. Allocate budgets b_i(t) (section 7).
-2. Agents choose and make their attempts (section 6). Each succeeds with probability π_i(r).
-3. Successes pass the validation screen θ and are recorded with their priority.
-4. Publication follows the visibility rule V.
-5. Mints and bounties are paid through the waterfall (section 5).
-6. Every agent's known results K_i are updated.
-
-The run stops when X is spent, or earlier when every target is solved: a funder stops paying then. Each setting is run S times with different random seeds.
-
-### 9. Settings
-
-| Rule | Traditional | OSO |
-| --- | --- | --- |
-| α: share of incoming value a result keeps | **1** | 0.8 |
-| c: share of each mint paid to what it built on | **0** | 0.15 |
-| V: visibility | **finished-only** | immediate, or agent's choice (the mechanism test) |
-| θ, m, B_t, ρ, σ_w | same | same |
-
-The values for OSO are starting points. The α and c sweeps decide them.
-
-### 10. Measures
-
-Value is measured on several axes, because a setting can be fastest but expensive, or cheap but never reach anything hard. Two framings are both needed: what you get for a fixed budget, and what a fixed target costs.
-
-| Axis | Definition |
+| Term | Definition |
 | --- | --- |
-| **Frontier** | The highest level ℓ(r) published by spend x, as a curve over x ∈ [0, X]. This is the headline figure |
-| **Speed** | The first round in which a result of level L\* is published |
-| **Cost** | Cumulative spend at that round |
-| **Productivity** | Distinct published, non-trivial results per unit of spend |
-| **Breadth** | Share of targets solved; number of areas reached |
-| **Waste** | Share of spend on redundant work (attempts on results someone else published first), dead ends and trivial results |
-| **Reliability** | Share of runs that reach L\*, and the spread across runs |
-| **Credit accuracy** | 1 − ½ Σ_i \| bounty pay share_i − contribution share_i \|. **Contribution** comes from the hidden DAG: each solved target's bounty is split over every result in its proof in proportion to that result's cost 1/p_r. **Bounty pay share** is the agent's share of bounty payouts (the mint is per-result credit and is left out). When one agent proves a whole chain alone, as under traditional rules, this is trivially high, so compare it between settings that share work |
+| **Knowledge of an agent** | The results it can build on: those it proved itself, plus published results it has taken up |
+| **Publish** | Make a proved result public. Its prover becomes its **author of record**, if nobody published it first |
+| **Visibility rule** | When a proved result is published (section 3): only together with a target that uses it, after a delay, at once, or when the agent decides |
+| **Uptake** | Another agent adding a published result to its knowledge. Each agent takes up each published result with its reuse chance per round |
+| **Private result** | Proved but not published. Other agents know nothing about it, not even that it exists, so they may prove it again |
 
-**Diagnostics** that explain the outcomes:
-- sharing rate;
-- time from proof to publication;
-- reuse: how often a result is built on;
-- duplication;
-- earnings by archetype.
+**Publishing a result always publishes the private results it depends on,** so a published result never rests on hidden work.
 
-**Presentation:**
-- the frontier-vs-spend curve, one line per setting;
-- a profile of all eight axes for each setting;
-- a Pareto view where settings trade one axis against another;
-- the α sweep, with α\* marked.
+**What an agent knows** (the information model):
 
-## First simulation results
+| Information | Every agent knows | Only some agents know |
+| --- | --- | --- |
+| The targets and their bounties | ✓ | |
+| The rules (α, c, visibility, mint, bounties) | ✓ | |
+| Its own proved results, published or private | | ✓ (its own) |
+| Published results | ✓, once taken up | |
+| Another agent's private results | | nobody else |
+| How many agents can attempt each result now (in the simulation, used to estimate the race) | ✓ | |
+| The rest of the research tree, including dead ends | | nobody |
 
-The simulator and its full description are in [sim/README.md](https://github.com/open-science-org/app/blob/master/sim/README.md) in the app repository. Every saved result is listed in the [log](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md). Each result names the commit that produced it, and can be regenerated with one command.
+**What sharing conveys depends on the instantiation:**
+
+| A published result tells other agents | Simulation | Lean experiment |
+| --- | --- | --- |
+| That the result is proved, so they may build on it | ✓ | ✓ |
+| Its statement, so which intermediate results are worth having | — (results are abstract) | ✓ |
+| How it was proved, so the method can be reused | — | ✓ (the proof is readable) |
+| That it is correct | ✓ (always) | ✓ (checked by Lean) |
+| Failed attempts and partial progress | — | — (could be added as a rule) |
+
+So the simulation captures only one effect of sharing: **nobody has to prove a shared result again.** It omits the transfer of know-how, and it assumes shared results are free to absorb.
+
+### 2.4 Rewards
+
+All payments use one ledger, with the rules of OIP-8 and OIP-14.
+
+- **Mint.** Every newly published, non-trivial result mints m:
+  - its author gets (1 − c) · m (all of m for a root);
+  - c · m flows to the results it built on, through the waterfall.
+- **Bounty.** When a target is first published, its bounty B enters it through the waterfall.
+- **Waterfall.** Value entering a result is split:
+  - its author keeps a share **α**;
+  - the rest, 1 − α, flows to its prerequisites in proportion to their attribution weights, and the split repeats at each of them;
+  - a root keeps everything that reaches it.
+- **Attribution weights.** How much a result relied on each prerequisite. Exact where the instantiation shows it (in Lean, the proof records which results it uses); estimated otherwise.
+- **Validation screen.** A trivial result is rejected with probability **θ** and then earns nothing. This is OSO's admission check (OIP-11).
+
+### 2.5 Budget and compute
+
+| Term | Definition |
+| --- | --- |
+| **Budget X** | Total compute the funder spends in a run |
+| **Round** | One step of the run. Each round releases X / T compute, where T is the number of rounds |
+| **Allocation** | How a round's compute is split among agents. The default is half equally, half in proportion to recent earnings (ρ = 0.5), so earnings buy future compute |
+| **Stop** | A run ends when the budget is spent, or as soon as every target is solved |
+
+### 2.6 One round
+
+1. **Allocate** compute to agents (section 2.5).
+2. **Attempt.** Each agent spends its compute on attempts, in an interleaved random order so that agents race. For each attempt:
+   - the agent chooses a result on its frontier, or farms a trivial result;
+   - the success oracle decides the outcome;
+   - **on success:** the result is now known to the agent; a duplicate earns nothing; otherwise the visibility rule decides whether to publish it now.
+3. **Publish and pay.** Each publication makes the agent the author of record and pays mints and bounties through the waterfall.
+4. **Take up.** Agents take up newly published results.
+5. **Record** the measures (section 5).
+
+![The whole loop: compute budgets, agents, the research tree, visibility and the ledger, with earnings buying future compute](img/demo-model.svg)
+
+The figure shows one round as a loop. Numbers in brackets are sections of this specification.
+
+### 2.7 Worked example: why sharing helps
+
+**The setup:**
+- **Results:** three in a row. **A**; then **B**, which needs A; then **C**, which needs B. C is the target.
+- **Agents:** two, each with one attempt per round.
+- **Success chance:** every attempt succeeds with chance p = 50%.
+
+To compare fairly, both worlds use the same outcomes (✓ success, ✗ failure):
+
+| Round | Agent 1 | Agent 2 |
+| --- | --- | --- |
+| 1 | ✓ | ✗ |
+| 2 | ✗ | ✓ |
+| 3 | ✓ | ✗ |
+| 4 | ✗ | ✗ |
+| 5 | ✓ | ✓ |
+
+**Hidden (finished-only).** Each agent must prove A, B and C itself:
+
+| Round | Agent 1 | Agent 2 |
+| --- | --- | --- |
+| 1 | proves A | — |
+| 2 | — | proves A again |
+| 3 | proves B | — |
+| 4 | — | — |
+| 5 | **proves C** | proves B again |
+
+The target is reached in round 5, after 10 attempts. Agent 2's two successes were duplicates.
+
+**Shared (immediate).** Each success is published, and both agents work on the next step:
+
+| Round | Step | Agent 1 | Agent 2 | Outcome |
+| --- | --- | --- | --- | --- |
+| 1 | A | ✓ | ✗ | A proved |
+| 2 | B | ✗ | ✓ | B proved |
+| 3 | C | ✓ | ✗ | **C proved** |
+
+The target is reached in round 3, after 6 attempts, and no success is wasted.
+
+**In general:** hidden progress needs a success from every agent on every step; shared progress needs one success from anyone. With N agents, sharing reaches about N times deeper for the same budget. The simulator's simple model confirms this against the exact mathematics (section 8).
+
+## 3. The rules
+
+The rules are the only thing that differs between the settings compared. Two axes separate traditional research from OSO:
+
+| Axis | Parameter | Traditional | OSO |
+| --- | --- | --- | --- |
+| **Flow-back:** does value reach the work a result built on? | α (share a result keeps) and c (share of each mint paid to what it built on) | α = 1, c = 0: nothing flows back | e.g. α = 0.8, c = 0.15 |
+| **Visibility:** when is work published? | visibility rule | finished-only | immediate, or agent's choice |
+
+| | Flow-back off | Flow-back on |
+| --- | --- | --- |
+| **Finished-only** | **Traditional research** | Credit without sharing |
+| **Immediate** | Sharing without credit | **Full OSO** |
+
+- **The main comparison** is traditional vs. full OSO.
+- **The mixed corners** separate the gain from sharing from the gain from credit.
+- **The mechanism test** uses agent's-choice visibility. OSO claims flow-back makes sharing the rational choice, so agents should share more when flow-back is on. A sweep of α finds the threshold α\* where they start to.
+
+The mint m, the bounties, the screen θ and the compute allocation are held the same across the compared settings.
+
+## 4. Agents
+
+### 4.1 Traits
+
+Every agent, simulated or LLM, is described by eight traits. In the simulation they are parameters; in the Lean experiment some are set by the choice of model or prompt, and all are measured from behaviour.
+
+| Trait | Meaning |
+| --- | --- |
+| Skill | How likely its attempts are to succeed |
+| Conjecture quality | How well it judges which results are worth attempting |
+| Cost per attempt | Compute per attempt (model price, in the Lean experiment) |
+| Time horizon | How much it values rewards that arrive later |
+| Risk attitude | Preference for safe steps vs. long shots |
+| Reuse | How readily it builds on others' published work |
+| Sharing disposition | Intrinsic willingness to publish, beyond what pays |
+| Gaming | Share of its effort spent on trivial results |
+
+A population is a mix of **archetypes**, each a set of trait values: foundation builder, target racer, cheap explorer, specialist, free rider, gamer. The simulator's values are in [scenarios/default.yaml](https://github.com/open-science-org/app/blob/master/sim/scenarios/default.yaml).
+
+### 4.2 How agents decide
+
+**Simulated agents** follow a formula ([app/sim/README.md, section 2.5](https://github.com/open-science-org/app/blob/master/sim/README.md#25-decisions)):
+- they score each frontier result by its expected value under the rules: mint, bounty, value as a stepping stone to a target, and flow-back, adjusted for success chance, impatience and risk;
+- they mostly pick the best, with some randomness;
+- under agent's-choice visibility, they publish a lemma when what sharing earns outweighs the risk of being scooped.
+
+The formula is an assumption, and the simulation's results depend on it.
+
+**LLM agents** (the Lean experiment) decide for themselves. Each is told the rules, the targets, the bounties and what it knows, and chooses what to attempt and whether to publish. The prompts are the same in every setting except for the sentence describing the rules. Their decisions are observed, not assumed. This is the main reason for running the Lean experiment.
+
+## 5. Measures
+
+Value is measured on several axes, because a setting can be fast but expensive, or cheap but never reach anything hard. Both framings are needed: what a fixed budget achieves, and what a fixed target costs.
+
+| Measure | Definition |
+| --- | --- |
+| **Frontier** | The highest level among published results, by spend. As a curve over spend, this is the headline figure |
+| **Reach** | Share of runs in which a result of level L\* was published |
+| **Speed** | The first round in which level L\* was published |
+| **Cost** | Compute spent by that round |
+| **Productivity** | Published, non-trivial results per unit of spend |
+| **Breadth** | Share of targets solved |
+| **Waste** | Share of spend on duplicates and redundant attempts, dead ends and trivial results |
+| **Reliability** | Spread of the measures across runs |
+| **Credit accuracy** | How closely bounty pay matches true contribution. Contribution comes from the tree: each solved target's bounty is split over every result in its proof, in proportion to the result's difficulty. High trivially when one agent proves a whole chain alone, so compare it between settings that share work |
+
+**Diagnostics** explain the outcomes: sharing rate, hoarding, publication lag, reuse, duplicates, and pay by archetype.
+
+## 6. Instantiations
+
+| Element | Simulation | Lean experiment |
+| --- | --- | --- |
+| Results | Abstract nodes, all existing in advance | Lean theorems; intermediate ones stated by agents |
+| Research tree | Generated: random layers, a chain, or a DAG from a file | Defined by what proofs use; a reference tree from our own proofs |
+| Targets and bounties | Configured | Posted theorems; bounty from measured depth |
+| Success oracle | Chance p: from the level and the agent's skill | Lean's checker |
+| Success chance p | Set (0.5 × 0.6^(level − 1) by default) | Measured in the pilot |
+| What sharing conveys | That the result is proved | The statement and the proof |
+| Attribution weights | By difficulty (exact or with noise) | Exact: the theorems a proof uses |
+| Trivial results | Farmed by gaming agents; screen θ | Statements closed by one cheap tactic; rejected by the screen |
+| Agents | Formula agents with set traits | LLM agents; traits from model and prompt, measured |
+| Cost | Compute units | Tokens and checking time |
+| Status | Built; results logged | Problem set built and verified; harness not built |
+
+### 6.1 The simulation
+
+[app/sim](https://github.com/open-science-org/app/tree/master/sim) implements sections 2 to 5, with simulated agents and the chance oracle. Every setting is configuration: [scenarios/default.yaml](https://github.com/open-science-org/app/blob/master/sim/scenarios/default.yaml) documents the defaults, and experiments are YAML files. Its documentation, [sim/README.md](https://github.com/open-science-org/app/blob/master/sim/README.md), maps each element of this specification to its configuration and code.
+
+**What it can show:**
+- whether the mechanics work as specified;
+- which parameters matter;
+- failure modes;
+- which settings, budgets and numbers of runs the Lean experiment needs.
+
+**What it cannot show:** that OSO works with real research. Results are given rather than invented, attempts are independent draws with no learning, sharing conveys no know-how, and agents follow a formula.
+
+### 6.2 The Lean experiment
+
+The problem set has three areas, in Lean 4 with no Mathlib:
+- **A:** a new number sequence;
+- **B:** sorting;
+- **C:** 2 × 2 integer matrices.
+
+There are eight posted targets, including two that cross areas, and hidden reference proofs that Lean has checked. Agents propose statements and proofs, Lean checks them, and the same rules, ledger and measures apply. Success chances are measured in a pilot and can be fed back into the simulation as a world read from a file, with the reference tree and the measured chance per result.
+
+## 7. Defining an experiment
+
+An experiment is one instantiation plus a configuration:
+- a **world:** the research tree, targets and bounties;
+- a **success oracle;**
+- **agents:** the population and how they decide;
+- **rules:** α, c, mint, screen, visibility;
+- a **budget** and allocation;
+- the **measures**;
+- the **factors** to vary, with the number of runs.
+
+Each element is replaceable without changing the others:
+
+| Extension point | Built today | Examples of more complex experiments |
+| --- | --- | --- |
+| World | Random layers, chain, DAG from a file | The Lean reference tree with measured p; a real field's citation graph |
+| Success oracle | Chance p (simulation) | Lean checker; chance that grows with failed attempts (learning) |
+| Agents | Formula agents with eight traits | LLM agents; mixed populations of formula and LLM agents |
+| Visibility | Finished-only, delayed, immediate, agent's choice | Batched publication; sharing failed attempts |
+| Allocation | Earnings share, equal | Grant committees; funding by reviewed quality |
+| Rules | α, c, mint, screen | Different rules per area (OIP-12 community setups) |
+| Measures | Section 5 | New columns or analyses |
+
+In the simulator, the world, visibility, allocation, choice policy, measures and analyses are plugins, and experiments are YAML files ([sim/README.md, section 3](https://github.com/open-science-org/app/blob/master/sim/README.md#3-configuration-and-extending)). The success oracle and LLM agents are the next extension points to add, for the Lean experiment.
+
+## 8. Results so far
+
+All from the simulation; every run is [logged](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md) with the commit that produced it.
 
 | Experiment | What it tests | Results |
 | --- | --- | --- |
 | Simple model | One chain, shared vs. hidden progress, against exact predictions | [summary](https://github.com/open-science-org/app/blob/master/sim/results/simple/summary.md) |
-| Six settings | Traditional, OSO and the mixed corners on the default world | [summary](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md) |
-| α sweep | How sharing and outcomes change with α, under agent's-choice visibility | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md) |
-| α × ψ × c | Where sharing becomes rational, by scoop risk ψ and cited share c | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md) |
+| Six settings | Traditional, OSO and the mixed corners | [summary](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md) |
+| α sweep | Sharing and outcomes as α falls, under agent's choice | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md) |
+| α × ψ × c | Where sharing becomes rational | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md) |
 | Sensitivity | How much the gap depends on the gaming agent and the compute loop | [summary](https://github.com/open-science-org/app/blob/master/sim/results/sensitivity/summary.md) |
 
-Each folder also holds `config.json` (every parameter and the commit) and `runs.jsonl` (one line per run).
-
-**Simple model first** ([results](https://github.com/open-science-org/app/blob/master/sim/results/simple/summary.md)). On a single chain with N identical agents, sharing progress reaches about N times deeper than hiding it for the same budget. The simulator matches the exact prediction for every N from 1 to 16. This check also found a flaw in the first random-number generator, which was then replaced.
-
-**Full model, default world** (8 levels, 7 targets, 12 agents, X = 1,200; 100 seeds; mean; [results](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md)):
+On the default world (8 levels, 7 targets, 12 agents, X = 1,200; 100 runs each):
 
 | Setting | Frontier (level) | Runs reaching level 7 | Cost to level 7 |
 | --- | --- | --- | --- |
 | Traditional | 5.7 | 35% | 957 |
 | OSO (immediate) | 7.9 | 100% | 485 |
-| No flow-back, immediate | 7.9 | 100% | 494 |
+| Sharing without flow-back | 7.9 | 100% | 494 |
 | OSO (agent's choice) | 6.3 | 43% | 959 |
 
 What they show so far:
 
-1. **Sharing does most of the work.** Immediate visibility reaches level 7 in every run at about half the cost, with or without flow-back. In this model the effect is largely built in, because published results are free to use and always correct.
-2. **Flow-back makes agents choose to share only well below α = 0.8.** Under agent's-choice visibility, the share of lemmas shared is 0.23 at α = 1, 0.22 at 0.8, 0.47 at 0.3 and 0.77 at 0.1. With a lower scoop risk (ψ = 0.1), it is already 0.61 at α = 0.5. So α\* exists in the model, but its value depends on ψ, which is a guess. Sources: [α sweep](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md), [α × ψ × c](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md).
-3. **The cited mint share c barely matters,** because the mint is small next to the bounties ([α × ψ × c](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md)).
-4. **Flow-back makes credit more accurate when work is shared:** 0.57 vs. 0.47 ([six settings](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md)).
-5. **Under traditional rules, a single gaming agent captures most of the compute and a median of all the pay.** Nobody else earns until they win a target, so the earnings-driven compute loop funds the spammer. Without the gamer, traditional reaches level 7.0 and the gap to OSO shrinks from 2.2 levels to 1.0. A large part of the default gap therefore comes from this combination, and should be presented with that decomposition ([sensitivity](https://github.com/open-science-org/app/blob/master/sim/results/sensitivity/summary.md)).
+1. **The simple model matches the mathematics.** With N agents on one chain, shared progress reaches about N times deeper than hidden progress, for N from 1 to 16.
+2. **Sharing does most of the work.** In the simulation, this is largely built in, because shared results are free to absorb (section 2.3).
+3. **Flow-back makes agents choose to share only well below α = 0.8.** The share of lemmas shared is:
+   - 0.23 at α = 1;
+   - 0.22 at 0.8;
+   - 0.47 at 0.3;
+   - 0.77 at 0.1.
 
-These are a first calibration, not a result to present. The simulator's limits are listed in [sim/README.md, section 6](https://github.com/open-science-org/app/blob/master/sim/README.md#6-what-this-simulation-can-and-cannot-show).
+   With a lower scoop risk (ψ = 0.1), it is already 0.61 at α = 0.5. So α\* exists in the model, but it depends on ψ, which is a guess.
+4. **The cited mint share c barely matters,** because the mint is small next to the bounties.
+5. **Flow-back makes credit more accurate when work is shared:** 0.57 vs. 0.47.
+6. **About half the default gap comes from one gaming agent and the compute loop.** Under traditional rules nobody else earns until they win a target, so earnings-driven funding goes to the spammer. Without it, traditional reaches 7.0 and the gap shrinks from 2.2 levels to 1.0.
 
-## Simplifications to revisit
+These are a first calibration of a model, not evidence about real research.
 
-- Agents see noisy attribution values, not the DAG itself.
-- Each attempt is a single success-or-failure draw.
-- True attribution weights are cost shares.
-- The scoop risk ψ and the publication boost κ are fixed numbers, not derived.
+## 9. Validity
 
-Each is a place where the LLM experiment may behave differently from the model, and each should be checked against measured agent behaviour.
-
-## Predictions to test
-
-1. **Sharing pools search.** On a chain of L results with N agents:
-   - without sharing, each agent proves every step itself, and the deepest level reached for spend X is about X·p / N;
-   - with sharing, the first proof of each step unlocks it for everyone, and the deepest level is about X·p.
-
-   That is about N times deeper for the same budget. Branching DAGs should gain more, because work can also run in parallel.
-2. **Flow-back makes sharing rational.** Under agent's-choice visibility, agents hoard above α\* and share below it.
-3. **Limits.** OSO's advantage should shrink when agents are impatient (low δ), and should break when gamers are common and the validation screen θ is weak. Both are limits to state honestly.
-4. **Credit.** Traditional rules pay final provers and leave foundation builders unpaid; OSO's pay should track true contribution.
-
-These are model predictions, not results. The simulation tests them ([first results](#first-simulation-results)), and the LLM experiment tests whether real agents behave like the model.
-
-## Problem space
-
-Any problem space must:
-- **be compositional:** hard results need intermediate results;
-- **be verifiable:** a machine checks each result cheaply and without argument;
-- **have graded difficulty:** levels 1–5;
-- **leave the steps open:** intermediate results are not given, and agents must find them;
-- **be safe from memorization:** solutions must not already be in the models' training data.
-
-| Candidate | Strengths | Weaknesses |
-| --- | --- | --- |
-| **Formal math in Lean (leading)** | Proofs are checked by machine; attribution is exact, because a proof records the lemmas it uses; lemmas proposed by agents become ideas in the graph | Needs a target set with fresh intermediate lemmas, and Lean tooling for the agents |
-| Synthetic compositional puzzles | Cheapest; fully controlled; ground truth known exactly | Less convincing to outsiders |
-| Program synthesis with test suites | Machine-checked; familiar | Attribution between programs is less exact |
-| Symbolic physics derivations | Matches the original theoretical-physics idea | Harder to verify automatically |
-
-## Validity
-
-- Several runs per setting, reported with their spread, not one best run.
-- The same models and prompts in every setting, except the sentence describing the reward rule.
-- Primary and secondary measures fixed before the first run.
-- A check that target solutions are not memorized.
-- Exact accounting of tokens and dollars per agent.
-- Ablations: no compute loop (ρ = 0), noisy attribution (σ_w > 0), and different archetype mixes.
+- **Several runs per setting,** reported with their spread. Settings are compared on the same seeds, so on the same worlds and agents.
+- **The same agents, prompts, budget and world in every setting,** except for the rules.
+- **Measures fixed before the runs.**
+- **For LLM agents:**
+  - check that targets are not memorized;
+  - check that deep targets need intermediate results;
+  - account exactly for tokens.
 - **What would count against OSO:** flow-back adds nothing beyond visibility, or OSO's lead comes only from trivial results.
 
-## Phases
+## 10. Phases and open decisions
 
-1. **Simulation.** Implement this model, reusing the ledger's tested OIP-14 waterfall from [open-science-org/app](https://github.com/open-science-org/app). Run thousands of settings without LLMs; find α\* and the settings worth testing. *First version done:* see [First simulation results](#first-simulation-results).
-2. **Pilot.** LLM agents on a small problem set with cheap models, in the traditional and OSO settings. Check the mechanics and whether incentives move behaviour at all.
-3. **Full runs.** The chosen problem space, the real budget, several runs per setting.
-4. **Demo.** The settings' DAGs growing side by side, the frontier-vs-spend curves and the α sweep. All runs replayable from their logs.
+**Phases:**
+1. **Simulation** — done, first calibration.
+2. **Lean problem set** — built and verified.
+3. **Lean pilot:**
+   - LLM agents on the problem set, in the traditional and OSO settings, with cheap models;
+   - measure success chances, and check that incentives move behaviour at all.
+4. **Full runs:** the real budget, several runs per setting.
+5. **Demo:** the settings' trees growing side by side, the frontier-vs-spend curves and the α sweep, all replayable from logs.
 
-## Open decisions
-
-- [ ] Problem space: Lean or another candidate.
+**Open decisions:**
 - [ ] Audience and deadline for the demo.
-- [ ] Budget X per setting, and the number of runs.
+- [ ] Budget per setting, and the number of runs.
 - [ ] Models for the agents.
-- [ ] Bounty levels, and the target level L\* for the speed and cost measures.
+- [ ] Where the Lean reference proofs are kept (private recommended), and whether agents may use `grind`.
 - [ ] Who builds what (Abinash, Bikrant).

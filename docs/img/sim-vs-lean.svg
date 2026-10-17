@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1290 760" width="1290" height="760" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#1d1c1a">
+  <title>What the agents are solving: the simulation vs. the Lean experiment</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a4843"/>
+    </marker>
+  </defs>
+  <rect width="1290" height="760" fill="#ffffff"/>
+
+  <text x="30" y="40" font-size="22" font-weight="700">What are the agents solving?</text>
+  <text x="30" y="64" font-size="14" fill="#5f5d58">Both use the same tree of results: a result can be attempted only once the results it builds on are known. What a result is differs.</text>
+
+  <!-- ================= LEFT: SIMULATION ================= -->
+  <rect x="30" y="85" width="605" height="560" rx="12" fill="#fbfaf8" stroke="#d6d2ca"/>
+  <text x="50" y="117" font-size="18" font-weight="700">The simulation: research as a game of chance</text>
+  <text x="50" y="138" fill="#5f5d58">A result is a numbered box with a success chance. No content.</text>
+
+  <!-- tree -->
+  <g font-size="12" text-anchor="middle">
+    <line x1="130" y1="200" x2="270" y2="230" stroke="#9a968e" stroke-width="1.5"/>
+    <line x1="130" y1="265" x2="270" y2="230" stroke="#9a968e" stroke-width="1.5"/>
+    <line x1="270" y1="230" x2="410" y2="230" stroke="#9a968e" stroke-width="1.5"/>
+    <line x1="410" y1="230" x2="545" y2="230" stroke="#9a968e" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <rect x="80" y="182" width="100" height="36" rx="8" fill="#2f6f5e"/><text x="130" y="198" fill="#fff" font-weight="700">box #3</text><text x="130" y="212" fill="#fff" font-size="11">known</text>
+    <rect x="80" y="247" width="100" height="36" rx="8" fill="#2f6f5e"/><text x="130" y="263" fill="#fff" font-weight="700">box #7</text><text x="130" y="277" fill="#fff" font-size="11">known</text>
+    <rect x="215" y="210" width="110" height="40" rx="8" fill="#ffffff" stroke="#2f6f5e" stroke-width="2.5"/><text x="270" y="227" font-weight="700">box #12</text><text x="270" y="242" font-size="11">level 3 · p = 18%</text>
+    <rect x="355" y="210" width="110" height="40" rx="8" fill="#ffffff" stroke="#9a968e" stroke-dasharray="4 3"/><text x="410" y="227" font-weight="700">box #31</text><text x="410" y="242" font-size="11">level 4 · p = 11%</text>
+    <path d="M545,210 l5.9,12 13.3,1.9 -9.6,9.4 2.3,13.2 -11.9,-6.2 -11.9,6.2 2.3,-13.2 -9.6,-9.4 13.3,-1.9z" fill="#ffffff" stroke="#9a968e" stroke-dasharray="4 3"/>
+    <text x="545" y="272" font-weight="700">target · B = 64</text>
+  </g>
+  <text x="270" y="300" text-anchor="middle" font-size="12" fill="#2f6f5e" font-weight="700">↑ the agent can try this one: everything it builds on is known</text>
+
+  <!-- turn -->
+  <text x="50" y="345" font-weight="700" font-size="15">One agent's turn</text>
+  <g font-size="13.5">
+    <circle cx="62" cy="372" r="11" fill="#2f6f5e"/><text x="62" y="377" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+    <text x="84" y="377">Pick a box it can try: <tspan font-weight="700">#12</tspan>, the best expected payoff.</text>
+    <circle cx="62" cy="408" r="11" fill="#2f6f5e"/><text x="62" y="413" text-anchor="middle" fill="#fff" font-weight="700">2</text>
+    <text x="84" y="413">Pay 1 unit of compute.</text>
+    <circle cx="62" cy="444" r="11" fill="#2f6f5e"/><text x="62" y="449" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+    <text x="84" y="449">The simulator <tspan font-weight="700">rolls a die</tspan>: success 18% of the time.</text>
+    <!-- die -->
+    <rect x="455" y="425" width="42" height="42" rx="8" fill="#ffffff" stroke="#1d1c1a" stroke-width="2"/>
+    <circle cx="466" cy="436" r="3.5"/><circle cx="476" cy="446" r="3.5"/><circle cx="486" cy="456" r="3.5"/>
+    <circle cx="62" cy="480" r="11" fill="#2f6f5e"/><text x="62" y="485" text-anchor="middle" fill="#fff" font-weight="700">4</text>
+    <text x="84" y="485">If it succeeds, #12 is known. Publish it, or keep it private.</text>
+    <circle cx="62" cy="516" r="11" fill="#2f6f5e"/><text x="62" y="521" text-anchor="middle" fill="#fff" font-weight="700">5</text>
+    <text x="84" y="521">Get paid: a small mint now; a bounty for a target.</text>
+  </g>
+  <rect x="50" y="548" width="565" height="80" rx="8" fill="#f4f2ee"/>
+  <text x="66" y="572" font-weight="700">What it studies: the economics of research</text>
+  <text x="66" y="592">Who works on what, who shares or hides, how much effort is duplicated,</text>
+  <text x="66" y="610">and who gets paid. Cheap: thousands of runs in seconds. Cannot prove OSO works.</text>
+
+  <!-- ================= RIGHT: LEAN ================= -->
+  <rect x="655" y="85" width="605" height="560" rx="12" fill="#f3f8f6" stroke="#2f6f5e"/>
+  <text x="675" y="117" font-size="18" font-weight="700">The Lean experiment: real research</text>
+  <text x="675" y="138" fill="#5f5d58">A result is a theorem. An LLM agent must find and write a proof.</text>
+
+  <g font-size="12" text-anchor="middle">
+    <line x1="765" y1="200" x2="905" y2="230" stroke="#9a968e" stroke-width="1.5"/>
+    <line x1="765" y1="265" x2="905" y2="230" stroke="#9a968e" stroke-width="1.5"/>
+    <line x1="905" y1="230" x2="1050" y2="230" stroke="#9a968e" stroke-width="1.5"/>
+    <line x1="1050" y1="230" x2="1170" y2="230" stroke="#9a968e" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <rect x="705" y="182" width="120" height="36" rx="8" fill="#2f6f5e"/><text x="765" y="198" fill="#fff" font-weight="700">definition of u</text><text x="765" y="212" fill="#fff" font-size="11">0, 1, 5, 28, 155, …</text>
+    <rect x="705" y="247" width="120" height="36" rx="8" fill="#2f6f5e"/><text x="765" y="263" fill="#fff" font-weight="700">Lean core</text><text x="765" y="277" fill="#fff" font-size="11">Nat, gcd, induction</text>
+    <rect x="840" y="208" width="130" height="44" rx="8" fill="#ffffff" stroke="#2f6f5e" stroke-width="2.5"/><text x="905" y="226" font-weight="700">addition formula</text><text x="905" y="242" font-size="11">u(m+n+1) = …</text>
+    <rect x="985" y="208" width="130" height="44" rx="8" fill="#ffffff" stroke="#9a968e" stroke-dasharray="4 3"/><text x="1050" y="226" font-weight="700">u(m) ∣ u(m·k)</text><text x="1050" y="242" font-size="11">target A3 · B = 8</text>
+    <path d="M1170,210 l5.9,12 13.3,1.9 -9.6,9.4 2.3,13.2 -11.9,-6.2 -11.9,6.2 2.3,-13.2 -9.6,-9.4 13.3,-1.9z" fill="#ffffff" stroke="#9a968e" stroke-dasharray="4 3"/>
+    <text x="1170" y="272" font-weight="700">gcd target · B = 256</text>
+  </g>
+  <text x="905" y="300" text-anchor="middle" font-size="12" fill="#2f6f5e" font-weight="700">↑ not given: the agent has to think of this lemma</text>
+
+  <text x="675" y="345" font-weight="700" font-size="15">One agent's turn</text>
+  <g font-size="13.5">
+    <circle cx="687" cy="372" r="11" fill="#2f6f5e"/><text x="687" y="377" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+    <text x="709" y="377">Decide what to prove: <tspan font-weight="700">the addition formula</tspan>, as a step to A3.</text>
+    <circle cx="687" cy="408" r="11" fill="#2f6f5e"/><text x="687" y="413" text-anchor="middle" fill="#fff" font-weight="700">2</text>
+    <text x="709" y="413">Pay in tokens while it works out a proof.</text>
+    <circle cx="687" cy="444" r="11" fill="#2f6f5e"/><text x="687" y="449" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+    <text x="709" y="449"><tspan font-weight="700">Lean checks the proof</tspan>: accepted, or errors to fix.</text>
+    <circle cx="687" cy="480" r="11" fill="#2f6f5e"/><text x="687" y="485" text-anchor="middle" fill="#fff" font-weight="700">4</text>
+    <text x="709" y="485">If accepted, it is known. Publish it, or keep it private.</text>
+    <circle cx="687" cy="516" r="11" fill="#2f6f5e"/><text x="687" y="521" text-anchor="middle" fill="#fff" font-weight="700">5</text>
+    <text x="709" y="521">Get paid by the same rules; Lean records exactly what it used.</text>
+  </g>
+  <!-- proof snippet -->
+  <rect x="1060" y="390" width="185" height="78" rx="6" fill="#1d1c1a"/>
+  <g font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#e3f0ec">
+    <text x="1070" y="410">theorem u_add (m n) :</text>
+    <text x="1070" y="425">  u (m+n+1) = …  := by</text>
+    <text x="1070" y="440">  induction m …</text>
+    <text x="1070" y="458" fill="#7cc4ad">✓ accepted by Lean</text>
+  </g>
+  <rect x="675" y="548" width="565" height="80" rx="8" fill="#e3f0ec"/>
+  <text x="691" y="572" font-weight="700">What it studies: the same questions, with real problem solving</text>
+  <text x="691" y="592">Success depends on the agent solving the problem, not on a die, and the</text>
+  <text x="691" y="610">steps are not given. Costs real tokens, so it runs only the settings that matter.</text>
+
+  <!-- ================= BOTTOM ================= -->
+  <rect x="30" y="665" width="1230" height="72" rx="12" fill="#ffffff" stroke="#d6d2ca"/>
+  <text x="50" y="693" font-weight="700" font-size="15">The same rules, ledger and measures in both</text>
+  <text x="50" y="716">Traditional vs. OSO, the waterfall, the frontier-vs-spend curve. The simulation finds which settings matter and how big a budget is needed;</text>
+  <text x="50" y="733">the Lean experiment tests whether the result holds when agents really have to solve the problems.</text>
+</svg>

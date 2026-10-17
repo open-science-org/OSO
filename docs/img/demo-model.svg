@@ -23,12 +23,12 @@
   <rect x="30" y="90" width="200" height="70" rx="10" fill="#f4f2ee" stroke="#d6d2ca"/>
   <text x="130" y="118" text-anchor="middle" font-weight="700" font-size="15">Funder</text>
   <text x="130" y="140" text-anchor="middle">spends $X in total</text>
-  <text x="130" y="155" text-anchor="middle" font-size="11" fill="#5f5d58">X_t = X / T per round [1]</text>
+  <text x="130" y="155" text-anchor="middle" font-size="11" fill="#5f5d58">X_t = X / T per round [2.5]</text>
 
   <line x1="130" y1="160" x2="130" y2="218" stroke="#4a4843" stroke-width="1.6" marker-end="url(#arr)"/>
 
   <rect x="30" y="222" width="200" height="200" rx="10" fill="#ffffff" stroke="#d6d2ca"/>
-  <text x="130" y="248" text-anchor="middle" font-weight="700" font-size="15">Compute budgets [7]</text>
+  <text x="130" y="248" text-anchor="middle" font-weight="700" font-size="15">Compute budgets [2.5]</text>
   <text x="130" y="268" text-anchor="middle" font-size="11.5">b_i = X_t·[(1−ρ)/N + ρ·Ē_i / ΣĒ]</text>
   <text x="130" y="285" text-anchor="middle" font-size="11" fill="#5f5d58">ρ = 0 equal grants · ρ = 1 by earnings</text>
   <!-- bars -->
@@ -48,7 +48,7 @@
 
   <!-- ===== 2. Agents ===== -->
   <rect x="260" y="90" width="260" height="440" rx="10" fill="#ffffff" stroke="#d6d2ca"/>
-  <text x="390" y="116" text-anchor="middle" font-weight="700" font-size="15">AI scientist agents [3]</text>
+  <text x="390" y="116" text-anchor="middle" font-weight="700" font-size="15">AI research agents [4]</text>
   <text x="390" y="134" text-anchor="middle" font-size="11" fill="#5f5d58">a mix of archetypes (Claude, GPT, open models)</text>
   <g font-size="12.5">
     <circle cx="285" cy="160" r="9" fill="#2f6f5e"/><text x="302" y="164"><tspan font-weight="700">Foundation builder</tspan> patient, shares</text>
@@ -71,7 +71,7 @@
     <text x="398" y="416">g  gaming</text>
   </g>
   <line x1="278" y1="432" x2="502" y2="432" stroke="#e4e1db"/>
-  <text x="278" y="452" font-weight="700" font-size="12.5">Each attempt [6]</text>
+  <text x="278" y="452" font-weight="700" font-size="12.5">Each attempt [4.2]</text>
   <text x="278" y="471" font-size="12">picks a reachable result r by score U_i(r):</text>
   <text x="278" y="489" font-size="12">chance × (mint + bounty + δ·expected flow-back)</text>
   <text x="278" y="507" font-size="12">− risk; and decides whether to publish it</text>
@@ -82,7 +82,7 @@
 
   <!-- ===== 3. Problem space ===== -->
   <rect x="550" y="90" width="330" height="440" rx="10" fill="#fbfaf8" stroke="#d6d2ca"/>
-  <text x="715" y="116" text-anchor="middle" font-weight="700" font-size="15">Problem space: hidden DAG [2]</text>
+  <text x="715" y="116" text-anchor="middle" font-weight="700" font-size="15">Research tree: hidden DAG [2.1]</text>
   <text x="715" y="134" text-anchor="middle" font-size="11" fill="#5f5d58">targets and bounties are public; the paths are not</text>
   <g font-size="10.5" fill="#5f5d58" text-anchor="middle">
     <text x="585" y="156">level 1</text><text x="648" y="156">2</text><text x="715" y="156">3</text><text x="780" y="156">4</text><text x="845" y="156">5</text>
@@ -146,7 +146,7 @@
   <rect x="900" y="210" width="110" height="220" rx="10" fill="#ffffff" stroke="#d6d2ca"/>
   <text x="955" y="236" text-anchor="middle" font-weight="700" font-size="14">Visibility V</text>
   <text x="955" y="252" text-anchor="middle" font-size="11" fill="#5f5d58">when proofs are</text>
-  <text x="955" y="265" text-anchor="middle" font-size="11" fill="#5f5d58">published [4]</text>
+  <text x="955" y="265" text-anchor="middle" font-size="11" fill="#5f5d58">published [2.3]</text>
   <g font-size="12" text-anchor="middle">
     <rect x="910" y="278" width="90" height="26" rx="13" fill="#fdecdf" stroke="#c2410c"/><text x="955" y="295">finished-only</text>
     <rect x="910" y="312" width="90" height="26" rx="13" fill="#f4f2ee" stroke="#d6d2ca"/><text x="955" y="329">delayed d</text>
@@ -160,7 +160,7 @@
 
   <!-- ===== 5. Ledger ===== -->
   <rect x="1030" y="90" width="230" height="440" rx="10" fill="#ffffff" stroke="#d6d2ca"/>
-  <text x="1145" y="116" text-anchor="middle" font-weight="700" font-size="15">Ledger: who gets paid [5]</text>
+  <text x="1145" y="116" text-anchor="middle" font-weight="700" font-size="15">Ledger: who gets paid [2.4]</text>
   <text x="1145" y="134" text-anchor="middle" font-size="11" fill="#5f5d58">the OIP-8 / OIP-14 waterfall</text>
 
   <text x="1145" y="160" text-anchor="middle" font-size="12">bounty B enters target t</text>
@@ -195,7 +195,7 @@
 
   <!-- ===== 6. Rules ===== -->
   <rect x="30" y="590" width="600" height="198" rx="10" fill="#f4f2ee" stroke="#d6d2ca"/>
-  <text x="50" y="617" font-weight="700" font-size="15">The rules: the only thing that differs [9]</text>
+  <text x="50" y="617" font-weight="700" font-size="15">The rules: the only thing that differs [3]</text>
   <g font-size="13">
     <text x="50" y="648" font-weight="700" fill="#5f5d58">Rule</text>
     <text x="330" y="648" font-weight="700" fill="#c2410c">Traditional</text>
@@ -214,7 +214,7 @@
 
   <!-- ===== 7. Measures ===== -->
   <rect x="650" y="590" width="610" height="198" rx="10" fill="#ffffff" stroke="#d6d2ca"/>
-  <text x="670" y="617" font-weight="700" font-size="15">Value, measured on several axes [10]</text>
+  <text x="670" y="617" font-weight="700" font-size="15">Value, measured on several axes [5]</text>
   <!-- mini chart -->
   <line x1="690" y1="740" x2="900" y2="740" stroke="#4a4843"/>
   <line x1="690" y1="740" x2="690" y2="640" stroke="#4a4843"/>
