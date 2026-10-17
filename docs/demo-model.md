@@ -303,14 +303,14 @@ Each element is replaceable without changing the others:
 | Extension point | Built today | Examples of more complex experiments |
 | --- | --- | --- |
 | World | Random layers, chain, DAG from a file | The Lean reference tree with measured p; a real field's citation graph |
-| Success oracle | Chance p (simulation) | Lean checker; chance that grows with failed attempts (learning) |
-| Agents | Formula agents with eight traits | LLM agents; mixed populations of formula and LLM agents |
+| Success oracle | Chance p; learning (each failure raises the next chance) | Lean checker |
+| Agents (deciders) | Formula agents; a random baseline; different deciders per archetype | LLM agents; mixed populations of formula and LLM agents |
 | Visibility | Finished-only, delayed, immediate, agent's choice | Batched publication; sharing failed attempts |
 | Allocation | Earnings share, equal | Grant committees; funding by reviewed quality |
 | Rules | α, c, mint, screen | Different rules per area (OIP-12 community setups) |
 | Measures | Section 5 | New columns or analyses |
 
-In the simulator, the world, visibility, allocation, choice policy, measures and analyses are plugins, and experiments are YAML files ([sim/README.md, section 3](https://github.com/open-science-org/app/blob/master/sim/README.md#3-configuration-and-extending)). The success oracle and LLM agents are the next extension points to add, for the Lean experiment.
+In the simulator, every element is a plugin: world, success oracle, deciders, visibility, allocation, choice policy, measures and analyses. Experiments are YAML files ([sim/README.md, section 3](https://github.com/open-science-org/app/blob/master/sim/README.md#3-configuration-and-extending)). For the Lean experiment, an LLM decider and a Lean-checker oracle become two more plugins, once the core loop is made asynchronous.
 
 ## 8. Results so far
 
