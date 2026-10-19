@@ -1,12 +1,12 @@
 # OSO v1 demo: experiment specification
 
-**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-16
+**Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-19
 
 **Implementations:**
-- **Problem-space reports:** [index](https://github.com/open-science-org/app/blob/master/sim/reports/README.md)
-- **Simulator:** [app/sim](https://github.com/open-science-org/app/tree/master/sim)
-- **Lean problem set:** app/problems (in preparation)
-- **Results:** [log of saved runs](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md)
+- **Problem-space reports:** [index](https://github.com/open-science-org/experiment/blob/master/reports/README.md)
+- **Simulator:** [open-science-org/experiment](https://github.com/open-science-org/experiment)
+- **Lean problem set:** in preparation, in the experiment repository
+- **Results:** [log of saved runs](https://github.com/open-science-org/experiment/blob/master/results/LOG.md)
 
 > **TL;DR.**
 > - **The experiment.** The v1 demo compares two communities of AI research agents, given the same budget and the same problems. One works under traditional incentives, the other under OSO incentives. The question is which produces more value: faster, cheaper, and harder results.
@@ -233,11 +233,11 @@ Every agent, simulated or LLM, is described by eight traits. In the simulation t
 | Sharing disposition | Intrinsic willingness to publish, beyond what pays |
 | Gaming | Share of its effort spent on trivial results |
 
-A population is a mix of **archetypes**, each a set of trait values: foundation builder, target racer, cheap explorer, specialist, free rider, gamer. The simulator's values are in [scenarios/default.yaml](https://github.com/open-science-org/app/blob/master/sim/scenarios/default.yaml).
+A population is a mix of **archetypes**, each a set of trait values: foundation builder, target racer, cheap explorer, specialist, free rider, gamer. The simulator's values are in [scenarios/default.yaml](https://github.com/open-science-org/experiment/blob/master/config/scenarios/default.yaml).
 
 ### 4.2 How agents decide
 
-**Simulated agents** follow a formula ([app/sim/README.md, section 2.5](https://github.com/open-science-org/app/blob/master/sim/README.md#25-decisions)):
+**Simulated agents** follow a formula ([the simulator doc, section 2.5](https://github.com/open-science-org/experiment/blob/master/docs/simulator.md#25-decisions)):
 - they score each frontier result by its expected value under the rules: mint, bounty, value as a stepping stone to a target, and flow-back, adjusted for success chance, impatience and risk;
 - they mostly pick the best, with some randomness;
 - under agent's-choice visibility, they publish a lemma when what sharing earns outweighs the risk of being scooped.
@@ -283,7 +283,7 @@ Value is measured on several axes, because a setting can be fast but expensive, 
 
 ### 6.1 The simulation
 
-[app/sim](https://github.com/open-science-org/app/tree/master/sim) implements sections 2 to 5, with simulated agents and the chance oracle. Every setting is configuration: [scenarios/default.yaml](https://github.com/open-science-org/app/blob/master/sim/scenarios/default.yaml) documents the defaults, and experiments are YAML files. Its documentation, [sim/README.md](https://github.com/open-science-org/app/blob/master/sim/README.md), maps each element of this specification to its configuration and code.
+[The simulator](https://github.com/open-science-org/experiment) implements sections 2 to 5, with simulated agents and the chance oracle. Every setting is configuration: [scenarios/default.yaml](https://github.com/open-science-org/experiment/blob/master/config/scenarios/default.yaml) documents the defaults, and experiments are YAML files. Its documentation, [docs/simulator.md](https://github.com/open-science-org/experiment/blob/master/docs/simulator.md), maps each element of this specification to its configuration and code.
 
 **What it can show:**
 - whether the mechanics work as specified;
@@ -326,13 +326,13 @@ Each element is replaceable without changing the others:
 | Rules | α, c, mint, screen | Different rules per area (OIP-12 community setups) |
 | Measures | Section 5 | New columns or analyses |
 
-In the simulator, every element is a plugin: world, success oracle, deciders, visibility, allocation, choice policy, measures and analyses. Experiments are YAML files ([sim/README.md, section 3](https://github.com/open-science-org/app/blob/master/sim/README.md#3-configuration-and-extending)). For the Lean experiment, an LLM decider and a Lean-checker oracle become two more plugins, once the core loop is made asynchronous.
+In the simulator, every element is a plugin: world, success oracle, deciders, visibility, allocation, choice policy, measures and analyses. Experiments are YAML files ([the simulator doc, section 3](https://github.com/open-science-org/experiment/blob/master/docs/simulator.md#3-configuration-and-extending)). For the Lean experiment, an LLM decider and a Lean-checker oracle become two more plugins, once the core loop is made asynchronous.
 
 ## 8. Problem spaces and canonical reports
 
 The framework is meant to be used beyond the cases built so far. Anyone can describe a new field and get a report on it that answers the same questions, in the same form, as every other field.
 
-**A problem space** is one file ([sim/spaces/](https://github.com/open-science-org/app/blob/master/sim/spaces/)). It holds:
+**A problem space** is one file ([spaces/](https://github.com/open-science-org/experiment/blob/master/spaces/)). It holds:
 - a title, a one-sentence summary and a plain-language description of the field;
 - a **glossary** of what a result, a target, an attempt, an area and an agent mean in that field;
 - the area names;
@@ -345,7 +345,7 @@ The framework is meant to be used beyond the cases built so far. Anyone can desc
   - The file is checked against the scenario rules and test-run once; any error is sent back to the model to fix, up to three times.
   - The budget is then **calibrated**: it is set to the smallest budget at which the OSO community solves 90% of the targets on average. Every space is then hard but not hopeless, and the comparison is what the same money buys traditional research.
 
-**The canonical report** (`npm run sim -- report <space>`) runs the same standard experiments on every space ([battery.ts](https://github.com/open-science-org/app/blob/master/sim/battery.ts)) and always has the same sections:
+**The canonical report** (`npm run sim -- report <space>`) runs the same standard experiments on every space ([battery.ts](https://github.com/open-science-org/experiment/blob/master/src/report/battery.ts)) and always has the same sections:
 
 | Section | What it answers |
 | --- | --- |
@@ -358,23 +358,23 @@ The framework is meant to be used beyond the cases built so far. Anyone can desc
 | What this shows | The limits, plus the space's own notes |
 | Reproduce | The command, the space file, the data, and the simulator commit |
 
-Reports are written in the field's own words, with charts that work in light and dark mode. An index ([sim/reports/](https://github.com/open-science-org/app/blob/master/sim/reports/)) lists every space with its verdict and headline numbers.
+Reports are written in the field's own words, with charts that work in light and dark mode. An index ([reports/](https://github.com/open-science-org/experiment/blob/master/reports/)) lists every space with its verdict and headline numbers.
 
 ## 9. Results so far
 
-All from the simulation; every run is [logged](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md) with the commit that produced it.
+All from the simulation; every run is [logged](https://github.com/open-science-org/experiment/blob/master/results/LOG.md) with the commit that produced it.
 
 | Experiment | What it tests | Results |
 | --- | --- | --- |
-| Simple model | One chain, shared vs. hidden progress, against exact predictions | [summary](https://github.com/open-science-org/app/blob/master/sim/results/simple/summary.md) |
-| Six settings | Traditional, OSO and the mixed corners | [summary](https://github.com/open-science-org/app/blob/master/sim/results/settings/summary.md) |
-| α sweep | Sharing and outcomes as α falls, under agent's choice | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md) |
-| α × ψ × c | Where sharing becomes rational | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md) |
-| Sensitivity | How much the gap depends on the gaming agent and the compute loop | [summary](https://github.com/open-science-org/app/blob/master/sim/results/sensitivity/summary.md) |
-| Lean tree | The six settings on the Lean problem set's reference tree | [summary](https://github.com/open-science-org/app/blob/master/sim/results/lean-tree/summary.md) |
-| Failures | Learning from own failures vs. from public failures | [summary](https://github.com/open-science-org/app/blob/master/sim/results/failures/summary.md) |
-| Costly sharing | Absorbing cost × error rate, traditional vs. OSO | [summary](https://github.com/open-science-org/app/blob/master/sim/results/costly-sharing/summary.md) |
-| Complex | All of the above together, on the Lean tree | [summary](https://github.com/open-science-org/app/blob/master/sim/results/complex/summary.md) |
+| Simple model | One chain, shared vs. hidden progress, against exact predictions | [summary](https://github.com/open-science-org/experiment/blob/master/results/simple/summary.md) |
+| Six settings | Traditional, OSO and the mixed corners | [summary](https://github.com/open-science-org/experiment/blob/master/results/settings/summary.md) |
+| α sweep | Sharing and outcomes as α falls, under agent's choice | [summary](https://github.com/open-science-org/experiment/blob/master/results/alpha-sweep/summary.md) |
+| α × ψ × c | Where sharing becomes rational | [summary](https://github.com/open-science-org/experiment/blob/master/results/alpha-psi/summary.md) |
+| Sensitivity | How much the gap depends on the gaming agent and the compute loop | [summary](https://github.com/open-science-org/experiment/blob/master/results/sensitivity/summary.md) |
+| Lean tree | The six settings on the Lean problem set's reference tree | [summary](https://github.com/open-science-org/experiment/blob/master/results/lean-tree/summary.md) |
+| Failures | Learning from own failures vs. from public failures | [summary](https://github.com/open-science-org/experiment/blob/master/results/failures/summary.md) |
+| Costly sharing | Absorbing cost × error rate, traditional vs. OSO | [summary](https://github.com/open-science-org/experiment/blob/master/results/costly-sharing/summary.md) |
+| Complex | All of the above together, on the Lean tree | [summary](https://github.com/open-science-org/experiment/blob/master/results/complex/summary.md) |
 
 On the default world (8 levels, 7 targets, 12 agents, X = 1,200; 100 runs each):
 
