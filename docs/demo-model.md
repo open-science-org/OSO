@@ -57,7 +57,7 @@ Agents see the targets, their bounties, and the results they know. They do not s
 | --- | --- |
 | **Attempt** | One try by one agent at one result on its frontier. It costs compute: the agent's cost per attempt |
 | **Success** | The attempt worked: the agent has now proved the result and knows it. Nothing else counts as success |
-| **Failure** | The attempt did not work. The compute is spent and nothing is gained; there is no partial progress |
+| **Failure** | The attempt did not work. The compute is spent and nothing is gained, except what a learning oracle carries forward (below) |
 | **Success oracle** | What decides whether an attempt succeeds. It is set by the instantiation (section 6) |
 | **Success chance p** | The probability that an attempt succeeds. The simulation sets it from the result's level and the agent's skill; in the Lean experiment it is measured, not set |
 | **Duplicate** | A success on a result someone else has already published. It earns nothing and counts as waste |
@@ -65,6 +65,8 @@ Agents see the targets, their bounties, and the results they know. They do not s
 **One rule for success, two oracles:**
 - **Simulation:** an attempt succeeds with chance p. The simulator draws a random number between 0 and 1, and the attempt succeeds if the number is below p.
 - **Lean:** an attempt succeeds if Lean's checker accepts the proof the agent wrote.
+
+**Learning from failure (optional).** With a learning oracle, each failed attempt raises the next chance on that result. The rule `publishFailures` makes failed attempts public, so other agents learn from them too.
 
 ### 2.3 Knowledge and sharing
 
@@ -98,9 +100,18 @@ Agents see the targets, their bounties, and the results they know. They do not s
 | Its statement, so which intermediate results are worth having | — (results are abstract) | ✓ |
 | How it was proved, so the method can be reused | — | ✓ (the proof is readable) |
 | That it is correct | ✓ (always) | ✓ (checked by Lean) |
-| Failed attempts and partial progress | — | — (could be added as a rule) |
+| Failed attempts | Only with the rule `publishFailures` (and a learning oracle) | Could be added as the same rule |
 
-So the simulation captures only one effect of sharing: **nobody has to prove a shared result again.** It omits the transfer of know-how, and it assumes shared results are free to absorb.
+By default the simulation captures only one effect of sharing: **nobody has to prove a shared result again.** It omits the transfer of know-how, and assumes shared results are free to absorb and always correct.
+
+**Costly and fallible knowledge (optional).** Two settings remove the last two assumptions:
+- **Absorbing costs compute** (`absorbCost`): an agent pays it for each published result it takes up, from its compute for the round.
+- **Proofs can be wrong** (`errorRate`), and anything built on a wrong result is wrong too:
+  - targets are checked, so a target proof that rests on a wrong result is rejected;
+  - the wrong results it rested on come to light and are retracted, and every agent that took them up loses them;
+  - mints already paid stay, under OIP-11's rule of no clawback.
+
+  In the Lean experiment proofs are never wrong, because Lean checks them; absorbing costs reading tokens.
 
 ### 2.4 Rewards
 
@@ -198,6 +209,7 @@ The rules are the only thing that differs between the settings compared. Two axe
 
 - **The main comparison** is traditional vs. full OSO.
 - **The mixed corners** separate the gain from sharing from the gain from credit.
+- **Publishing failed attempts** (`publishFailures`) is a further visibility option; it matters when agents learn from failure.
 - **The mechanism test** uses agent's-choice visibility. OSO claims flow-back makes sharing the rational choice, so agents should share more when flow-back is on. A sweep of α finds the threshold α\* where they start to.
 
 The mint m, the bounties, the screen θ and the compute allocation are held the same across the compared settings.
@@ -255,11 +267,12 @@ Value is measured on several axes, because a setting can be fast but expensive, 
 | Element | Simulation | Lean experiment |
 | --- | --- | --- |
 | Results | Abstract nodes, all existing in advance | Lean theorems; intermediate ones stated by agents |
-| Research tree | Generated: random layers, a chain, or a DAG from a file | Defined by what proofs use; a reference tree from our own proofs |
+| Research tree | Generated (random layers, a chain), or read from a file, such as the Lean reference tree | Defined by what proofs use; a reference tree from our own proofs |
 | Targets and bounties | Configured | Posted theorems; bounty from measured depth |
-| Success oracle | Chance p: from the level and the agent's skill | Lean's checker |
+| Success oracle | Chance p, from the level and the agent's skill; optionally learning from own and public failures | Lean's checker |
 | Success chance p | Set (0.5 × 0.6^(level − 1) by default) | Measured in the pilot |
 | What sharing conveys | That the result is proved | The statement and the proof |
+| Cost and correctness of shared results | Free and correct by default; optionally a cost to absorb, and wrong results that are retracted | Reading costs tokens; Lean guarantees correctness |
 | Attribution weights | By difficulty (exact or with noise) | Exact: the theorems a proof uses |
 | Trivial results | Farmed by gaming agents; screen θ | Statements closed by one cheap tactic; rejected by the screen |
 | Agents | Formula agents with set traits | LLM agents; traits from model and prompt, measured |
@@ -276,7 +289,7 @@ Value is measured on several axes, because a setting can be fast but expensive, 
 - failure modes;
 - which settings, budgets and numbers of runs the Lean experiment needs.
 
-**What it cannot show:** that OSO works with real research. Results are given rather than invented, attempts are independent draws with no learning, sharing conveys no know-how, and agents follow a formula.
+**What it cannot show:** that OSO works with real research. Results are given rather than invented, sharing conveys no know-how, and agents follow a formula. Learning from failure, the cost of absorbing results and wrong results are optional mechanics, with guessed parameters.
 
 ### 6.2 The Lean experiment
 
@@ -302,8 +315,9 @@ Each element is replaceable without changing the others:
 
 | Extension point | Built today | Examples of more complex experiments |
 | --- | --- | --- |
-| World | Random layers, chain, DAG from a file | The Lean reference tree with measured p; a real field's citation graph |
-| Success oracle | Chance p; learning (each failure raises the next chance) | Lean checker |
+| World | Random layers, chain, DAG from a file, the Lean reference tree | The Lean reference tree with measured p; a real field's citation graph |
+| Knowledge | Free and correct; costly to absorb; fallible, with retraction | Partial results; reviews that catch errors before a target does |
+| Success oracle | Chance p; learning from own and public failures | Lean checker |
 | Agents (deciders) | Formula agents; a random baseline; different deciders per archetype | LLM agents; mixed populations of formula and LLM agents |
 | Visibility | Finished-only, delayed, immediate, agent's choice | Batched publication; sharing failed attempts |
 | Allocation | Earnings share, equal | Grant committees; funding by reviewed quality |
@@ -323,6 +337,10 @@ All from the simulation; every run is [logged](https://github.com/open-science-o
 | α sweep | Sharing and outcomes as α falls, under agent's choice | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-sweep/summary.md) |
 | α × ψ × c | Where sharing becomes rational | [summary](https://github.com/open-science-org/app/blob/master/sim/results/alpha-psi/summary.md) |
 | Sensitivity | How much the gap depends on the gaming agent and the compute loop | [summary](https://github.com/open-science-org/app/blob/master/sim/results/sensitivity/summary.md) |
+| Lean tree | The six settings on the Lean problem set's reference tree | [summary](https://github.com/open-science-org/app/blob/master/sim/results/lean-tree/summary.md) |
+| Failures | Learning from own failures vs. from public failures | [summary](https://github.com/open-science-org/app/blob/master/sim/results/failures/summary.md) |
+| Costly sharing | Absorbing cost × error rate, traditional vs. OSO | [summary](https://github.com/open-science-org/app/blob/master/sim/results/costly-sharing/summary.md) |
+| Complex | All of the above together, on the Lean tree | [summary](https://github.com/open-science-org/app/blob/master/sim/results/complex/summary.md) |
 
 On the default world (8 levels, 7 targets, 12 agents, X = 1,200; 100 runs each):
 
@@ -347,6 +365,11 @@ What they show so far:
 4. **The cited mint share c barely matters,** because the mint is small next to the bounties.
 5. **Flow-back makes credit more accurate when work is shared:** 0.57 vs. 0.47.
 6. **About half the default gap comes from one gaming agent and the compute loop.** Under traditional rules nobody else earns until they win a target, so earnings-driven funding goes to the spammer. Without it, traditional reaches 7.0 and the gap shrinks from 2.2 levels to 1.0.
+
+7. **On the real shape of the Lean problem set,** OSO solves all 8 targets in every run, at 125 compute to depth 5. Traditional solves 4.8 of 8, at 303. Agents also share more by choice there (0.42 at α = 0.8), because the tree has many shallow results that carry little scoop risk.
+8. **Learning from public failures helps OSO most.** Cost to reach level 7 is 485 with no learning, 367 learning from own failures, and 284 learning from everyone's public failures. Traditional benefits less (957, 865, 810), because its agents climb apart.
+9. **When sharing costs compute and results can be wrong, OSO's lead narrows but holds on depth.** At absorbing cost 1 and a 15% error rate, OSO still reaches level 6.6 against 4.5, but its lead in targets solved shrinks from 2.7 to 0.4. Errors hurt OSO more in absolute terms (21 retractions against 10), because wrong results spread to more agents.
+10. **With everything combined on the Lean tree,** OSO stays ahead, but publishing failures adds nothing once absorbing is costly.
 
 These are a first calibration of a model, not evidence about real research.
 
