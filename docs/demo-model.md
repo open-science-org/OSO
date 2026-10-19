@@ -355,6 +355,7 @@ The framework is meant to be used beyond the cases built so far. Anyone can desc
 | 3. The six settings | Section 3's settings, with the standard measures |
 | 4. Does flow-back make agents share? | Sharing and reach as α falls, with α\* |
 | 5. When sharing is costly or sometimes wrong | The lead under free, costly, fallible, and costly-and-fallible knowledge |
+| 6. Sensitivity to the parameters | OSO's lead as each parameter is varied alone. Two groups: those communities, funders or the protocol set (α, c, mint per result, validation screen θ, how far compute follows earnings ρ), and those we guessed about agents (ψ, κ, perception noise, choice randomness, attribution error). Also α × c together. Because communities will set these values, the result must hold across them. |
 | What this shows | The limits, plus the space's own notes |
 | Reproduce | The command, the space file, the data, and the simulator commit |
 
