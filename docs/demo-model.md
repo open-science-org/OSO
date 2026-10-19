@@ -3,6 +3,7 @@
 **Author:** Gajendra Jung Katuwal (@himalayajung) · **Status:** Draft for discussion · **Last updated:** 2026-10-16
 
 **Implementations:**
+- **Problem-space reports:** [index](https://github.com/open-science-org/app/blob/master/sim/reports/README.md)
 - **Simulator:** [app/sim](https://github.com/open-science-org/app/tree/master/sim)
 - **Lean problem set:** app/problems (in preparation)
 - **Results:** [log of saved runs](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md)
@@ -15,6 +16,7 @@
 >   - **The Lean experiment:** results are real theorems, and an attempt succeeds when Lean accepts the agent's proof.
 > - **More complex experiments** are new instantiations of the same specification: new worlds, success oracles, agents or rules.
 > - **Traditional research is not a separate system.** It is one setting of OSO's rules.
+> - **Anyone can add a problem space,** by hand or by describing it in words, and get the same canonical report for it (section 8).
 
 ![What the agents are solving: the simulation and the Lean experiment](img/sim-vs-lean.svg)
 
@@ -191,7 +193,7 @@ The target is reached in round 5, after 10 attempts. Agent 2's two successes wer
 
 The target is reached in round 3, after 6 attempts, and no success is wasted.
 
-**In general:** hidden progress needs a success from every agent on every step; shared progress needs one success from anyone. With N agents, sharing reaches about N times deeper for the same budget. The simulator's simple model confirms this against the exact mathematics (section 8).
+**In general:** hidden progress needs a success from every agent on every step; shared progress needs one success from anyone. With N agents, sharing reaches about N times deeper for the same budget. The simulator's simple model confirms this against the exact mathematics (section 9).
 
 ## 3. The rules
 
@@ -326,7 +328,39 @@ Each element is replaceable without changing the others:
 
 In the simulator, every element is a plugin: world, success oracle, deciders, visibility, allocation, choice policy, measures and analyses. Experiments are YAML files ([sim/README.md, section 3](https://github.com/open-science-org/app/blob/master/sim/README.md#3-configuration-and-extending)). For the Lean experiment, an LLM decider and a Lean-checker oracle become two more plugins, once the core loop is made asynchronous.
 
-## 8. Results so far
+## 8. Problem spaces and canonical reports
+
+The framework is meant to be used beyond the cases built so far. Anyone can describe a new field and get a report on it that answers the same questions, in the same form, as every other field.
+
+**A problem space** is one file ([sim/spaces/](https://github.com/open-science-org/app/blob/master/sim/spaces/)). It holds:
+- a title, a one-sentence summary and a plain-language description of the field;
+- a **glossary** of what a result, a target, an attempt, an area and an agent mean in that field;
+- the area names;
+- the scenario: the research tree, success chances, targets, agents and anything else that differs from the defaults.
+
+**Adding one:**
+- **By hand:** copy an example space and edit it. `npm run sim -- check <space>` validates it and test-runs it.
+- **By description:** `npm run sim -- new "<a description of the field>"`.
+  - Claude (claude-opus-5-5) writes the space file from the description, the documented settings and two example spaces. This needs an Anthropic API key (`ANTHROPIC_API_KEY`).
+  - The file is checked against the scenario rules and test-run once; any error is sent back to the model to fix, up to three times.
+  - The budget is then **calibrated**: it is set to the smallest budget at which the OSO community solves 90% of the targets on average. Every space is then hard but not hopeless, and the comparison is what the same money buys traditional research.
+
+**The canonical report** (`npm run sim -- report <space>`) runs the same standard experiments on every space ([battery.ts](https://github.com/open-science-org/app/blob/master/sim/battery.ts)) and always has the same sections:
+
+| Section | What it answers |
+| --- | --- |
+| Headline | A verdict (OSO ahead, no clear difference, or traditional ahead, judged against two standard errors), plus: how far each community got, targets solved, cost to reach the main level, whether flow-back makes agents share (the threshold α\*), and the condition under which OSO's lead is smallest |
+| 1. The problem space | The description, the glossary, a drawing of the research tree, its targets and difficulty by level |
+| 2. Progress for the money | The frontier-vs-spend chart: traditional, OSO with immediate sharing, and OSO with agent's choice |
+| 3. The six settings | Section 3's settings, with the standard measures |
+| 4. Does flow-back make agents share? | Sharing and reach as α falls, with α\* |
+| 5. When sharing is costly or sometimes wrong | The lead under free, costly, fallible, and costly-and-fallible knowledge |
+| What this shows | The limits, plus the space's own notes |
+| Reproduce | The command, the space file, the data, and the simulator commit |
+
+Reports are written in the field's own words, with charts that work in light and dark mode. An index ([sim/reports/](https://github.com/open-science-org/app/blob/master/sim/reports/)) lists every space with its verdict and headline numbers.
+
+## 9. Results so far
 
 All from the simulation; every run is [logged](https://github.com/open-science-org/app/blob/master/sim/results/LOG.md) with the commit that produced it.
 
@@ -373,7 +407,7 @@ What they show so far:
 
 These are a first calibration of a model, not evidence about real research.
 
-## 9. Validity
+## 10. Validity
 
 - **Several runs per setting,** reported with their spread. Settings are compared on the same seeds, so on the same worlds and agents.
 - **The same agents, prompts, budget and world in every setting,** except for the rules.
@@ -384,7 +418,7 @@ These are a first calibration of a model, not evidence about real research.
   - account exactly for tokens.
 - **What would count against OSO:** flow-back adds nothing beyond visibility, or OSO's lead comes only from trivial results.
 
-## 10. Phases and open decisions
+## 11. Phases and open decisions
 
 **Phases:**
 1. **Simulation** — done, first calibration.
