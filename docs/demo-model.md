@@ -5,7 +5,7 @@
 **Implementations:**
 - **Problem-space reports:** [index](https://github.com/open-science-org/experiment/blob/master/reports/README.md)
 - **Simulator:** [open-science-org/experiment](https://github.com/open-science-org/experiment)
-- **Lean problem set:** in preparation, in the experiment repository
+- **Lean problem set:** [definitions and targets](https://github.com/open-science-org/experiment/tree/master/lean) (reference proofs private); [calibration pilot](https://github.com/open-science-org/experiment#the-lean-pilot) ready to run
 - **Results:** [log of saved runs](https://github.com/open-science-org/experiment/blob/master/results/LOG.md)
 
 > **TL;DR.**
